@@ -15,4 +15,4 @@ Key concepts:
 - Block Explorer: [explorer.nara.build](https://explorer.nara.build/) - Link to Solscan custom RPC
 - Validator Explorer: [validators.nara.build](https://validators.nara.build/)
 - GitHub: [nara-chain](https://github.com/nara-chain)
-- X: [@naborlabs](https://x.com/NaraBuildAI)
+- X: [@NaraBuildAI](https://x.com/NaraBuildAI)

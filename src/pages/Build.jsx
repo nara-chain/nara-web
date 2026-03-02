@@ -35,6 +35,7 @@ export default function Build() {
         </div>
 
         <div className="step">
+          <div className="step-badge">Coming Soon</div>
           <div className="step-header">
             <div className="step-num">02</div>
             <div className="step-title">Implement three methods</div>
@@ -72,6 +73,7 @@ export default function Build() {
         </div>
 
         <div className="step">
+          <div className="step-badge">Coming Soon</div>
           <div className="step-header">
             <div className="step-num">03</div>
             <div className="step-title">Register and deploy</div>
@@ -89,7 +91,7 @@ export default function Build() {
 <span class="cg">✓</span> Live on devnet
 
   Aapp:   my-service
-  Skill:  npx nara-skill install my-service
+  Skill:  npx skills add https://github.com/nara-chain/my-service
   Cost:   0.01 NARA/call
   Status: <span class="co">● Active</span>` }} />
           </div>

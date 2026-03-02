@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
-import NaraLogo from './NaraLogo';
 
 export default function Footer() {
   return (
     <footer>
       <div className="fl">
         <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, textDecoration: 'none', marginBottom: 12 }}>
-          <NaraLogo size={12} />
+          <img src="/favicon.png" alt="NARA" style={{width:18,height:18}} />
           <span style={{ fontSize: 13, fontWeight: 800, letterSpacing: '0.3em', color: '#e8e8e8', fontFamily: "'JetBrains Mono',monospace" }}>NARA</span>
         </Link>
         <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>&copy; 2025 Nara Network Foundation</div>
@@ -19,7 +18,7 @@ export default function Footer() {
         <Link to="/aapps">Aapps</Link>
         <span style={{ opacity: 0.2 }}>|</span>
         <a href="https://github.com/nara-chain" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="https://x.com/naborlabs" target="_blank" rel="noopener noreferrer">X</a>
+        <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">X</a>
       </div>
     </footer>
   );

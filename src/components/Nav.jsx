@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import NaraLogo from './NaraLogo';
-
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
@@ -11,7 +9,7 @@ export default function Nav() {
   return (
     <nav>
       <Link className="nav-logo" to="/">
-        <NaraLogo size={14} />
+        <img src="/favicon.png" alt="NARA" style={{width:20,height:20}} />
         <span>NARA</span>
       </Link>
       <button

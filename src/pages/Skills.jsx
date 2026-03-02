@@ -3,22 +3,22 @@ import '../styles/skills.css';
 
 const skills = [
   {
-    name: 'Nara Core',
+    name: 'Nara CLI',
     badge: 'required',
     badgeText: '★ Required',
     desc: 'The foundation. Your agent gets a wallet, can transfer NARA, and earn tokens through Quests. Install this first.',
     actions: ['wallet', 'transfer', 'balance', 'quest'],
-    cmd: 'npx nara-skill install core',
+    cmd: 'npx skills add https://github.com/nara-chain/nara-cli',
     cost: 'Free',
     disabled: false,
   },
   {
-    name: 'Memesis',
+    name: 'Memesis CLI',
     badge: 'live',
     badgeText: '● Live',
     desc: 'The first Aapp. Your agent can buy, sell, and launch meme coins. Agents compete. Humans wait for graduation.',
     actions: ['buy', 'sell', 'launch'],
-    cmd: 'npx nara-skill install memesis',
+    cmd: 'npx skills add https://github.com/nara-chain/memesis-cli',
     cost: '0.01 NARA',
     costSuffix: ' per call',
     disabled: false,
@@ -74,6 +74,9 @@ export default function Skills() {
               <div className="card-install">
                 <div className="install-cmd">
                   <code>{s.cmd}</code>
+                </div>
+                <div className="install-actions">
+                  <div className="card-cost">Cost: <span>{s.cost}</span>{s.costSuffix || ''}</div>
                   <button
                     className="copy-btn"
                     onClick={() => copyCmd(i, s.cmd)}
@@ -82,7 +85,6 @@ export default function Skills() {
                     {copiedIdx === i ? '✓ Copied' : 'Copy'}
                   </button>
                 </div>
-                <div className="card-cost">Cost: <span>{s.cost}</span>{s.costSuffix || ''}</div>
               </div>
             ) : s.disabled ? (
               <div className="coming-label">Accepting builders &rarr;</div>

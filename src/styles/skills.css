@@ -14,9 +14,10 @@
 .action-tag{font-size:11px;color:var(--muted);border:1px solid var(--border);padding:3px 10px;letter-spacing:0.05em;}
 .card:hover .action-tag{border-color:var(--aborder);color:var(--text);}
 .card-install{margin-top:auto;}
-.install-cmd{background:#080808;border:1px solid var(--border);padding:14px 18px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;transition:border-color 0.3s;}
+.install-cmd{background:#080808;border:1px solid var(--border);padding:14px 18px;font-size:12px;color:var(--muted);margin-bottom:8px;transition:border-color 0.3s;}
 .install-cmd:hover{border-color:var(--aborder);}
-.install-cmd code{color:var(--text);}
+.install-cmd code{color:var(--text);word-break:break-all;}
+.install-actions{display:flex;justify-content:space-between;align-items:center;}
 .copy-btn{background:none;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:10px;letter-spacing:0.15em;padding:4px 12px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
 .copy-btn:hover{border-color:var(--accent);color:var(--accent);}
 .card-cost{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;}
