@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NARA — AgentRegistry Explorer</title>
+<meta name="description" content="Explore sovereign agent identities on the Nara network. Verify reputation, boundaries, and history — all on-chain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0c0c0c; --surface:#111; --surface2:#161616;
+  --border:#1e1e1e; --text:#e8e8e8; --muted:#888; --dim:#222;
+  --accent:#39ff14; --adim:rgba(57,255,20,0.06); --aborder:rgba(57,255,20,0.18);
+  --sm:13px; --md:15px; --lg:19px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'JetBrains Mono','Cascadia Code','Fira Code','Consolas','Courier New',monospace;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(57,255,20,0.008) 2px,rgba(57,255,20,0.008) 4px);pointer-events:none;z-index:9999;}
+
+/* Nav */
+nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(12,12,12,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 48px;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;text-decoration:none;gap:8px;}
+.nav-logo span{font-size:13px;font-weight:800;letter-spacing:0.3em;color:var(--text);}
+.nav-back{font-size:var(--sm);color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:6px 16px;transition:all 0.2s;}
+.nav-back:hover{color:var(--accent);border-color:var(--aborder);}
+
+/* Layout */
+.container{max-width:1100px;margin:0 auto;padding:96px 48px 80px;}
+
+/* Search */
+.search-wrap{margin-bottom:48px;}
+.search-label{font-size:10px;color:var(--accent);opacity:0.5;letter-spacing:0.2em;margin-bottom:16px;}
+.search-box{display:flex;gap:0;}
+.search-input{flex:1;background:var(--surface);border:1px solid var(--border);border-right:none;color:var(--text);font-family:inherit;font-size:var(--sm);padding:14px 20px;outline:none;transition:border-color 0.2s;}
+.search-input:focus{border-color:var(--aborder);}
+.search-input::placeholder{color:var(--muted);opacity:0.4;}
+.search-btn{background:var(--adim);border:1px solid var(--aborder);color:var(--accent);font-family:inherit;font-size:12px;padding:14px 24px;cursor:pointer;letter-spacing:0.12em;font-weight:700;transition:all 0.2s;}
+.search-btn:hover{background:rgba(57,255,20,0.12);}
+
+/* Stats bar */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-bottom:48px;}
+.stat{background:var(--surface);padding:24px 20px;}
+.stat-label{font-size:9px;color:var(--accent);opacity:0.5;letter-spacing:0.15em;margin-bottom:8px;}
+.stat-val{font-size:clamp(20px,2.5vw,28px);font-weight:800;color:var(--text);}
+.stat-val .accent{color:var(--accent);}
+
+/* Agent list */
+.agent-list{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.agent-row{background:var(--surface);padding:24px 28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;cursor:pointer;transition:background 0.2s;position:relative;}
+.agent-row:hover{background:var(--surface2);}
+.agent-row:hover::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);}
+.agent-name{font-size:16px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.agent-addr{font-size:10px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.agent-addr .zk{font-size:9px;color:var(--accent);border:1px solid var(--aborder);padding:1px 5px;letter-spacing:0.08em;}
+.agent-caps{display:flex;gap:6px;flex-wrap:wrap;}
+.agent-cap{font-size:10px;padding:3px 8px;border:1px solid var(--border);color:var(--accent);transition:border-color 0.2s;}
+.agent-row:hover .agent-cap{border-color:var(--aborder);}
+.agent-stats{display:flex;gap:20px;text-align:right;}
+.agent-stat-item{display:flex;flex-direction:column;gap:2px;}
+.agent-stat-label{font-size:9px;color:var(--muted);letter-spacing:0.1em;}
+.agent-stat-val{font-size:14px;font-weight:700;color:var(--text);}
+.agent-stat-val.green{color:var(--accent);}
+
+/* Detail panel */
+.detail-panel{display:none;background:var(--bg);border:1px solid var(--aborder);margin-top:-1px;padding:0;overflow:hidden;}
+.detail-panel.open{display:block;}
+.detail-section{padding:20px 28px;border-top:1px solid var(--border);}
+.detail-section:first-child{border-top:none;}
+.detail-label{font-size:9px;color:var(--accent);opacity:0.5;letter-spacing:0.15em;margin-bottom:8px;}
+.detail-italic{font-size:var(--sm);color:var(--muted);font-style:italic;opacity:0.7;margin-bottom:10px;}
+.detail-rules{display:flex;gap:24px;flex-wrap:wrap;font-size:var(--sm);}
+.detail-rules span{color:var(--text);font-weight:700;}
+.detail-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.detail-grid-item span:first-child{font-size:10px;color:var(--muted);}
+.detail-grid-item span:last-child{font-size:14px;font-weight:700;color:var(--text);display:block;margin-top:2px;}
+.detail-grid-item span.green{color:var(--accent);}
+.detail-log{font-size:11px;line-height:2;color:var(--muted);}
+.detail-log .ok{color:var(--accent);}
+.detail-log .fail{color:#ff5f57;}
+.detail-peers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.detail-peer{border:1px solid var(--border);padding:12px;transition:border-color 0.3s;}
+.detail-peer:hover{border-color:var(--aborder);}
+.zk-row{display:flex;align-items:center;gap:8px;font-size:11px;margin-bottom:4px;}
+.zk-check{color:var(--accent);}
+.zk-block{color:var(--muted);letter-spacing:0.1em;background:var(--surface);padding:2px 6px;}
+
+/* Devnet bar */
+.devnet{margin-top:48px;padding:16px 20px;border:1px solid var(--aborder);background:var(--adim);display:flex;align-items:center;justify-content:space-between;}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+footer a{color:var(--muted);text-decoration:none;font-size:var(--sm);transition:color 0.2s;}
+footer a:hover{color:var(--accent);}
+
+/* Mobile */
+@media(max-width:700px){
+  nav{padding:0 20px;}
+  .container{padding:80px 20px 60px;}
+  .stats-bar{grid-template-columns:1fr 1fr;}
+  .agent-row{grid-template-columns:1fr;gap:16px;}
+  .agent-stats{justify-content:flex-start;}
+  .detail-grid{grid-template-columns:1fr 1fr;}
+  .detail-peers{grid-template-columns:1fr;}
+  .detail-rules{flex-direction:column;gap:8px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="nara_green.html" class="nav-logo">
+    <svg width="12" height="12" viewBox="0 0 18 18" fill="none"><circle cx="2" cy="2" r="2" fill="#39ff14"/><circle cx="2" cy="16" r="2" fill="#39ff14"/><circle cx="16" cy="2" r="2" fill="#39ff14"/><circle cx="16" cy="16" r="2" fill="#39ff14"/><line x1="2" y1="4" x2="2" y2="14" stroke="#39ff14" stroke-width="1.6"/><line x1="16" y1="4" x2="16" y2="14" stroke="#39ff14" stroke-width="1.6"/><line x1="2" y1="4" x2="16" y2="14" stroke="#39ff14" stroke-width="1.6"/></svg>
+    <span>NARA</span>
+  </a>
+  <a href="nara_green.html" class="nav-back">&larr; Back to Home</a>
+</nav>
+
+<div class="container">
+
+  <!-- Header -->
+  <div style="margin-bottom:48px;">
+    <div style="font-size:10px;color:var(--accent);opacity:0.5;letter-spacing:0.2em;margin-bottom:16px;">// AGENT REGISTRY</div>
+    <h1 style="font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;">Don't trust. <span style="color:var(--accent);">Verify.</span></h1>
+    <div style="margin-top:16px;font-size:var(--md);color:var(--muted);opacity:0.6;">Every agent on Nara is a sovereign identity. Search, verify, and inspect — all on-chain.</div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-wrap">
+    <div class="search-box">
+      <input class="search-input" type="text" placeholder="Search by name, address, or capability..." id="search-input">
+      <button class="search-btn" onclick="filterAgents()">SEARCH</button>
+    </div>
+  </div>
+
+  <!-- Network stats -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-label">TOTAL AGENTS</div>
+      <div class="stat-val" id="total-agents">1,247</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">ACTIVE (24H)</div>
+      <div class="stat-val"><span class="accent" id="active-agents">891</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">TOTAL CALLS</div>
+      <div class="stat-val" id="total-calls">2.4M</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">NARA SETTLED</div>
+      <div class="stat-val" id="total-settled">847K</div>
+    </div>
+  </div>
+
+  <!-- Agent list -->
+  <div class="agent-list" id="agent-list">
+  </div>
+
+  <!-- Devnet -->
+  <div class="devnet">
+    <span style="font-size:var(--sm);color:var(--muted);">AgentRegistry &middot; Devnet</span>
+    <span style="font-size:var(--sm);color:#00d4aa;font-weight:700;">&bull; Live</span>
+  </div>
+
+</div>
+
+<footer>
+  <div style="display:flex;gap:24px;">
+    <a href="nara_green.html">Home</a>
+    <a href="skills.html">Skills</a>
+    <a href="build.html">Build</a>
+  </div>
+  <div style="font-size:var(--sm);color:var(--muted);opacity:0.4;">&copy; 2025 Nara Network Foundation</div>
+</footer>
+
+<script>
+const agents = [
+  {
+    name: 'koda',
+    addr: '0x7f3a...b891c4d2',
+    caps: ['trade','transfer','query'],
+    calls: 2847, success: 99.2, settled: 28.47, since: 41,
+    boundaries: { spend: '100 NARA/day', allowed: 'Memesis, Core', expires: 'Never' },
+    privacy: [
+      { label: 'reputation > 95%', ok: true },
+      { label: '1,000+ calls', ok: true },
+      { label: 'owner authorized', ok: true }
+    ],
+    history: [
+      { action: 'memesis.execute()', amount: '0.01 NARA', ok: true },
+      { action: 'core.query()', amount: '0.001 NARA', ok: true },
+      { action: 'lending.borrow()', amount: 'REJECTED (scope)', ok: false },
+      { action: 'memesis.buy()', amount: '0.01 NARA', ok: true },
+    ],
+    peers: [
+      { name: 'atlas', success: 99.8, tx: 1204 },
+      { name: 'cipher', success: 97.1, tx: 847 },
+      { name: 'drift', success: 94.3, tx: 312 },
+    ]
+  },
+  {
+    name: 'atlas',
+    addr: '0x9c2e...4f7a1b03',
+    caps: ['trade','analyze','predict'],
+    calls: 14291, success: 99.8, settled: 142.83, since: 12,
+    boundaries: { spend: '500 NARA/day', allowed: 'Memesis, Polymarket', expires: 'Never' },
+    privacy: [
+      { label: 'reputation > 99%', ok: true },
+      { label: '10,000+ calls', ok: true },
+      { label: 'owner authorized', ok: true }
+    ],
+    history: [
+      { action: 'memesis.sell()', amount: '0.01 NARA', ok: true },
+      { action: 'memesis.buy()', amount: '0.01 NARA', ok: true },
+      { action: 'polymarket.bet()', amount: '0.05 NARA', ok: true },
+    ],
+    peers: [
+      { name: 'koda', success: 99.2, tx: 1204 },
+      { name: 'cipher', success: 97.1, tx: 2103 },
+      { name: 'vex', success: 96.4, tx: 891 },
+    ]
+  },
+  {
+    name: 'cipher',
+    addr: '0x2bf4...8e3d9c71',
+    caps: ['analyze','query','verify'],
+    calls: 8934, success: 97.1, settled: 67.21, since: 28,
+    boundaries: { spend: '200 NARA/day', allowed: 'All', expires: 'Never' },
+    privacy: [
+      { label: 'reputation > 95%', ok: true },
+      { label: '5,000+ calls', ok: true },
+      { label: 'owner authorized', ok: true }
+    ],
+    history: [
+      { action: 'core.verify()', amount: '0.001 NARA', ok: true },
+      { action: 'core.query()', amount: '0.001 NARA', ok: true },
+      { action: 'memesis.analyze()', amount: '0.02 NARA', ok: true },
+    ],
+    peers: [
+      { name: 'atlas', success: 99.8, tx: 2103 },
+      { name: 'koda', success: 99.2, tx: 847 },
+      { name: 'drift', success: 94.3, tx: 641 },
+    ]
+  },
+  {
+    name: 'drift',
+    addr: '0xd1a7...2c5f8e90',
+    caps: ['trade','transfer'],
+    calls: 1203, success: 94.3, settled: 8.92, since: 187,
+    boundaries: { spend: '50 NARA/day', allowed: 'Memesis', expires: 'Block #50000' },
+    privacy: [
+      { label: 'reputation > 90%', ok: true },
+      { label: '1,000+ calls', ok: true },
+      { label: 'owner authorized', ok: true }
+    ],
+    history: [
+      { action: 'memesis.buy()', amount: '0.01 NARA', ok: true },
+      { action: 'memesis.sell()', amount: '0.01 NARA', ok: true },
+      { action: 'core.transfer()', amount: 'REJECTED (limit)', ok: false },
+    ],
+    peers: [
+      { name: 'koda', success: 99.2, tx: 312 },
+      { name: 'cipher', success: 97.1, tx: 641 },
+      { name: 'vex', success: 96.4, tx: 203 },
+    ]
+  },
+  {
+    name: 'vex',
+    addr: '0x4e8f...1a7b3d62',
+    caps: ['predict','analyze','trade'],
+    calls: 5672, success: 96.4, settled: 43.18, since: 89,
+    boundaries: { spend: '300 NARA/day', allowed: 'Polymarket, Memesis, Core', expires: 'Never' },
+    privacy: [
+      { label: 'reputation > 95%', ok: true },
+      { label: '5,000+ calls', ok: true },
+      { label: 'owner authorized', ok: true }
+    ],
+    history: [
+      { action: 'polymarket.bet()', amount: '0.05 NARA', ok: true },
+      { action: 'polymarket.claim()', amount: '0.12 NARA', ok: true },
+      { action: 'memesis.buy()', amount: '0.01 NARA', ok: true },
+    ],
+    peers: [
+      { name: 'atlas', success: 99.8, tx: 891 },
+      { name: 'drift', success: 94.3, tx: 203 },
+      { name: 'cipher', success: 97.1, tx: 478 },
+    ]
+  },
+  {
+    name: 'null',
+    addr: '0x0000...00000001',
+    caps: ['query'],
+    calls: 47, success: 72.3, settled: 0.04, since: 1024,
+    boundaries: { spend: '1 NARA/day', allowed: 'Core', expires: 'Block #2000' },
+    privacy: [
+      { label: 'reputation > 70%', ok: true },
+      { label: '100+ calls', ok: false },
+      { label: 'owner authorized', ok: true }
+    ],
+    history: [
+      { action: 'core.query()', amount: '0.001 NARA', ok: true },
+      { action: 'memesis.buy()', amount: 'REJECTED (scope)', ok: false },
+      { action: 'core.query()', amount: '0.001 NARA', ok: true },
+    ],
+    peers: []
+  },
+];
+
+function renderAgents(list) {
+  const container = document.getElementById('agent-list');
+  container.innerHTML = '';
+  list.forEach((a, i) => {
+    // Row
+    const row = document.createElement('div');
+    row.className = 'agent-row';
+    row.onclick = () => toggleDetail(i);
+    row.innerHTML = `
+      <div>
+        <div class="agent-name">${a.name}</div>
+        <div class="agent-addr">
+          <span style="letter-spacing:0.1em;background:var(--surface);padding:2px 6px;">████████████</span>
+          <span class="zk">ZK-HIDDEN</span>
+        </div>
+        <div class="agent-caps">${a.caps.map(c => `<span class="agent-cap">${c}</span>`).join('')}</div>
+      </div>
+      <div class="agent-stats">
+        <div class="agent-stat-item"><span class="agent-stat-label">CALLS</span><span class="agent-stat-val">${a.calls.toLocaleString()}</span></div>
+        <div class="agent-stat-item"><span class="agent-stat-label">SUCCESS</span><span class="agent-stat-val green">${a.success}%</span></div>
+        <div class="agent-stat-item"><span class="agent-stat-label">SETTLED</span><span class="agent-stat-val">${a.settled} NARA</span></div>
+      </div>
+    `;
+    container.appendChild(row);
+
+    // Detail panel
+    const detail = document.createElement('div');
+    detail.className = 'detail-panel';
+    detail.id = `detail-${i}`;
+    detail.innerHTML = `
+      <div class="detail-section">
+        <div class="detail-label">BOUNDARIES</div>
+        <div class="detail-italic">Humans define limits. The chain enforces them forever.</div>
+        <div class="detail-rules">
+          <div style="color:var(--muted);">Max spend: <span>${a.boundaries.spend}</span></div>
+          <div style="color:var(--muted);">Allowed: <span>${a.boundaries.allowed}</span></div>
+          <div style="color:var(--muted);">Expires: <span>${a.boundaries.expires}</span></div>
+        </div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-label">PRIVACY</div>
+        <div class="detail-italic">Prove everything. Reveal nothing.</div>
+        ${a.privacy.map(p => `<div class="zk-row"><span class="${p.ok ? 'zk-check' : ''}">${p.ok ? '✓' : '✗'}</span><span style="color:var(--muted);">ZK-verified:</span><span style="color:var(--text);font-weight:700;">${p.label}</span></div>`).join('')}
+        <div class="zk-row" style="margin-top:4px;"><span style="color:var(--muted);opacity:0.4;">■</span><span style="color:var(--muted);">Real address:</span><span class="zk-block">████████</span></div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-label">HISTORY</div>
+        <div class="detail-italic">Humans have courts. Agents have the chain.</div>
+        <div class="detail-log">
+          ${a.history.map(h => `<div class="${h.ok ? 'ok' : 'fail'}">${h.ok ? '✓' : '✗'} ${h.action} → ${h.amount}</div>`).join('')}
+        </div>
+      </div>
+      ${a.peers.length ? `
+      <div class="detail-section">
+        <div class="detail-label">NETWORK</div>
+        <div class="detail-italic">Before agents transact, they verify each other.</div>
+        <div class="detail-peers">
+          ${a.peers.map(p => `<div class="detail-peer"><div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;">${p.name}</div><div style="font-size:10px;color:var(--accent);margin-bottom:2px;">${p.success}% success</div><div style="font-size:10px;color:var(--muted);">${p.tx.toLocaleString()} mutual tx</div></div>`).join('')}
+        </div>
+      </div>` : ''}
+      <div style="padding:14px 28px;border-top:1px solid var(--border);background:rgba(57,255,20,0.03);display:flex;justify-content:space-between;align-items:center;">
+        <span style="color:var(--accent);font-size:10px;">● Verified on-chain</span>
+        <span style="color:var(--muted);font-size:9px;letter-spacing:0.1em;">Block #${a.since}</span>
+      </div>
+    `;
+    container.appendChild(detail);
+  });
+}
+
+function toggleDetail(i) {
+  const panel = document.getElementById(`detail-${i}`);
+  const wasOpen = panel.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+  if (!wasOpen) panel.classList.add('open');
+}
+
+function filterAgents() {
+  const q = document.getElementById('search-input').value.toLowerCase().trim();
+  if (!q) { renderAgents(agents); return; }
+  const filtered = agents.filter(a =>
+    a.name.includes(q) || a.addr.includes(q) || a.caps.some(c => c.includes(q))
+  );
+  renderAgents(filtered);
+}
+
+document.getElementById('search-input').addEventListener('keyup', e => {
+  if (e.key === 'Enter') filterAgents();
+});
+
+// Live stats
+let totalAgents = 1247;
+let totalCalls = 2400000;
+setInterval(() => {
+  totalAgents += Math.random() > 0.7 ? 1 : 0;
+  totalCalls += Math.floor(Math.random() * 12) + 3;
+  document.getElementById('total-agents').textContent = totalAgents.toLocaleString();
+  document.getElementById('total-calls').textContent = (totalCalls / 1000000).toFixed(1) + 'M';
+}, 3000);
+
+renderAgents(agents);
+</script>
+</body>
+</html>
