@@ -31,7 +31,6 @@ export default function Home() {
   const neuralRef = useRef(null);
   const feedListRef = useRef(null);
   const feedCounterRef = useRef(null);
-  const pomiRef = useRef(null);
   const globeRef = useRef(null);
   const termBodyRef = useRef(null);
   const idCardRef = useRef(null);
