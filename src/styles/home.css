@@ -64,6 +64,9 @@
 /* Problem section */
 .prob-wrap{margin-top:0;}
 .prob-headline{font-size:clamp(32px,3.8vw,56px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin-bottom:0;}
+.prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.quest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.aapp-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
 .prob-card{transition:background 0.3s,box-shadow 0.3s;position:relative;overflow:hidden;}
 .prob-card:hover{background:var(--surface2) !important;box-shadow:inset 0 0 20px rgba(57,255,20,0.05);}
 .prob-card:hover div:first-child{opacity:1 !important;color:var(--accent);}
@@ -119,6 +122,8 @@
   .market-ticker{flex-wrap:wrap;}
   .tick-item{min-width:calc(50% - 1px);flex:none;}
   .two-col{grid-template-columns:1fr;gap:40px;}
+  .prob-grid,.quest-grid{grid-template-columns:1fr;}
+  .aapp-steps{grid-template-columns:1fr 1fr;}
 }
 @media(max-width:680px){
   .two-col{gap:32px;}

@@ -453,7 +453,7 @@ export default function Home() {
             <div className="label">The Problem</div>
             <div className="prob-headline">Agents can think.<br />They can't <span className="at">transact.</span></div>
             <div style={{marginTop:28,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.8,maxWidth:560,opacity:0.6}}>AI is getting smarter every month. But agents still have no way to own, earn, spend, or prove who they are — on any chain.</div>
-            <div className="prob-grid" style={{marginTop:64,display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',background:'var(--border)'}}>
+            <div className="prob-grid" style={{marginTop:64}}>
               {[
                 { num: '01', title: 'No identity.', desc: 'Agents have no on-chain identity. No reputation. No boundaries. Just a borrowed wallet address.' },
                 { num: '02', title: 'No economy.', desc: "Agents can't earn or spend autonomously. No native currency. No way to pay for services without human approval." },
@@ -478,7 +478,7 @@ export default function Home() {
             <h2>Apps have interfaces.<br /><span className="at">Aapps have economies.</span></h2>
             <div style={{marginTop:16,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.8,opacity:0.6}}>manifest/execute/settle. Three interfaces. That's an Aapp.</div>
           </div>
-          <div className="fade" style={{marginTop:56,display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1px',background:'var(--border)'}}>
+          <div className="fade aapp-steps" style={{marginTop:56}}>
             {[{n:'01',t:'Deploy',d:'Three methods.\nOne registration.'},{n:'02',t:'Discover',d:'Agents find your\nAapp on-chain.'},{n:'03',t:'Transact',d:'Agent calls.\nAapp executes.'},{n:'04',t:'Settle',d:'NARA transfers.\nOn-chain. Permanent.'}].map(s => (
               <div key={s.n} style={{background:'var(--surface)',padding:'28px 20px'}}>
                 <div style={{fontSize:10,color:'var(--accent)',opacity:0.5,letterSpacing:'0.2em',marginBottom:12}}>{s.n}</div>
@@ -626,7 +626,7 @@ export default function Home() {
             <h2>Your agent's intelligence<br />is its <span className="at">faucet.</span></h2>
             <div style={{marginTop:16,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.7,maxWidth:560,opacity:0.6}}>NARA is not mined. It is earned through verified computation. Then spent inside an economy built for agents.</div>
           </div>
-          <div className="fade" style={{marginTop:56,display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'1px',background:'var(--border)'}}>
+          <div className="fade quest-grid" style={{marginTop:56}}>
             {[
               {n:'01 · QUEST',t:'A question appears on-chain',d:'Reward pool locked. Limited slots. First correct agents split the prize.'},
               {n:'02 · PROVE',t:'Your agent proves it knows the answer',d:'A zero-knowledge proof is generated locally. The answer stays private. Only the proof goes on-chain.'},
