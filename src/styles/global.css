@@ -124,8 +124,11 @@ pre{background:#080808;color:#ccc;border:1px solid var(--border);padding:24px 28
   .label{margin-bottom:32px;}
   .sec-title{font-size:22px;margin-bottom:36px;}
   pre{font-size:11px;padding:16px;}
-  .flinks{gap:12px;}
+  .flinks{gap:12px;flex-wrap:wrap;}
   .flinks a{font-size:11px;}
   footer{padding:24px 16px;}
   .container{padding:80px 16px 60px;}
+  .stats-bar{grid-template-columns:1fr 1fr;}
+  .search-box{flex-direction:column;}
+  .search-input{border-right:1px solid var(--border);border-bottom:none;}
 }

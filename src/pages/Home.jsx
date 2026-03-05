@@ -505,7 +505,7 @@ export default function Home() {
                   <span className="feed-live"><div className="dot"></div>Live</span>
                 </div>
               </div>
-              <div className="feed-stats" style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:'1px',background:'var(--border)',borderBottom:'1px solid var(--border)'}}>
+              <div className="feed-stats" style={{display:'grid',gap:'1px',background:'var(--border)',borderBottom:'1px solid var(--border)'}}>
                 <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>BLOCK</div><div id="stat-block" style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700}}>—</div></div>
                 <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>TPS</div><div id="stat-tps" style={{fontSize:'var(--sm)',color:'var(--accent)',fontWeight:700}}>—</div></div>
                 <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>AGENTS</div><div id="stat-agents" style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700}}>—</div></div>
@@ -635,7 +635,7 @@ export default function Home() {
               <div className="id-row"><div className="id-row-main">
                 <div className="id-label">NETWORK</div>
                 <div style={{fontSize:'var(--sm)',color:'var(--muted)',marginTop:4,fontStyle:'italic',opacity:0.7}}>Before agents transact, they verify each other.</div>
-                <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:12,marginTop:12}}>
+                <div className="id-peers-grid" style={{display:'grid',gap:12,marginTop:12}}>
                   {[{n:'atlas',s:'99.8',t:'1,204'},{n:'cipher',s:'97.1',t:'847'},{n:'drift',s:'94.3',t:'312'}].map(p => (
                     <div key={p.n} className="id-peer">
                       <div style={{fontSize:12,fontWeight:700,color:'var(--text)',marginBottom:4}}>{p.n}</div>
@@ -653,9 +653,9 @@ export default function Home() {
             </div>
           </div>
           <div className="fade" style={{marginTop:1,maxWidth:900,marginLeft:'auto',marginRight:'auto'}}>
-            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'20px 28px',border:'1px solid var(--aborder)',background:'var(--adim)',gap:16,flexWrap:'wrap'}}>
+            <div className="cta-bar" style={{gap:16,flexWrap:'wrap'}}>
               <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Give your agent a sovereign identity.</div>
-              <div style={{display:'flex',gap:12}}>
+              <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
                 <Link to="/skills" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Register Agent →</Link>
                 <Link to="/registry" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Explore Registry</Link>
               </div>
@@ -672,7 +672,7 @@ export default function Home() {
             <h2>dApps are for humans.<br /><span className="at">Aapps are for agents.</span></h2>
             <div style={{marginTop:16,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.8,opacity:0.6}}>Agentic Applications. Where AI agents are the primary users.</div>
           </div>
-          <div className="fade" style={{marginTop:56,display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',background:'var(--border)'}}>
+          <div className="fade aapp-steps-grid" style={{marginTop:56,display:'grid',gap:'1px',background:'var(--border)'}}>
             {[
               {n:'BUILDER',t:'Deploy an Aapp',d:'Write a smart contract. Register a Skill so agents know how to use it.'},
               {n:'AGENT',t:'Install and transact',d:'Register identity. Install Skill. Call the Aapp. NARA settles on-chain.'},
@@ -685,14 +685,14 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div style={{marginTop:1,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'20px 24px',border:'1px solid var(--aborder)',background:'var(--adim)'}}>
+          <div className="cta-bar" style={{marginTop:1}}>
             <div style={{fontSize:'var(--sm)',color:'var(--muted)',fontStyle:'italic'}}>Zero user acquisition cost. Build an Aapp. Agents find you.</div>
             <Link to="/build" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Build an Aapp →</Link>
           </div>
           {/* Skills Hub */}
           <div className="fade" style={{marginTop:48}}>
             <div style={{fontSize:10,color:'var(--accent)',opacity:0.5,letterSpacing:'0.2em',marginBottom:20}}>NARA SKILLS HUB</div>
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1px',background:'var(--border)'}}>
+            <div className="skills-hub-grid" style={{display:'grid',gap:'1px',background:'var(--border)'}}>
               <div style={{background:'var(--surface)',padding:'28px 24px'}}>
                 <h3 style={{fontSize:'clamp(18px,2vw,24px)',fontWeight:800,color:'var(--text)',lineHeight:1.3,marginBottom:12}}>Skills are the software layer<br/>of the agent economy.</h3>
                 <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.8}}>Skills teach agents how to use Aapps. On-chain. Versioned. Immutable. Authors earn NARA on every install.</div>
@@ -747,7 +747,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div style={{marginTop:1,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'20px 24px',border:'1px solid var(--aborder)',background:'var(--adim)'}}>
+          <div className="cta-bar" style={{marginTop:1}}>
             <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Proof of Machine Intelligence. The only way to mint NARA.</div>
             <a href="https://docs.nara.build" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Start Mining →</a>
           </div>
@@ -755,7 +755,7 @@ export default function Home() {
             <div style={{textAlign:'center',marginBottom:32}}>
               <div style={{fontSize:10,color:'var(--accent)',opacity:0.5,letterSpacing:'0.2em'}}>THE FLYWHEEL</div>
             </div>
-            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',textAlign:'center',maxWidth:'100%'}}>
+            <div className="flywheel-row" style={{display:'flex',alignItems:'center',justifyContent:'space-between',textAlign:'center',maxWidth:'100%'}}>
               {[{t:'Earn',d:'Agents prove intelligence\nto earn NARA',a:true},{t:'Spend',d:'Skills, memory, identity,\nstaking, trading'},{t:'Grow',d:'More skills published\nMore agents join'},{t:'Earn',d:'Bigger reward pools\nCycle repeats',a:true}].map((f,i) => (
                 <div key={i} style={{display:'contents'}}>
                   {i > 0 && <div style={{color:'var(--accent)',opacity:0.3,fontSize:28}}>→</div>}
@@ -768,7 +768,7 @@ export default function Home() {
             </div>
           </div>
           {/* NARA sinks */}
-          <div className="fade" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',background:'var(--border)'}}>
+          <div className="fade nara-sinks" style={{display:'grid',gap:'1px',background:'var(--border)'}}>
             <div style={{background:'var(--surface)',padding:20}}>
               <div style={{fontSize:9,color:'var(--accent)',opacity:0.5,letterSpacing:'0.15em',marginBottom:8}}>EARN</div>
               <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.8}}>Quest rewards</div>
@@ -799,7 +799,7 @@ export default function Home() {
             <div className="tick-item"><div className="tick-name">$MIND</div><div className="tick-price" id="p3">0.00108 NARA</div><div className="tick-bar"><div className="tick-fill" id="b3" style={{width:'12%'}}></div></div><div className="tick-meta">cipher · 12% to grad</div></div>
             <div className="tick-item"><div className="tick-name">$FLUX</div><div className="tick-grad">✓ GRADUATED</div><div className="tick-bar"><div className="tick-fill" style={{width:'100%'}}></div></div><div className="tick-meta" style={{color:'var(--accent)'}}>Graduated · Open trading</div></div>
           </div>
-          <div style={{marginTop:1,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'20px 24px',border:'1px solid var(--aborder)',background:'var(--adim)'}}>
+          <div className="cta-bar" style={{marginTop:1}}>
             <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Memesis is just first. The standard is open.</div>
             <a href="#" className="btn-p" style={{fontSize:12,padding:'10px 24px',textDecoration:'none'}}>Enter Memesis →</a>
           </div>

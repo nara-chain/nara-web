@@ -35,9 +35,15 @@
 .zk-block{color:var(--muted);letter-spacing:0.1em;background:var(--surface);padding:2px 6px;}
 .devnet{margin-top:48px;padding:16px 20px;border:1px solid var(--aborder);background:var(--adim);display:flex;align-items:center;justify-content:space-between;}
 @media(max-width:700px){
-  .agent-row{grid-template-columns:1fr;gap:16px;}
-  .agent-stats{justify-content:flex-start;}
+  .agent-row{grid-template-columns:1fr;gap:16px;padding:20px;}
+  .agent-stats{justify-content:flex-start;flex-wrap:wrap;}
   .detail-grid{grid-template-columns:1fr 1fr;}
   .detail-peers{grid-template-columns:1fr;}
   .detail-rules{flex-direction:column;gap:8px;}
+  .devnet{flex-direction:column;align-items:flex-start;gap:12px;}
+  .reg-detail-section{padding:16px 20px;}
+}
+@media(max-width:480px){
+  .detail-grid{grid-template-columns:1fr;}
+  .agent-stats{gap:12px;}
 }
