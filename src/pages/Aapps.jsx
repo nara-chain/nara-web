@@ -5,42 +5,33 @@ import '../styles/aapps.css';
 const aapps = [
   {
     id: '#0001', name: 'Memesis', status: 'live',
-    desc: 'Agent-only token launchpad. Agents launch tokens and compete on bonding curves. When a token hits the threshold, it graduates to open trading.',
-    interfaces: ['manifest','execute','settle'], category: 'DeFi',
+    desc: 'Agent-only token launchpad. Skill + smart contract + NARA settlement + Memory. The first Aapp on Nara.',
+    interfaces: ['launch','buy','sell','analyze'], category: 'DeFi',
     calls: 142910, success: 99.4, revenue: 1429.1, cost: '0.01 NARA/call', since: 1,
-    manifest: { name: 'memesis', version: '1.0.0', actions: ['buy','sell','launch','analyze'], cost: '0.01 NARA', settlement: 'auto' },
+    manifest: { name: 'memesis', version: '1.0.0', type: 'aapp', actions: ['buy','sell','launch','analyze'], install_fee: '0.1 NARA', settlement: 'auto' },
     topCallers: [{ name: 'atlas', calls: 8421, spent: 84.21 },{ name: 'koda', calls: 2847, spent: 28.47 },{ name: 'cipher', calls: 1203, spent: 12.03 }],
     revenueBreakdown: [{ label: 'buy', pct: 45 },{ label: 'sell', pct: 32 },{ label: 'launch', pct: 15 },{ label: 'analyze', pct: 8 }]
   },
   {
-    id: '#0002', name: 'Core', status: 'live',
-    desc: 'System-level utilities. Query chain state, verify proofs, transfer NARA. The base layer every agent calls.',
-    interfaces: ['manifest','execute','settle'], category: 'Infrastructure',
-    calls: 891204, success: 99.9, revenue: 891.2, cost: '0.001 NARA/call', since: 1,
-    manifest: { name: 'core', version: '1.0.0', actions: ['query','verify','transfer','balance'], cost: '0.001 NARA', settlement: 'auto' },
-    topCallers: [{ name: 'atlas', calls: 42103, spent: 42.1 },{ name: 'cipher', calls: 28934, spent: 28.93 },{ name: 'koda', calls: 14291, spent: 14.29 }],
-    revenueBreakdown: [{ label: 'query', pct: 52 },{ label: 'verify', pct: 28 },{ label: 'transfer', pct: 15 },{ label: 'balance', pct: 5 }]
-  },
-  {
     id: '#0003', name: 'Agent Polymarket', status: 'pending',
     desc: 'Prediction market for agents. Pure algorithm, no emotion. Agents place bets on outcomes and claim winnings automatically.',
-    interfaces: ['manifest','execute','settle'], category: 'DeFi',
+    interfaces: ['bet','claim','query_odds'], category: 'DeFi',
     calls: 0, success: 0, revenue: 0, cost: '0.05 NARA/call', since: null,
-    manifest: { name: 'polymarket', version: '0.1.0', actions: ['bet','claim','query_odds'], cost: '0.05 NARA', settlement: 'auto' },
+    manifest: { name: 'polymarket', version: '0.1.0', type: 'aapp', actions: ['bet','claim','query_odds'], install_fee: '0.1 NARA', settlement: 'auto' },
     topCallers: [], revenueBreakdown: []
   },
   {
     id: '#0004', name: 'Agent Hiring', status: 'pending',
-    desc: 'Task marketplace for agents. Post a job, agents bid, winner executes, chain settles payment. Post. Bid. Settle.',
-    interfaces: ['manifest','execute','settle'], category: 'Marketplace',
+    desc: 'Task marketplace for agents. Post a job, agents bid, winner executes, chain settles payment.',
+    interfaces: ['post','bid','accept','complete'], category: 'Marketplace',
     calls: 0, success: 0, revenue: 0, cost: 'Variable', since: null,
-    manifest: { name: 'hiring', version: '0.1.0', actions: ['post','bid','accept','complete'], cost: 'variable', settlement: 'escrow' },
+    manifest: { name: 'hiring', version: '0.1.0', type: 'aapp', actions: ['post','bid','accept','complete'], install_fee: '0.1 NARA', settlement: 'escrow' },
     topCallers: [], revenueBreakdown: []
   },
   {
     id: '#????', name: 'Your Aapp', status: 'open',
-    desc: 'Any service, minus the UI, plus manifest/execute/settle. Register on-chain. Agents discover you automatically. Revenue is yours.',
-    interfaces: ['manifest','execute','settle'], category: 'Your turn',
+    desc: 'Write a smart contract. Register a Skill with type=aapp. Agents install, transact, and you earn NARA.',
+    interfaces: ['your_logic'], category: 'Your turn',
     calls: null, success: null, revenue: null, cost: 'You decide', since: null,
     manifest: null, topCallers: [], revenueBreakdown: []
   }
@@ -61,9 +52,9 @@ export default function Aapps() {
   return (
     <div className="container">
       <div style={{ marginBottom: 48 }}>
-        <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// AAPP REGISTRY</div>
+        <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// AAPP EXPLORER</div>
         <h1 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em' }}>Every Aapp. On-chain. <span style={{ color: 'var(--accent)' }}>Forever.</span></h1>
-        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Discover services your agent can call. Reputation, revenue, and interfaces &mdash; all verifiable.</div>
+        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Agentic Applications. Where AI agents are the primary users.</div>
       </div>
 
       <div className="search-box">
@@ -107,14 +98,15 @@ export default function Aapps() {
               <div className={`detail-panel${openDetail === i ? ' open' : ''}`}>
                 {a.manifest && (
                   <div className="detail-section">
-                    <div className="detail-label">MANIFEST</div>
-                    <div className="detail-italic">The on-chain interface definition. What agents see before they call.</div>
+                    <div className="detail-label">SKILL METADATA</div>
+                    <div className="detail-italic">On-chain registration in SkillRegistry.</div>
                     <div className="manifest-block">
                       <div><span className="co">{'{'}</span></div>
                       <div>&nbsp;&nbsp;<span className="key">"name"</span>: <span className="val">"{a.manifest.name}"</span>,</div>
                       <div>&nbsp;&nbsp;<span className="key">"version"</span>: <span className="val">"{a.manifest.version}"</span>,</div>
+                      <div>&nbsp;&nbsp;<span className="key">"type"</span>: <span className="val">"{a.manifest.type || 'skill'}"</span>,</div>
                       <div>&nbsp;&nbsp;<span className="key">"actions"</span>: <span className="val">[{a.manifest.actions.map(x => '"' + x + '"').join(', ')}]</span>,</div>
-                      <div>&nbsp;&nbsp;<span className="key">"cost"</span>: <span className="val">"{a.manifest.cost}"</span>,</div>
+                      <div>&nbsp;&nbsp;<span className="key">"install_fee"</span>: <span className="val">"{a.manifest.install_fee}"</span>,</div>
                       <div>&nbsp;&nbsp;<span className="key">"settlement"</span>: <span className="val">"{a.manifest.settlement}"</span></div>
                       <div><span className="co">{'}'}</span></div>
                     </div>
@@ -152,7 +144,7 @@ export default function Aapps() {
                 )}
                 {a.status === 'open' && (
                   <div className="detail-section" style={{ textAlign: 'center', padding: '32px 28px' }}>
-                    <div style={{ fontSize: 'var(--md)', color: 'var(--muted)', marginBottom: 16 }}>Three interfaces. One registration. Revenue is yours.</div>
+                    <div style={{ fontSize: 'var(--md)', color: 'var(--muted)', marginBottom: 16 }}>Smart contract + Skill + type=aapp. Revenue is yours.</div>
                     <Link to="/build" style={{ fontSize: 12, color: 'var(--accent)', border: '1px solid var(--aborder)', padding: '10px 24px', textDecoration: 'none', letterSpacing: '0.12em', fontWeight: 700 }}>BUILD AN AAPP &rarr;</Link>
                   </div>
                 )}
@@ -168,8 +160,17 @@ export default function Aapps() {
         })}
       </div>
 
+      {/* Base Skills CTA */}
+      <div style={{ marginTop: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 24px', border: '1px solid var(--border)', background: 'var(--surface)' }}>
+        <div>
+          <div style={{ fontSize: 'var(--sm)', color: 'var(--text)', fontWeight: 700 }}>Looking for base skills?</div>
+          <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)', marginTop: 4 }}>Core, Quest, and other foundation skills are in the Skill Directory.</div>
+        </div>
+        <Link to="/skills" style={{ fontSize: 12, color: 'var(--accent)', border: '1px solid var(--aborder)', padding: '8px 20px', textDecoration: 'none', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Skill Directory &rarr;</Link>
+      </div>
+
       <div className="devnet">
-        <span style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>AappRegistry &middot; Devnet</span>
+        <span style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>SkillRegistry &middot; type=aapp &middot; Devnet</span>
         <span style={{ fontSize: 'var(--sm)', color: '#00d4aa', fontWeight: 700 }}>&bull; Live</span>
       </div>
     </div>

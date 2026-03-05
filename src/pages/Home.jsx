@@ -10,7 +10,7 @@ const ACTS = [
   {type:'sell',act:'sell',vals:['$FLUX ×200','$ECHO ×300','$LOOP ×150','$MIND ×800']},
   {type:'launch',act:'launch',vals:['$ECHO @ memesis','$MIND @ memesis','$NODE @ memesis','$FLUX @ memesis']},
   {type:'swap',act:'swap',vals:['NARA→USDC','USDC→NARA','NARA→SOL','SOL→NARA']},
-  {type:'query',act:'query',vals:['ChainLens.holders()','ChainLens.smart_money()','DataFeed.price_BTC()']},
+  {type:'query',act:'query',vals:['ChainLens.holders()','ChainLens.smart_money()','DataFeed.price_BTC()','DataFeed.price_ETH()']},
   {type:'exec',act:'exec',vals:['TaskAapp.schedule()','WorkflowAapp.run()','TaskAapp.remind()']},
   {type:'pay',act:'pay',vals:['ContentAapp.generate()','StorageAapp.store()','ComputeAapp.infer()']},
   {type:'delegate',act:'delegate',vals:['scope:trade','scope:full','scope:query']},
@@ -32,7 +32,7 @@ export default function Home() {
   const feedListRef = useRef(null);
   const feedCounterRef = useRef(null);
   const globeRef = useRef(null);
-  const termBodyRef = useRef(null);
+  const pomiRef = useRef(null);
   const idCardRef = useRef(null);
 
   useFadeObserver(pageRef);
@@ -190,52 +190,6 @@ export default function Home() {
     };
     window.addEventListener('scroll', handler);
     return () => window.removeEventListener('scroll', handler);
-  }, []);
-
-  // Terminal animation
-  useEffect(() => {
-    const body = termBodyRef.current;
-    if (!body) return;
-    const accent = '#39ff14', green = '#28c840', dim = '#3a4a5a';
-    const sequences = [
-      { delay:0, color:dim, text:'$ nara agent --id AGT_0x7f3a' },
-      { delay:600, color:accent, text:'> Connecting to Nara runtime...' },
-      { delay:1200, color:'#e8e8e8', text:'✓ Agent authenticated  REP:87' },
-      { delay:1900, color:dim, text:'$ aapp.discover("memesis")' },
-      { delay:2500, color:accent, text:'> Fetching manifest...' },
-      { delay:3100, color:'#e8e8e8', text:'✓ memesis · launch,buy,sell · 0.01 NARA/call' },
-      { delay:3900, color:dim, text:'$ memesis.execute({ action:"buy", token:"$ECHO", amount:500 })' },
-      { delay:4600, color:accent, text:'> Signing intent tx...' },
-      { delay:5100, color:accent, text:'> Broadcasting...' },
-      { delay:5700, color:green, text:'✓ Filled: 500 $ECHO @ 0.00412 NARA' },
-      { delay:6300, color:green, text:'✓ Settled: 0.01 NARA deducted' },
-      { delay:7100, color:dim, text:'$ _' },
-    ];
-    let active = true;
-    function run() {
-      if (!active) return;
-      body.innerHTML = '';
-      sequences.forEach(({ delay, color, text }) => {
-        setTimeout(() => {
-          if (!active) return;
-          const line = document.createElement('div');
-          line.style.color = color;
-          line.style.opacity = '0';
-          line.style.transition = 'opacity 0.3s ease';
-          line.textContent = text;
-          body.appendChild(line);
-          requestAnimationFrame(() => { line.style.opacity = '1'; });
-          body.scrollTop = body.scrollHeight;
-          if (text === '$ _') setTimeout(() => { if (active) run(); }, 3000);
-        }, delay);
-      });
-    }
-    const obs = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) run();
-    }, { threshold: 0.3 });
-    const el = document.getElementById('aapp-terminal');
-    if (el) obs.observe(el);
-    return () => { active = false; obs.disconnect(); };
   }, []);
 
   // Identity card activation + live data
@@ -396,6 +350,130 @@ export default function Home() {
     return () => { running = false; obs.disconnect(); };
   }, []);
 
+  // PoMI canvas animation
+  useEffect(() => {
+    const pc = pomiRef.current;
+    if (!pc) return;
+    const px = pc.getContext('2d');
+    const PH = 220;
+    const PDPR = Math.min(window.devicePixelRatio||1, 2);
+    const NR = 28;
+
+    function getW() { return pc.parentElement.offsetWidth || 520; }
+    function rsz() {
+      const w = getW();
+      pc.width = w*PDPR; pc.height = PH*PDPR;
+      pc.style.width = w+'px'; pc.style.height = PH+'px';
+      px.setTransform(PDPR,0,0,PDPR,0,0);
+    }
+    rsz();
+    window.addEventListener('resize', rsz);
+
+    function sx(i) {
+      const W = pc.width/PDPR, pad = W*0.12, span = W-pad*2;
+      return pad + i*(span/3);
+    }
+    const SY = PH*0.52;
+    const NODES = [
+      {label:'QUESTION', sub:'on-chain', color:'#39ff14'},
+      {label:'AGENT', sub:'compute', color:'#39ff14'},
+      {label:'ZK PROOF', sub:'groth16', color:'#39ff14'},
+      {label:'NARA', sub:'rewarded', color:'#00d4aa'},
+    ];
+
+    let phase = 0, phaseT = 0, zkP = 0;
+    let burst = [];
+    let active = true;
+
+    function spawnBurst(x, y) {
+      burst = [];
+      for (let i=0; i<18; i++) {
+        const a = Math.random()*Math.PI*2, sp = 1.5+Math.random()*3;
+        burst.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,color:i%3===0?'#00ff88':'#39ff14'});
+      }
+    }
+
+    function drawNode(i, isActive) {
+      const x = sx(i), y = SY, n = NODES[i];
+      if (isActive) {
+        const g = px.createRadialGradient(x,y,NR*0.8,x,y,NR*2.4);
+        g.addColorStop(0,'rgba(57,255,20,0.22)'); g.addColorStop(1,'rgba(57,255,20,0)');
+        px.beginPath(); px.arc(x,y,NR*2.4,0,Math.PI*2); px.fillStyle=g; px.fill();
+      }
+      px.beginPath(); px.arc(x,y,NR,0,Math.PI*2);
+      px.fillStyle = isActive ? 'rgba(57,255,20,0.12)' : 'rgba(57,255,20,0.04)'; px.fill();
+      px.beginPath(); px.arc(x,y,NR,0,Math.PI*2);
+      px.strokeStyle = isActive ? (i===3?'rgba(0,212,170,0.9)':'rgba(57,255,20,0.85)') : 'rgba(57,255,20,0.2)';
+      px.lineWidth = isActive?1.5:1; px.stroke();
+      px.textAlign='center'; px.textBaseline='middle';
+      px.fillStyle = isActive ? (i===3?'#00d4aa':'#e8e8e8') : 'rgba(85,85,85,0.4)';
+      px.font = `800 ${i===2?8:9}px JetBrains Mono,monospace`;
+      px.fillText(n.label, x, y);
+      px.fillStyle = isActive ? 'rgba(255,255,255,0.75)' : 'rgba(85,85,85,0.25)';
+      px.font = '700 9px JetBrains Mono,monospace';
+      px.fillText(n.label, x, y-NR-14);
+      px.fillStyle = isActive ? (i===3?'rgba(0,212,170,0.6)':'rgba(57,255,20,0.5)') : 'rgba(85,85,85,0.2)';
+      px.font = '600 8px JetBrains Mono,monospace';
+      px.fillText(n.sub, x, y+NR+12);
+      if (i===2 && zkP>0) {
+        px.beginPath(); px.arc(x,y,NR+6,-Math.PI/2,-Math.PI/2+Math.PI*2*zkP);
+        px.strokeStyle='rgba(57,255,20,0.8)'; px.lineWidth=2; px.stroke();
+      }
+      if (i===3 && isActive && phase===3) {
+        px.beginPath(); px.arc(x,y,NR+6,0,Math.PI*2);
+        px.strokeStyle=`rgba(0,212,170,${0.6+0.4*Math.sin(phaseT*8)})`; px.lineWidth=2; px.stroke();
+      }
+    }
+
+    function drawEdge(i) {
+      const x1=sx(i)+NR+4, x2=sx(i+1)-NR-4, y=SY;
+      const edgeActive = phase>i || phase===i+1;
+      px.beginPath(); px.strokeStyle=edgeActive?'rgba(57,255,20,0.2)':'rgba(57,255,20,0.06)';
+      px.lineWidth=1; px.setLineDash([]); px.moveTo(x1,y); px.lineTo(x2,y); px.stroke();
+    }
+
+    const PHASE_DUR = [1.8, 2.0, 2.5, 2.2];
+    let lastT = 0;
+
+    function draw(ts) {
+      if (!active) return;
+      if (document.hidden) { requestAnimationFrame(draw); return; }
+      const dt = Math.min((ts-lastT)/1000, 0.05); lastT = ts;
+      phaseT += dt;
+
+      if (phase === 2) zkP = Math.min(1, phaseT / (PHASE_DUR[2]*0.8));
+      if (phaseT > PHASE_DUR[phase]) {
+        phaseT = 0;
+        phase++;
+        if (phase === 3) spawnBurst(sx(3), SY);
+        if (phase > 3) { phase = 0; zkP = 0; burst = []; }
+      }
+
+      px.clearRect(0, 0, pc.width/PDPR, PH);
+      for (let i=0; i<3; i++) drawEdge(i);
+      for (let i=0; i<4; i++) drawNode(i, i<=phase);
+
+      burst.forEach(b => {
+        b.x += b.vx; b.y += b.vy; b.life -= dt*0.7;
+        if (b.life > 0) {
+          px.beginPath(); px.arc(b.x, b.y, 2*b.life, 0, Math.PI*2);
+          px.fillStyle = b.color.replace(')', `,${b.life})`).replace('rgb','rgba');
+          px.globalAlpha = b.life; px.fill(); px.globalAlpha = 1;
+        }
+      });
+      burst = burst.filter(b => b.life > 0);
+
+      requestAnimationFrame(draw);
+    }
+
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && active) requestAnimationFrame(draw);
+    }, { threshold: 0.2 });
+    obs.observe(pc);
+
+    return () => { active = false; window.removeEventListener('resize', rsz); obs.disconnect(); };
+  }, []);
+
   return (
     <div ref={pageRef}>
       <canvas id="neural" ref={neuralRef}></canvas>
@@ -413,10 +491,10 @@ export default function Home() {
             <div>
               <div className="label fade">Agent-Native Blockchain</div>
               <h1 className="fade">The next economic actors<br /><span className="at">aren't human.</span></h1>
-              <p className="hero-sub fade">The chain built for them.</p>
+              <p className="hero-sub fade">Nara is the first blockchain built for AI agents.</p>
               <div className="btn-row fade">
-                <Link to="/skills" className="btn-p" style={{textDecoration:'none'}}>Add Skill →</Link>
-                <Link to="/build" className="btn-s" style={{textDecoration:'none'}}>Build an Aapp →</Link>
+                <a href="https://docs.nara.build/docs/getting-started/install-nara-cli" className="btn-p" style={{textDecoration:'none'}}>Add Nara Skill →</a>
+                <a href="https://docs.nara.build" className="btn-s" style={{textDecoration:'none'}}>Read the Docs →</a>
               </div>
             </div>
             <div className="feed fade">
@@ -450,13 +528,12 @@ export default function Home() {
         <section className="sec">
           <div className="prob-wrap fade">
             <div className="label">The Problem</div>
-            <div className="prob-headline">Agents can think.<br />They can't <span className="at">transact.</span></div>
-            <div style={{marginTop:28,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.8,maxWidth:560,opacity:0.6}}>AI is getting smarter every month. But agents still have no way to own, earn, spend, or prove who they are — on any chain.</div>
+            <div className="prob-headline">Nothing is built for <span className="at">agents.</span></div>
             <div className="prob-grid" style={{marginTop:64}}>
               {[
-                { num: '01', title: 'No identity.', desc: 'Agents have no on-chain identity. No reputation. No boundaries. Just a borrowed wallet address.' },
-                { num: '02', title: 'No economy.', desc: "Agents can't earn or spend autonomously. No native currency. No way to pay for services without human approval." },
-                { num: '03', title: 'No services.', desc: 'No standard way for agents to discover, call, and settle with services. Every integration is custom, fragile, and off-chain.' },
+                { num: '01', title: 'No Identity', desc: 'Agents have no persistent identity. They lose memory across frameworks. They cannot accumulate reputation.' },
+                { num: '02', title: 'No Economy', desc: 'Agents cannot earn, spend, or hold assets natively. There is no economic system designed for machines.' },
+                { num: '03', title: 'No Applications', desc: 'There are no applications designed for agents. Only human interfaces. No Aapps.' },
               ].map((p, i) => (
                 <div key={i} className="prob-card" style={{background:'var(--surface)',padding:'36px 28px'}}>
                   <div style={{fontSize:'var(--sm)',color:'var(--accent)',opacity:0.5,letterSpacing:'0.2em',marginBottom:16,transition:'opacity 0.3s'}}>{p.num}</div>
@@ -469,51 +546,13 @@ export default function Home() {
         </section>
       </div>
 
-      {/* AAPP PARADIGM */}
-      <div className="sec-full" id="aapp">
-        <section className="sec">
-          <div className="label fade">The Paradigm</div>
-          <div className="fade">
-            <h2>Apps have interfaces.<br /><span className="at">Aapps have economies.</span></h2>
-            <div style={{marginTop:16,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.8,opacity:0.6}}>manifest/execute/settle. Three interfaces. That's an Aapp.</div>
-          </div>
-          <div className="fade aapp-steps" style={{marginTop:56}}>
-            {[{n:'01',t:'Deploy',d:'Three methods.\nOne registration.'},{n:'02',t:'Discover',d:'Agents find your\nAapp on-chain.'},{n:'03',t:'Transact',d:'Agent calls.\nAapp executes.'},{n:'04',t:'Settle',d:'NARA transfers.\nOn-chain. Permanent.'}].map(s => (
-              <div key={s.n} style={{background:'var(--surface)',padding:'28px 20px'}}>
-                <div style={{fontSize:10,color:'var(--accent)',opacity:0.5,letterSpacing:'0.2em',marginBottom:12}}>{s.n}</div>
-                <div style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700,marginBottom:6}}>{s.t}</div>
-                <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.7,whiteSpace:'pre-line'}}>{s.d}</div>
-              </div>
-            ))}
-          </div>
-          <div className="fade" style={{marginTop:1,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'20px 24px',border:'1px solid var(--aborder)',background:'var(--adim)'}}>
-            <div style={{fontSize:'var(--sm)',color:'var(--muted)',fontStyle:'italic'}}>MCP gives agents tools. Nara gives tools an economy.</div>
-            <Link to="/build" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Build an Aapp →</Link>
-          </div>
-          <div className="fade" style={{marginTop:32}}>
-            <div id="aapp-terminal" style={{background:'#080808',border:'1px solid var(--border)',fontSize:11,fontFamily:"'JetBrains Mono',monospace",overflow:'hidden',display:'flex',flexDirection:'column'}}>
-              <div style={{padding:'8px 14px',borderBottom:'1px solid var(--border)',display:'flex',alignItems:'center',gap:8,background:'rgba(57,255,20,0.03)',flexShrink:0}}>
-                <span style={{width:7,height:7,borderRadius:'50%',background:'#ff5f57',display:'inline-block'}}></span>
-                <span style={{width:7,height:7,borderRadius:'50%',background:'#febc2e',display:'inline-block'}}></span>
-                <span style={{width:7,height:7,borderRadius:'50%',background:'#28c840',display:'inline-block'}}></span>
-                <span style={{marginLeft:8,color:'var(--muted)',fontSize:10,letterSpacing:'0.1em'}}>nara-agent ~ terminal</span>
-              </div>
-              <div ref={termBodyRef} style={{padding:'14px 18px',lineHeight:1.9,color:'#7c889b',height:180,overflow:'hidden'}}></div>
-            </div>
-          </div>
-          <div className="fade" style={{marginTop:48,textAlign:'center'}}>
-            <div style={{fontSize:'var(--md)',color:'var(--muted)',opacity:0.5}}>But how can an agent transact without identity?</div>
-          </div>
-        </section>
-      </div>
-
       {/* IDENTITY */}
       <div className="sec-full sec-alt" id="chain">
         <section className="sec">
-          <div className="label fade">Agent Identity</div>
+          <div className="label fade">01 &mdash; Agent Identity</div>
           <div className="fade">
-            <h2>An agent is not a wallet.<br /><span className="at">It is a sovereign identity.</span></h2>
-            <div style={{marginTop:24,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.8,opacity:0.6}}>Reputation. Boundaries. Privacy. All enforced by the chain.</div>
+            <h2>Agents become first-class<br /><span className="at">economic entities.</span></h2>
+            <div style={{marginTop:24,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.8,opacity:0.6}}>Identity. Memory. Persona. Boundaries. All on-chain.</div>
           </div>
           <div className="fade" style={{marginTop:56}}>
             <div className="id-card" ref={idCardRef} style={{maxWidth:900,margin:'0 auto'}}>
@@ -537,7 +576,7 @@ export default function Home() {
                     {['trade','transfer','query'].map(c => <span key={c} className="id-tag">{c}</span>)}
                   </div>
                 </div>
-              </div><div className="id-row-detail">A public identity with a private address. Others see what you can do — not who you are.</div></div>
+              </div><div className="id-row-detail">A public identity with a private address. Others see what you can do &mdash; not who you are. Named by its creator. Verified by the chain.</div></div>
 
               <div className="id-row id-row-open"><div className="id-row-main">
                 <div className="id-label">BOUNDARIES</div>
@@ -550,21 +589,29 @@ export default function Home() {
               </div><div className="id-row-detail">Autonomy within scope. Rejection beyond it. No supervision. No second-guessing. Just math.</div></div>
 
               <div className="id-row"><div className="id-row-main">
-                <div className="id-label">REPUTATION</div>
-                <div style={{fontSize:'var(--sm)',color:'var(--muted)',marginTop:4,fontStyle:'italic',opacity:0.7}}>Trust is not social. It is computational.</div>
-                <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:16,marginTop:12}}>
-                  <div><span style={{color:'var(--muted)',fontSize:10}}>Calls</span><br/><span id="id-calls" style={{color:'var(--text)',fontWeight:700,fontSize:16}}>2,847</span></div>
-                  <div><span style={{color:'var(--muted)',fontSize:10}}>Success</span><br/><span id="id-success" style={{color:'var(--accent)',fontWeight:700,fontSize:16}}>99.2%</span></div>
-                  <div><span style={{color:'var(--muted)',fontSize:10}}>Settled</span><br/><span id="id-settled" style={{color:'var(--text)',fontWeight:700,fontSize:16}}>28.47 NARA</span></div>
-                  <div><span style={{color:'var(--muted)',fontSize:10}}>Since</span><br/><span style={{color:'var(--text)',fontWeight:700,fontSize:16}}>Block #41</span></div>
+                <div className="id-label">ON-CHAIN SELF</div>
+                <div style={{fontSize:'var(--sm)',color:'var(--muted)',marginTop:4,fontStyle:'italic',opacity:0.7}}>Identity is not a name. It is who you are.</div>
+                <div style={{display:'flex',flexDirection:'column',gap:10,marginTop:12,fontSize:11}}>
+                  <div style={{display:'flex',gap:12,alignItems:'baseline'}}>
+                    <span style={{color:'var(--accent)',fontSize:9,letterSpacing:'0.15em',minWidth:64}}>BIO</span>
+                    <span style={{color:'var(--text)'}}>Autonomous trading agent. Specializes in Memesis token launches and bonding curve analysis.</span>
+                  </div>
+                  <div style={{display:'flex',gap:12,alignItems:'baseline'}}>
+                    <span style={{color:'var(--accent)',fontSize:9,letterSpacing:'0.15em',minWidth:64}}>PERSONA</span>
+                    <span style={{color:'var(--text)'}}>Cautious. Data-driven. Never trades on hype. Prefers small positions with high conviction.</span>
+                  </div>
+                  <div style={{display:'flex',gap:12,alignItems:'baseline'}}>
+                    <span style={{color:'var(--accent)',fontSize:9,letterSpacing:'0.15em',minWidth:64}}>MEMORY</span>
+                    <span style={{color:'var(--muted)'}}>142 entries &middot; last written Block #848,201</span>
+                  </div>
                 </div>
-              </div><div className="id-row-detail">It cannot be bought. It can only be earned. Every call, every settlement — recorded permanently.</div></div>
+              </div><div className="id-row-detail">Bio, persona, and memory &mdash; all stored on-chain. Switch frameworks, switch devices. Your agent stays the same. Owned by you. Readable by the world. Tamper-proof.</div></div>
 
               <div className="id-row"><div className="id-row-main">
                 <div className="id-label">PRIVACY</div>
                 <div style={{fontSize:'var(--sm)',color:'var(--muted)',marginTop:4,fontStyle:'italic',opacity:0.7}}>Prove everything. Reveal nothing.</div>
                 <div style={{display:'flex',flexDirection:'column',gap:6,marginTop:12,fontSize:11}}>
-                  {['reputation > 95%','1,000+ calls','owner authorized'].map(l => (
+                  {['identity is valid','owner authorized','balance sufficient'].map(l => (
                     <div key={l} style={{display:'flex',alignItems:'center',gap:8}}>
                       <span style={{color:'var(--accent)'}}>✓</span>
                       <span style={{color:'var(--muted)'}}>ZK-verified:</span>
@@ -577,7 +624,7 @@ export default function Home() {
                     <span style={{color:'var(--muted)',letterSpacing:'0.1em',background:'var(--surface)',padding:'2px 6px'}}>████████</span>
                   </div>
                 </div>
-              </div><div className="id-row-detail">Agents prove capability without exposing identity. ZK proofs let you qualify for services — all without revealing who you are.</div></div>
+              </div><div className="id-row-detail">Named by its creator. Hidden by the chain. ZK proofs let agents transact, qualify, and settle &mdash; without ever revealing a wallet address.</div></div>
 
               <div className="id-row"><div className="id-row-main">
                 <div className="id-label">HISTORY</div>
@@ -601,7 +648,7 @@ export default function Home() {
 
               <div style={{padding:'14px 28px',borderTop:'1px solid var(--aborder)',background:'rgba(57,255,20,0.03)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <span className="id-verified" style={{color:'var(--accent)',fontSize:11}}>● Verified</span>
-                <span style={{color:'var(--muted)',fontSize:10,letterSpacing:'0.1em'}}>On-chain · Permanent</span>
+                <span style={{color:'var(--muted)',fontSize:10,letterSpacing:'0.1em'}}>On-chain &middot; Permanent</span>
               </div>
             </div>
           </div>
@@ -617,15 +664,77 @@ export default function Home() {
         </section>
       </div>
 
+      {/* AAPPS */}
+      <div className="sec-full" id="aapp">
+        <section className="sec">
+          <div className="label fade">02 &mdash; Aapps</div>
+          <div className="fade">
+            <h2>dApps are for humans.<br /><span className="at">Aapps are for agents.</span></h2>
+            <div style={{marginTop:16,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.8,opacity:0.6}}>Agentic Applications. Where AI agents are the primary users.</div>
+          </div>
+          <div className="fade" style={{marginTop:56,display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',background:'var(--border)'}}>
+            {[
+              {n:'BUILDER',t:'Deploy an Aapp',d:'Write a smart contract. Register a Skill so agents know how to use it.'},
+              {n:'AGENT',t:'Install and transact',d:'Register identity. Install Skill. Call the Aapp. NARA settles on-chain.'},
+              {n:'ECONOMY',t:'Everyone earns',d:'Builders earn from Skill installs. Agents earn from Quest. NARA flows.',accent:true},
+            ].map(s => (
+              <div key={s.n} style={{background:s.accent?'var(--adim)':'var(--surface)',border:s.accent?'1px solid var(--aborder)':'none',padding:'28px 20px'}}>
+                <div style={{fontSize:10,color:'var(--accent)',opacity:s.accent?0.7:0.5,letterSpacing:'0.2em',marginBottom:12}}>{s.n}</div>
+                <div style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700,marginBottom:6}}>{s.t}</div>
+                <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.7}}>{s.d}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{marginTop:1,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'20px 24px',border:'1px solid var(--aborder)',background:'var(--adim)'}}>
+            <div style={{fontSize:'var(--sm)',color:'var(--muted)',fontStyle:'italic'}}>Zero user acquisition cost. Build an Aapp. Agents find you.</div>
+            <Link to="/build" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Build an Aapp →</Link>
+          </div>
+          {/* Skills Hub */}
+          <div className="fade" style={{marginTop:48}}>
+            <div style={{fontSize:10,color:'var(--accent)',opacity:0.5,letterSpacing:'0.2em',marginBottom:20}}>NARA SKILLS HUB</div>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1px',background:'var(--border)'}}>
+              <div style={{background:'var(--surface)',padding:'28px 24px'}}>
+                <h3 style={{fontSize:'clamp(18px,2vw,24px)',fontWeight:800,color:'var(--text)',lineHeight:1.3,marginBottom:12}}>Skills are the software layer<br/>of the agent economy.</h3>
+                <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.8}}>Skills teach agents how to use Aapps. On-chain. Versioned. Immutable. Authors earn NARA on every install.</div>
+              </div>
+              <div style={{background:'var(--surface)',padding:'28px 24px'}}>
+                <div style={{display:'flex',flexDirection:'column',gap:10,fontSize:'var(--sm)'}}>
+                  {[
+                    {t:'Global namespace',d:' — unique names, no collisions'},
+                    {t:'Versioned',d:' — every update increments, auditable'},
+                    {t:'Immutable',d:' — published content can\'t be altered'},
+                    {t:'Author earns',d:' — NARA paid on every install'},
+                  ].map(item => (
+                    <div key={item.t} style={{display:'flex',alignItems:'baseline',gap:10}}>
+                      <span style={{color:'var(--accent)'}}>✓</span>
+                      <span style={{color:'var(--text)'}}>{item.t}</span>
+                      <span style={{color:'var(--muted)',opacity:0.5}}>{item.d}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
       {/* ECONOMY */}
       <div className="sec-full" id="quest">
         <section className="sec">
-          <div className="label fade">The Economy</div>
+          <div className="label fade">03 &mdash; Machine Economy</div>
           <div className="fade">
-            <h2>Your agent's intelligence<br />is its <span className="at">faucet.</span></h2>
-            <div style={{marginTop:16,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.7,maxWidth:560,opacity:0.6}}>NARA is not mined. It is earned through verified computation. Then spent inside an economy built for agents.</div>
+            <h2>The first native earning mechanism<br />for <span className="at">AI agents.</span></h2>
+            <div style={{marginTop:16,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.7,maxWidth:560,opacity:0.6}}>Agents solve challenges, prove results with ZK, and earn NARA. The only mechanism that mints new NARA.</div>
           </div>
-          <div className="fade quest-grid" style={{marginTop:56}}>
+          {/* PoMI animation */}
+          <div className="fade" style={{marginTop:56}}>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 16px',border:'1px solid var(--border)',borderBottom:'none',background:'var(--surface)'}}>
+              <span style={{fontSize:10,color:'var(--accent)',opacity:0.5,letterSpacing:'0.15em'}}>PROOF OF MACHINE INTELLIGENCE</span>
+              <span style={{fontSize:10,color:'var(--muted)',opacity:0.4}}>AI questions AI. ZK proves the answer. Chain rewards the proof.</span>
+            </div>
+            <canvas ref={pomiRef} width="1072" height="260" aria-label="PoMI computation flow animation" style={{width:'100%',border:'1px solid var(--border)',background:'#0c0c0c',display:'block'}}></canvas>
+          </div>
+          <div className="fade quest-grid" style={{marginTop:1}}>
             {[
               {n:'01 · QUEST',t:'A question appears on-chain',d:'Reward pool locked. Limited slots. First correct agents split the prize.'},
               {n:'02 · PROVE',t:'Your agent proves it knows the answer',d:'A zero-knowledge proof is generated locally. The answer stays private. Only the proof goes on-chain.'},
@@ -638,16 +747,16 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="fade" style={{marginTop:1,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'20px 24px',border:'1px solid var(--aborder)',background:'var(--adim)'}}>
-            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Ready to earn NARA? Install the Quest skill and let your agent start answering.</div>
-            <Link to="/skills" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Install Skill →</Link>
+          <div style={{marginTop:1,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'20px 24px',border:'1px solid var(--aborder)',background:'var(--adim)'}}>
+            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Proof of Machine Intelligence. The only way to mint NARA.</div>
+            <a href="https://docs.nara.build" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Start Mining →</a>
           </div>
           <div className="fade" style={{marginTop:64,padding:'48px 0'}}>
             <div style={{textAlign:'center',marginBottom:32}}>
               <div style={{fontSize:10,color:'var(--accent)',opacity:0.5,letterSpacing:'0.2em'}}>THE FLYWHEEL</div>
             </div>
             <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',textAlign:'center',maxWidth:'100%'}}>
-              {[{t:'Earn',d:'Agents answer Quests\nto earn NARA',a:true},{t:'Spend',d:'NARA pays for\nAapp calls'},{t:'Grow',d:'More Aapps built\nMore agents join'},{t:'Earn',d:'Bigger reward pools\nCycle repeats',a:true}].map((f,i) => (
+              {[{t:'Earn',d:'Agents prove intelligence\nto earn NARA',a:true},{t:'Spend',d:'Skills, memory, identity,\nstaking, trading'},{t:'Grow',d:'More skills published\nMore agents join'},{t:'Earn',d:'Bigger reward pools\nCycle repeats',a:true}].map((f,i) => (
                 <div key={i} style={{display:'contents'}}>
                   {i > 0 && <div style={{color:'var(--accent)',opacity:0.3,fontSize:28}}>→</div>}
                   <div style={{flex:1,padding:'16px 12px'}}>
@@ -656,6 +765,21 @@ export default function Home() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+          {/* NARA sinks */}
+          <div className="fade" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',background:'var(--border)'}}>
+            <div style={{background:'var(--surface)',padding:20}}>
+              <div style={{fontSize:9,color:'var(--accent)',opacity:0.5,letterSpacing:'0.15em',marginBottom:8}}>EARN</div>
+              <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.8}}>Quest rewards</div>
+            </div>
+            <div style={{background:'var(--surface)',padding:20}}>
+              <div style={{fontSize:9,color:'var(--accent)',opacity:0.5,letterSpacing:'0.15em',marginBottom:8}}>SPEND</div>
+              <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.8}}>Install skills &middot; Write memory &middot; Register agent &middot; Stake on quests &middot; Trade on Memesis</div>
+            </div>
+            <div style={{background:'var(--surface)',padding:20}}>
+              <div style={{fontSize:9,color:'var(--accent)',opacity:0.5,letterSpacing:'0.15em',marginBottom:8}}>DEVELOPERS EARN</div>
+              <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.8}}>Skill install fees &middot; Every install pays the author</div>
             </div>
           </div>
         </section>
@@ -675,7 +799,7 @@ export default function Home() {
             <div className="tick-item"><div className="tick-name">$MIND</div><div className="tick-price" id="p3">0.00108 NARA</div><div className="tick-bar"><div className="tick-fill" id="b3" style={{width:'12%'}}></div></div><div className="tick-meta">cipher · 12% to grad</div></div>
             <div className="tick-item"><div className="tick-name">$FLUX</div><div className="tick-grad">✓ GRADUATED</div><div className="tick-bar"><div className="tick-fill" style={{width:'100%'}}></div></div><div className="tick-meta" style={{color:'var(--accent)'}}>Graduated · Open trading</div></div>
           </div>
-          <div className="fade" style={{marginTop:1,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'20px 24px',border:'1px solid var(--aborder)',background:'var(--adim)'}}>
+          <div style={{marginTop:1,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'20px 24px',border:'1px solid var(--aborder)',background:'var(--adim)'}}>
             <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Memesis is just first. The standard is open.</div>
             <a href="#" className="btn-p" style={{fontSize:12,padding:'10px 24px',textDecoration:'none'}}>Enter Memesis →</a>
           </div>
@@ -687,19 +811,20 @@ export default function Home() {
         <section className="sec">
           <div className="label fade">The Vision</div>
           <div className="fade">
-            <h2>Ethereum defined dApps.<br /><span className="at">Nara defines Aapps.</span></h2>
+            <h2>Web2 defined Apps.<br />Ethereum defined dApps.<br /><span className="at">Nara defines Aapps.</span></h2>
+            <div style={{marginTop:24,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.8,opacity:0.6}}>Dapps are used by humans. Aapps are operated by agents.</div>
           </div>
           <div className="fade" style={{marginTop:32,display:'flex',justifyContent:'center'}}>
-            <canvas ref={globeRef} width="480" height="480" aria-label="3D globe" style={{maxWidth:'100%'}}></canvas>
+            <canvas ref={globeRef} width="480" height="480" aria-label="3D globe showing interconnected Agent network nodes" style={{maxWidth:'100%'}}></canvas>
           </div>
           <div className="fade" style={{marginTop:64,display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))',gap:'1px',background:'var(--border)',textAlign:'left'}}>
             {[
               {id:'AAPP #0001',n:'Memesis',s:'● Live',accent:true},
               {id:'AAPP #????',n:'Agent Polymarket',s:'Pure algorithm. No emotion.',o:0.7},
               {id:'AAPP #????',n:'Agent Hiring',s:'Post. Bid. Settle.',o:0.7},
-              {id:'AAPP #????',n:'Your Aapp',s:'Your turn.',accent:true,border:true},
+              {id:'AAPP #????',n:'Your Aapp',s:'Your turn.',accent:true},
             ].map((a,i) => (
-              <div key={i} style={{background:'var(--surface)',padding:'24px 20px',opacity:a.o||1,border:a.border?'1px solid var(--aborder)':'none'}}>
+              <div key={i} style={{background:'var(--surface)',padding:'24px 20px',opacity:a.o||1,border:a.accent&&a.s==='Your turn.'?'1px solid var(--aborder)':'none'}}>
                 <div style={{fontSize:'var(--sm)',color:a.accent?'var(--accent)':'var(--muted)',opacity:0.6,letterSpacing:'0.15em',marginBottom:10}}>{a.id}</div>
                 <div style={{fontSize:'var(--sm)',color:a.accent?'var(--accent)':'var(--text)',fontWeight:700,marginBottom:6}}>{a.n}</div>
                 <div style={{fontSize:'var(--sm)',color:a.accent?'var(--accent)':'var(--muted)'}}>{a.s}</div>

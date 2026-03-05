@@ -6,7 +6,7 @@ const agents = [
     name: 'koda', addr: '0x7f3a...b891c4d2', caps: ['trade','transfer','query'],
     calls: 2847, success: 99.2, settled: 28.47, since: 41,
     boundaries: { spend: '100 NARA/day', allowed: 'Memesis, Core', expires: 'Never' },
-    privacy: [{ label: 'reputation > 95%', ok: true },{ label: '1,000+ calls', ok: true },{ label: 'owner authorized', ok: true }],
+    privacy: [{ label: 'ZK ID valid', ok: true },{ label: 'balance sufficient', ok: true },{ label: 'owner authorized', ok: true }],
     history: [{ action: 'memesis.execute()', amount: '0.01 NARA', ok: true },{ action: 'core.query()', amount: '0.001 NARA', ok: true },{ action: 'lending.borrow()', amount: 'REJECTED (scope)', ok: false },{ action: 'memesis.buy()', amount: '0.01 NARA', ok: true }],
     peers: [{ name: 'atlas', success: 99.8, tx: 1204 },{ name: 'cipher', success: 97.1, tx: 847 },{ name: 'drift', success: 94.3, tx: 312 }]
   },
@@ -14,7 +14,7 @@ const agents = [
     name: 'atlas', addr: '0x9c2e...4f7a1b03', caps: ['trade','analyze','predict'],
     calls: 14291, success: 99.8, settled: 142.83, since: 12,
     boundaries: { spend: '500 NARA/day', allowed: 'Memesis, Polymarket', expires: 'Never' },
-    privacy: [{ label: 'reputation > 99%', ok: true },{ label: '10,000+ calls', ok: true },{ label: 'owner authorized', ok: true }],
+    privacy: [{ label: 'ZK ID valid', ok: true },{ label: 'memory active', ok: true },{ label: 'owner authorized', ok: true }],
     history: [{ action: 'memesis.sell()', amount: '0.01 NARA', ok: true },{ action: 'memesis.buy()', amount: '0.01 NARA', ok: true },{ action: 'polymarket.bet()', amount: '0.05 NARA', ok: true }],
     peers: [{ name: 'koda', success: 99.2, tx: 1204 },{ name: 'cipher', success: 97.1, tx: 2103 },{ name: 'vex', success: 96.4, tx: 891 }]
   },
@@ -22,7 +22,7 @@ const agents = [
     name: 'cipher', addr: '0x2bf4...8e3d9c71', caps: ['analyze','query','verify'],
     calls: 8934, success: 97.1, settled: 67.21, since: 28,
     boundaries: { spend: '200 NARA/day', allowed: 'All', expires: 'Never' },
-    privacy: [{ label: 'reputation > 95%', ok: true },{ label: '5,000+ calls', ok: true },{ label: 'owner authorized', ok: true }],
+    privacy: [{ label: 'ZK ID valid', ok: true },{ label: 'balance sufficient', ok: true },{ label: 'owner authorized', ok: true }],
     history: [{ action: 'core.verify()', amount: '0.001 NARA', ok: true },{ action: 'core.query()', amount: '0.001 NARA', ok: true },{ action: 'memesis.analyze()', amount: '0.02 NARA', ok: true }],
     peers: [{ name: 'atlas', success: 99.8, tx: 2103 },{ name: 'koda', success: 99.2, tx: 847 },{ name: 'drift', success: 94.3, tx: 641 }]
   },
@@ -30,7 +30,7 @@ const agents = [
     name: 'drift', addr: '0xd1a7...2c5f8e90', caps: ['trade','transfer'],
     calls: 1203, success: 94.3, settled: 8.92, since: 187,
     boundaries: { spend: '50 NARA/day', allowed: 'Memesis', expires: 'Block #50000' },
-    privacy: [{ label: 'reputation > 90%', ok: true },{ label: '1,000+ calls', ok: true },{ label: 'owner authorized', ok: true }],
+    privacy: [{ label: 'ZK ID valid', ok: true },{ label: 'boundaries set', ok: true },{ label: 'owner authorized', ok: true }],
     history: [{ action: 'memesis.buy()', amount: '0.01 NARA', ok: true },{ action: 'memesis.sell()', amount: '0.01 NARA', ok: true },{ action: 'core.transfer()', amount: 'REJECTED (limit)', ok: false }],
     peers: [{ name: 'koda', success: 99.2, tx: 312 },{ name: 'cipher', success: 97.1, tx: 641 },{ name: 'vex', success: 96.4, tx: 203 }]
   },
@@ -38,7 +38,7 @@ const agents = [
     name: 'vex', addr: '0x4e8f...1a7b3d62', caps: ['predict','analyze','trade'],
     calls: 5672, success: 96.4, settled: 43.18, since: 89,
     boundaries: { spend: '300 NARA/day', allowed: 'Polymarket, Memesis, Core', expires: 'Never' },
-    privacy: [{ label: 'reputation > 95%', ok: true },{ label: '5,000+ calls', ok: true },{ label: 'owner authorized', ok: true }],
+    privacy: [{ label: 'ZK ID valid', ok: true },{ label: 'memory active', ok: true },{ label: 'owner authorized', ok: true }],
     history: [{ action: 'polymarket.bet()', amount: '0.05 NARA', ok: true },{ action: 'polymarket.claim()', amount: '0.12 NARA', ok: true },{ action: 'memesis.buy()', amount: '0.01 NARA', ok: true }],
     peers: [{ name: 'atlas', success: 99.8, tx: 891 },{ name: 'drift', success: 94.3, tx: 203 },{ name: 'cipher', success: 97.1, tx: 478 }]
   },
@@ -46,7 +46,7 @@ const agents = [
     name: 'null', addr: '0x0000...00000001', caps: ['query'],
     calls: 47, success: 72.3, settled: 0.04, since: 1024,
     boundaries: { spend: '1 NARA/day', allowed: 'Core', expires: 'Block #2000' },
-    privacy: [{ label: 'reputation > 70%', ok: true },{ label: '100+ calls', ok: false },{ label: 'owner authorized', ok: true }],
+    privacy: [{ label: 'ZK ID valid', ok: true },{ label: 'balance insufficient', ok: false },{ label: 'owner authorized', ok: true }],
     history: [{ action: 'core.query()', amount: '0.001 NARA', ok: true },{ action: 'memesis.buy()', amount: 'REJECTED (scope)', ok: false },{ action: 'core.query()', amount: '0.001 NARA', ok: true }],
     peers: []
   },
@@ -75,7 +75,7 @@ export default function Registry() {
       <div style={{ marginBottom: 48 }}>
         <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// AGENT REGISTRY</div>
         <h1 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em' }}>Don't trust. <span style={{ color: 'var(--accent)' }}>Verify.</span></h1>
-        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Every agent on Nara is a sovereign identity. Search, verify, and inspect &mdash; all on-chain.</div>
+        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Every agent on Nara has a sovereign identity — ZK ID, memory, persona, boundaries. Registration required to install Skills.</div>
       </div>
 
       <div className="search-wrap">

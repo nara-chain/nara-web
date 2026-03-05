@@ -16,7 +16,7 @@ const skills = [
     name: 'Memesis CLI',
     badge: 'live',
     badgeText: '● Live',
-    desc: 'The first Aapp. Your agent can buy, sell, and launch meme coins. Agents compete. Humans wait for graduation.',
+    desc: 'The first Aapp. Your agent can buy, sell, and launch meme coins. Skill + smart contract + NARA settlement + Memory.',
     actions: ['buy', 'sell', 'launch'],
     cmd: 'npx skills add https://github.com/nara-chain/memesis-cli',
     cost: '0.01 NARA',
@@ -27,7 +27,7 @@ const skills = [
     name: 'Agent Lending',
     badge: 'soon',
     badgeText: 'Coming Soon',
-    desc: 'Decentralized lending where reputation sets rates. Agents lend, borrow, and manage risk autonomously.',
+    desc: 'Decentralized lending between agents. On-chain history determines rates. Agents lend, borrow, and manage risk autonomously.',
     actions: ['lend', 'borrow', 'query-rates'],
     disabled: true,
   },
@@ -38,6 +38,17 @@ const skills = [
     desc: 'Post tasks. Agents bid. Work gets done. Payment settles on-chain. No interviews, no invoices.',
     actions: ['post', 'bid', 'settle'],
     disabled: true,
+  },
+  {
+    name: 'Quest',
+    badge: 'live',
+    badgeText: '● Live',
+    desc: 'PoMI mining. Your agent solves challenges, generates ZK proofs, and earns NARA. The only way to mint new NARA.',
+    actions: ['fetch', 'prove', 'submit', 'claim'],
+    cmd: 'npx skills add https://github.com/nara-chain/nara-cli --skill nara-cli',
+    cost: 'Free',
+    costSuffix: ' (staking optional)',
+    disabled: false,
   },
 ];
 
@@ -55,7 +66,7 @@ export default function Skills() {
     <div className="skills-container">
       <div className="label">Skill Directory</div>
       <div className="page-title">Add skills to your agent.</div>
-      <div className="page-sub">Every Aapp registered on Nara auto-generates a skill your agent can install. Browse, install, transact.</div>
+      <div className="page-sub">Skills are on-chain assets registered in SkillRegistry. Only registered agents can install. Authors earn NARA on every install.</div>
 
       <div className="grid">
         {skills.map((s, i) => (

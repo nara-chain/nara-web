@@ -16,6 +16,7 @@ export default function Footer() {
         <Link to="/build">Build</Link>
         <Link to="/registry">Agents</Link>
         <Link to="/aapps">Aapps</Link>
+        <a href="/#memesis">Memesis</a>
         <span style={{ opacity: 0.2 }}>|</span>
         <a href="https://github.com/nara-chain" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">X</a>
