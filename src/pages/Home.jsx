@@ -381,9 +381,18 @@ export default function Home() {
       {label:'NARA', sub:'rewarded', color:'#00d4aa'},
     ];
 
-    let phase = 0, phaseT = 0, zkP = 0;
+    // Phase system: 7 steps
+    // 0: node 0 lit, hold
+    // 1: line 0→1 animates
+    // 2: node 1 lit, hold + line 1→2 animates
+    // 3: line 1→2 finishes (already done in 2)
+    // Simplified: step 0=node0, 1=edge0→1, 2=node1, 3=edge1→2, 4=node2(ZK), 5=edge2→3, 6=node3(burst+hold)
+    let step = 0, stepT = 0, zkP = 0;
     let burst = [];
     let active = true;
+    const LINE_DUR = 0.6; // seconds for line travel
+    const STEP_DUR = [0.8, LINE_DUR, 0.8, LINE_DUR, 2.0, LINE_DUR, 2.0];
+    // step 0: node0 hold, 1: edge0→1, 2: node1 hold, 3: edge1→2, 4: node2+ZK, 5: edge2→3, 6: node3+burst
 
     function spawnBurst(x, y) {
       burst = [];
@@ -391,6 +400,23 @@ export default function Home() {
         const a = Math.random()*Math.PI*2, sp = 1.5+Math.random()*3;
         burst.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,color:i%3===0?'#00ff88':'#39ff14'});
       }
+    }
+
+    // Which nodes are lit at each step
+    function nodeLit(nodeIdx) {
+      if (nodeIdx === 0) return step >= 0;
+      if (nodeIdx === 1) return step >= 2;
+      if (nodeIdx === 2) return step >= 4;
+      if (nodeIdx === 3) return step >= 6;
+      return false;
+    }
+
+    // Edge progress: 0=not started, 0-1=animating, 1=complete
+    function edgeProgress(edgeIdx) {
+      const edgeStep = edgeIdx * 2 + 1; // edge 0 at step 1, edge 1 at step 3, edge 2 at step 5
+      if (step < edgeStep) return 0;
+      if (step === edgeStep) return Math.min(1, stepT / LINE_DUR);
+      return 1;
     }
 
     function drawNode(i, isActive) {
@@ -419,39 +445,52 @@ export default function Home() {
         px.beginPath(); px.arc(x,y,NR+6,-Math.PI/2,-Math.PI/2+Math.PI*2*zkP);
         px.strokeStyle='rgba(57,255,20,0.8)'; px.lineWidth=2; px.stroke();
       }
-      if (i===3 && isActive && phase===3) {
+      if (i===3 && isActive && step===6) {
         px.beginPath(); px.arc(x,y,NR+6,0,Math.PI*2);
-        px.strokeStyle=`rgba(0,212,170,${0.6+0.4*Math.sin(phaseT*8)})`; px.lineWidth=2; px.stroke();
+        px.strokeStyle=`rgba(0,212,170,${0.6+0.4*Math.sin(stepT*8)})`; px.lineWidth=2; px.stroke();
       }
     }
 
     function drawEdge(i) {
       const x1=sx(i)+NR+4, x2=sx(i+1)-NR-4, y=SY;
-      const edgeActive = phase>i || phase===i+1;
-      px.beginPath(); px.strokeStyle=edgeActive?'rgba(57,255,20,0.2)':'rgba(57,255,20,0.06)';
+      const p = edgeProgress(i);
+      // dim base line
+      px.beginPath(); px.strokeStyle='rgba(57,255,20,0.06)';
       px.lineWidth=1; px.setLineDash([]); px.moveTo(x1,y); px.lineTo(x2,y); px.stroke();
+      if (p > 0) {
+        // active portion of line
+        const xEnd = x1 + (x2-x1)*p;
+        px.beginPath(); px.strokeStyle='rgba(57,255,20,0.25)';
+        px.lineWidth=1; px.moveTo(x1,y); px.lineTo(xEnd,y); px.stroke();
+        // glowing travel particle
+        if (p < 1) {
+          const glow = px.createRadialGradient(xEnd,y,0,xEnd,y,12);
+          glow.addColorStop(0,'rgba(57,255,20,0.7)'); glow.addColorStop(1,'rgba(57,255,20,0)');
+          px.beginPath(); px.arc(xEnd,y,12,0,Math.PI*2); px.fillStyle=glow; px.fill();
+          px.beginPath(); px.arc(xEnd,y,3,0,Math.PI*2); px.fillStyle='rgba(57,255,20,0.9)'; px.fill();
+        }
+      }
     }
 
-    const PHASE_DUR = [1.8, 2.0, 2.5, 2.2];
     let lastT = 0;
 
     function draw(ts) {
       if (!active) return;
       if (document.hidden) { requestAnimationFrame(draw); return; }
       const dt = Math.min((ts-lastT)/1000, 0.05); lastT = ts;
-      phaseT += dt;
+      stepT += dt;
 
-      if (phase === 2) zkP = Math.min(1, phaseT / (PHASE_DUR[2]*0.8));
-      if (phaseT > PHASE_DUR[phase]) {
-        phaseT = 0;
-        phase++;
-        if (phase === 3) spawnBurst(sx(3), SY);
-        if (phase > 3) { phase = 0; zkP = 0; burst = []; }
+      if (step === 4) zkP = Math.min(1, stepT / (STEP_DUR[4]*0.8));
+      if (stepT > STEP_DUR[step]) {
+        stepT = 0;
+        step++;
+        if (step === 6) spawnBurst(sx(3), SY);
+        if (step > 6) { step = 0; zkP = 0; burst = []; }
       }
 
       px.clearRect(0, 0, pc.width/PDPR, PH);
       for (let i=0; i<3; i++) drawEdge(i);
-      for (let i=0; i<4; i++) drawNode(i, i<=phase);
+      for (let i=0; i<4; i++) drawNode(i, nodeLit(i));
 
       burst.forEach(b => {
         b.x += b.vx; b.y += b.vy; b.life -= dt*0.7;

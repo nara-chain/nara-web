@@ -37,7 +37,7 @@ export default function Nav() {
       </ul>
       <div className="status">
         <div className="dot" role="status" aria-label="Devnet is live"></div>
-        <span>Mainnet Live</span>
+        <span>Devnet Live</span>
       </div>
     </nav>
   );
