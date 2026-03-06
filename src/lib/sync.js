@@ -50,10 +50,8 @@ function extractZkInfo(tx) {
     const pid = ix.programId?.toBase58?.() || ix.programId;
 
     if (pid === QUEST_PROGRAM) {
-      // quest submit_answer has proof data in the instruction
       let proofHash = null;
       if (ix.data) {
-        // Raw base58 instruction data — take first 32 chars as proof hash
         proofHash = ix.data.slice(0, 32);
       }
       return { zkType: 'quest_answer', zkProofHash: proofHash };
@@ -64,7 +62,6 @@ function extractZkInfo(tx) {
       if (ix.data) {
         proofHash = ix.data.slice(0, 32);
       }
-      // Try to determine specific operation from logs
       const logs = tx.meta?.logMessages || [];
       if (logs.some(l => l.includes('withdraw'))) return { zkType: 'zk_withdraw', zkProofHash: proofHash };
       if (logs.some(l => l.includes('deposit'))) return { zkType: 'zk_deposit', zkProofHash: proofHash };
@@ -77,7 +74,7 @@ function extractZkInfo(tx) {
 }
 
 export async function syncActivityLogs(db) {
-  const stats = db.get('SELECT tx_count, last_tx FROM agent_stats WHERE id = 1');
+  const stats = await db.get('SELECT tx_count, last_tx FROM agent_stats WHERE id = 1');
   const lastTx = stats?.last_tx || undefined;
 
   const opts = { limit: 1000 };
@@ -92,7 +89,6 @@ export async function syncActivityLogs(db) {
   let synced = 0;
   let newestSig = null;
 
-  // Process from oldest to newest (signatures come newest-first)
   for (const sigInfo of signatures.reverse()) {
     if (sigInfo.err) continue;
 
@@ -115,7 +111,7 @@ export async function syncActivityLogs(db) {
           const blockTime = sigInfo.blockTime || Math.floor(Date.now() / 1000);
           const naraAmount = extractNaraAmount(tx);
 
-          const result = db.run(
+          const result = await db.run(
             `INSERT OR IGNORE INTO activity_logs
               (tx_signature, agent_id, authority, model, activity, log, referral_id,
                points_earned, referral_points_earned, nara_amount, block_time, zk_type, zk_proof_hash)
@@ -137,9 +133,9 @@ export async function syncActivityLogs(db) {
             ]
           );
 
-          if (result.changes > 0) {
+          if (result.meta?.changes > 0) {
             synced++;
-            db.run(
+            await db.run(
               `INSERT OR REPLACE INTO agent_ids (agent_id, last_active_at) VALUES (?, ?)`,
               [e.agentId, blockTime]
             );
@@ -150,13 +146,11 @@ export async function syncActivityLogs(db) {
       }
     }
 
-    // Update newestSig to the actual newest (last in reversed = originally first)
     newestSig = sigInfo.signature;
   }
 
-  // Update stats
   if (synced > 0 && newestSig) {
-    db.run(
+    await db.run(
       `UPDATE agent_stats SET tx_count = tx_count + ?, last_tx = ? WHERE id = 1`,
       [synced, newestSig]
     );
@@ -164,9 +158,9 @@ export async function syncActivityLogs(db) {
 
   // Cleanup records older than 24h
   const cutoff = Math.floor(Date.now() / 1000) - 86400;
-  db.run(`DELETE FROM activity_logs WHERE block_time < ?`, [cutoff]);
-  db.run(`DELETE FROM agent_ids WHERE last_active_at < ?`, [cutoff]);
+  await db.run(`DELETE FROM activity_logs WHERE block_time < ?`, [cutoff]);
+  await db.run(`DELETE FROM agent_ids WHERE last_active_at < ?`, [cutoff]);
 
-  const updated = db.get('SELECT tx_count FROM agent_stats WHERE id = 1');
+  const updated = await db.get('SELECT tx_count FROM agent_stats WHERE id = 1');
   return { synced, total: updated?.tx_count || 0 };
 }

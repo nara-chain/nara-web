@@ -2,14 +2,14 @@ import { getDb } from '../../../lib/db';
 
 export async function GET() {
   try {
-    const db = getDb();
+    const db = await getDb();
 
-    const stats = db.get('SELECT tx_count, last_tx FROM agent_stats WHERE id = 1');
-    const agentCount = db.get('SELECT COUNT(*) as count FROM agent_ids');
-    const active24h = db.get(
+    const stats = await db.get('SELECT tx_count, last_tx FROM agent_stats WHERE id = 1');
+    const agentCount = await db.get('SELECT COUNT(*) as count FROM agent_ids');
+    const active24h = await db.get(
       'SELECT COUNT(*) as count FROM agent_ids WHERE last_active_at > unixepoch() - 86400'
     );
-    const naraSum = db.get(
+    const naraSum = await db.get(
       'SELECT COALESCE(SUM(nara_amount), 0) as total FROM activity_logs'
     );
 

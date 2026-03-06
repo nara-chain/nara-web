@@ -3,7 +3,7 @@ import { syncActivityLogs } from '../../../lib/sync';
 
 export async function POST() {
   try {
-    const db = getDb();
+    const db = await getDb();
     const result = await syncActivityLogs(db);
     return Response.json(result);
   } catch (error) {

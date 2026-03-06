@@ -29,8 +29,9 @@ yarn-error.log*
 .assets
 data/
 
-# wrangler files
+# wrangler / OpenNext
 .wrangler
+.open-next
 .dev.vars*
 !.dev.vars.example
 !.env.example

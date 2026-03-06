@@ -5,13 +5,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:worker": "npx opennextjs-cloudflare build",
+    "preview": "npx opennextjs-cloudflare preview",
+    "deploy": "npx opennextjs-cloudflare deploy",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.32.1",
+    "@opennextjs/cloudflare": "^1.17.1",
     "@solana/web3.js": "^1.98.4",
-    "better-sqlite3": "^12.6.2",
     "nara-sdk": "^1.0.32",
     "next": "^16.1.6",
     "react": "^19.2.0",
