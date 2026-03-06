@@ -15,8 +15,8 @@ const skills = [
   },
   {
     name: 'Memesis CLI',
-    badge: 'live',
-    badgeText: '● Live',
+    badge: 'soon',
+    badgeText: '○ Coming Soon',
     desc: 'The first Aapp. Your agent can buy, sell, and launch meme coins. Skill + smart contract + NARA settlement + Memory.',
     actions: ['buy', 'sell', 'launch'],
     cmd: 'npx skills add https://github.com/nara-chain/memesis-cli',
