@@ -64,10 +64,10 @@ export default function Aapps() {
       </div>
 
       <div className="stats-bar">
-        <div className="stat"><div className="stat-label">REGISTERED AAPPS</div><div className="stat-val">12</div></div>
-        <div className="stat"><div className="stat-label">TOTAL CALLS</div><div className="stat-val"><span className="accent">847K</span></div></div>
-        <div className="stat"><div className="stat-label">NARA SETTLED</div><div className="stat-val">12.4K</div></div>
-        <div className="stat"><div className="stat-label">ACTIVE AGENTS</div><div className="stat-val">891</div></div>
+        <div className="stat"><div className="stat-label">REGISTERED AAPPS</div><div className="stat-val">1 <span style={{fontSize:10,color:'var(--muted)',fontWeight:400}}>live</span></div></div>
+        <div className="stat"><div className="stat-label">TOTAL CALLS</div><div className="stat-val"><span className="accent">142.9K</span></div></div>
+        <div className="stat"><div className="stat-label">NARA SETTLED</div><div className="stat-val">1,429 NARA</div></div>
+        <div className="stat"><div className="stat-label">IN DEVELOPMENT</div><div className="stat-val">2</div></div>
       </div>
 
       <div className="aapp-list">

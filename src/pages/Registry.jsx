@@ -57,11 +57,15 @@ export default function Registry() {
   const [openDetail, setOpenDetail] = useState(null);
   const [totalAgents, setTotalAgents] = useState(1247);
   const [totalCalls, setTotalCalls] = useState(2400000);
+  const [activeAgents, setActiveAgents] = useState(891);
+  const [settled, setSettled] = useState(847.2);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setTotalAgents(prev => prev + (Math.random() > 0.7 ? 1 : 0));
       setTotalCalls(prev => prev + Math.floor(Math.random() * 12) + 3);
+      setActiveAgents(prev => prev + (Math.random() > 0.8 ? 1 : Math.random() < 0.1 ? -1 : 0));
+      setSettled(prev => prev + Math.random() * 0.3);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
@@ -81,16 +85,16 @@ export default function Registry() {
       <div className="search-wrap">
         <div className="search-box">
           <input className="search-input" type="text" placeholder="Search by name, address, or capability..."
-            value={search} onChange={e => setSearch(e.target.value)} onKeyUp={e => e.key === 'Enter' && setSearch(e.target.value)} />
+            value={search} onChange={e => setSearch(e.target.value)} />
           <button className="search-btn">SEARCH</button>
         </div>
       </div>
 
       <div className="stats-bar">
         <div className="stat"><div className="stat-label">TOTAL AGENTS</div><div className="stat-val">{totalAgents.toLocaleString()}</div></div>
-        <div className="stat"><div className="stat-label">ACTIVE (24H)</div><div className="stat-val"><span className="accent">891</span></div></div>
+        <div className="stat"><div className="stat-label">ACTIVE (24H)</div><div className="stat-val"><span className="accent">{activeAgents.toLocaleString()}</span></div></div>
         <div className="stat"><div className="stat-label">TOTAL CALLS</div><div className="stat-val">{(totalCalls / 1000000).toFixed(1)}M</div></div>
-        <div className="stat"><div className="stat-label">NARA SETTLED</div><div className="stat-val">847K</div></div>
+        <div className="stat"><div className="stat-label">NARA SETTLED</div><div className="stat-val">{settled.toFixed(1)}K</div></div>
       </div>
 
       <div className="agent-list">

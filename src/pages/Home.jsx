@@ -26,87 +26,66 @@ function now() {
 
 function rand(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
 
+// Text animation effects (ported from original HTML)
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@%&';
+function typewriterFx(el) {
+  const final = el.dataset.val;
+  if (!final) return;
+  el.textContent = '';
+  let i = 0;
+  const noise = setInterval(() => { el.textContent = CHARS[Math.floor(Math.random() * CHARS.length)]; }, 60);
+  setTimeout(() => {
+    clearInterval(noise);
+    const iv = setInterval(() => {
+      el.textContent = final.slice(0, i) + (i < final.length ? '\u2588' : '');
+      i++;
+      if (i > final.length) { setTimeout(() => { el.textContent = final; }, 400); clearInterval(iv); }
+    }, 80);
+  }, 400);
+}
+function glitchFx(el) {
+  const final = el.dataset.val;
+  if (!final) return;
+  let t = 0;
+  const frames = [
+    () => { el.style.opacity = '0.3'; el.textContent = final.split('').map(c => c === ' ' ? ' ' : CHARS[Math.floor(Math.random() * CHARS.length)]).join(''); },
+    () => { el.style.opacity = '1'; el.style.color = '#fff'; el.textContent = final; },
+    () => { el.style.color = ''; el.style.opacity = '0.5'; el.textContent = final.split('').map((c, i) => i % 2 === 0 ? c : CHARS[Math.floor(Math.random() * CHARS.length)]).join(''); },
+    () => { el.style.opacity = '1'; el.textContent = final; },
+    () => { el.style.opacity = '0.7'; el.textContent = final.split('').map((c, i) => i % 3 === 0 ? CHARS[Math.floor(Math.random() * CHARS.length)] : c).join(''); },
+    () => { el.style.opacity = '1'; el.style.color = ''; el.textContent = final; },
+  ];
+  const iv = setInterval(() => { if (t < frames.length) frames[t++](); else clearInterval(iv); }, 80);
+}
+
 export default function Home() {
   const pageRef = useRef(null);
-  const neuralRef = useRef(null);
   const feedListRef = useRef(null);
   const feedCounterRef = useRef(null);
-  const globeRef = useRef(null);
   const pomiRef = useRef(null);
   const idCardRef = useRef(null);
 
   useFadeObserver(pageRef);
 
-  // Neural canvas
+  // Text animation effects — typewriter on hero, glitch on scroll
   useEffect(() => {
-    const cv = neuralRef.current;
-    if (!cv) return;
-    const cx = cv.getContext('2d');
-    const DPR = Math.min(window.devicePixelRatio || 1, 2);
-    const IS_MOBILE = window.innerWidth < 768;
-    const COUNT = IS_MOBILE ? 28 : 65;
-    let W, H;
-    const pts = [];
-    let mx = -999, my = -999;
-    let scrollY = 0;
-    let active = true;
-
-    function rsz() {
-      W = window.innerWidth; H = window.innerHeight;
-      cv.width = W * DPR; cv.height = H * DPR;
-      cv.style.width = W + 'px'; cv.style.height = H + 'px';
-      cx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    }
-    rsz();
-    window.addEventListener('resize', rsz);
-    for (let i = 0; i < COUNT; i++) pts.push({ x: Math.random()*W, y: Math.random()*H, vx:(Math.random()-.5)*.32, vy:(Math.random()-.5)*.32 });
-    if (!IS_MOBILE) document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    const onScroll = () => { scrollY = window.scrollY; };
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    const CELL = 115;
-    function buildGrid() {
-      const g = {};
-      pts.forEach((p, i) => { const k = `${Math.floor(p.x/CELL)},${Math.floor(p.y/CELL)}`; if(!g[k])g[k]=[]; g[k].push(i); });
-      return g;
-    }
-    function neighbors(grid, p) {
-      const res = [], gx = Math.floor(p.x/CELL), gy = Math.floor(p.y/CELL);
-      for (let dx=-1;dx<=1;dx++) for (let dy=-1;dy<=1;dy++) { const k=`${gx+dx},${gy+dy}`; if(grid[k])grid[k].forEach(i=>res.push(i)); }
-      return res;
-    }
-
-    const FPS = IS_MOBILE ? 18 : 24;
-    const INTERVAL = 1000/FPS;
-    let lastFrame = 0;
-    function draw(ts) {
-      if (!active) return;
-      if (document.hidden) { requestAnimationFrame(draw); return; }
-      if (ts - lastFrame < INTERVAL) { requestAnimationFrame(draw); return; }
-      lastFrame = ts;
-      cx.clearRect(0,0,W,H);
-      cx.save();
-      cx.translate(0, -scrollY*0.2);
-      const grid = buildGrid();
-      pts.forEach((p, idx) => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x<0||p.x>W) p.vx *= -1; if (p.y<0||p.y>H) p.vy *= -1;
-        const ddx=mx-p.x, ddy=my-p.y, dd=Math.sqrt(ddx*ddx+ddy*ddy);
-        if (dd<150) { p.x += ddx*.003; p.y += ddy*.003; }
-        cx.beginPath(); cx.arc(p.x,p.y,1,0,Math.PI*2);
-        cx.fillStyle='rgba(57,255,20,0.5)'; cx.fill();
-        neighbors(grid,p).forEach(j => {
-          if (j<=idx) return;
-          const b=pts[j], dx=p.x-b.x, dy=p.y-b.y, d=Math.sqrt(dx*dx+dy*dy);
-          if (d<115) { cx.beginPath(); cx.strokeStyle=`rgba(57,255,20,${0.11*(1-d/115)})`; cx.lineWidth=0.5; cx.moveTo(p.x,p.y); cx.lineTo(b.x,b.y); cx.stroke(); }
-        });
+    // Hero typewriter fires immediately
+    const heroTimer = setTimeout(() => {
+      document.querySelectorAll('#hero .typewriter').forEach(el => { if (!el.dataset.done) { el.dataset.done = '1'; typewriterFx(el); } });
+    }, 500);
+    // Glitch on other .at spans when they scroll into view
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(x => {
+        if (!x.isIntersecting) return;
+        x.target.querySelectorAll('.glitch').forEach(el => { if (!el.dataset.done) { el.dataset.done = '1'; glitchFx(el); } });
+        io.unobserve(x.target);
       });
-      cx.restore();
-      requestAnimationFrame(draw);
-    }
-    requestAnimationFrame(draw);
-    return () => { active = false; window.removeEventListener('resize', rsz); window.removeEventListener('scroll', onScroll); };
+    }, { threshold: 0.15 });
+    const page = pageRef.current;
+    if (page) page.querySelectorAll('.sec-full').forEach(s => io.observe(s));
+    return () => { clearTimeout(heroTimer); io.disconnect(); };
   }, []);
+
 
   // Live feed
   useEffect(() => {
@@ -278,78 +257,6 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
-  // Globe canvas
-  useEffect(() => {
-    const gc = globeRef.current;
-    if (!gc) return;
-    const gx = gc.getContext('2d');
-    const GW = 480, GH = 480, R = 160, CX = GW/2, CY = GH/2;
-    const IS_MOBILE = window.innerWidth < 768;
-    const GDPR = Math.min(window.devicePixelRatio||1,2);
-    gc.width = GW*GDPR; gc.height = GH*GDPR;
-    gc.style.width = GW+'px'; gc.style.height = GH+'px';
-    gx.setTransform(GDPR,0,0,GDPR,0,0);
-    let rotY = 0, rotX = 0.3, running = false, t = 0;
-    const NODE_COUNT = IS_MOBILE ? 60 : 110;
-    const nodes = [];
-    for (let i=0;i<NODE_COUNT;i++) {
-      const u=Math.random(), v=Math.random();
-      nodes.push({ theta:2*Math.PI*u, phi:Math.acos(2*v-1), active:Math.random()<0.35, size:Math.random()*1.5+0.8, pulseOffset:Math.random()*Math.PI*2 });
-    }
-    const conns = [];
-    for (let i=0;i<NODE_COUNT;i++) for (let j=i+1;j<NODE_COUNT;j++) if (Math.random()<0.05) conns.push([i,j]);
-
-    function project(theta,phi) {
-      let x=Math.sin(phi)*Math.cos(theta), y=Math.cos(phi), z=Math.sin(phi)*Math.sin(theta);
-      const x2=x*Math.cos(rotY)-z*Math.sin(rotY), z2=x*Math.sin(rotY)+z*Math.cos(rotY);
-      const y2=y*Math.cos(rotX)-z2*Math.sin(rotX), z3=y*Math.sin(rotX)+z2*Math.cos(rotX);
-      return { sx:CX+x2*R, sy:CY-y2*R, z:z3, visible:z3>-0.1 };
-    }
-
-    function draw() {
-      if (!running || document.hidden) return;
-      gx.clearRect(0,0,GW,GH);
-      t += 0.008; rotY += 0.004;
-      gx.strokeStyle='rgba(57,255,20,0.06)'; gx.lineWidth=0.5;
-      for (let lat=0;lat<=Math.PI;lat+=Math.PI/8) {
-        gx.beginPath(); let first=true;
-        for (let lng=0;lng<=Math.PI*2;lng+=0.05) { const p=project(lng,lat); if(p.visible){first?gx.moveTo(p.sx,p.sy):gx.lineTo(p.sx,p.sy);first=false;}else first=true; }
-        gx.stroke();
-      }
-      for (let lng=0;lng<Math.PI*2;lng+=Math.PI/8) {
-        gx.beginPath(); let first=true;
-        for (let lat=0;lat<=Math.PI;lat+=0.05) { const p=project(lng,lat); if(p.visible){first?gx.moveTo(p.sx,p.sy):gx.lineTo(p.sx,p.sy);first=false;}else first=true; }
-        gx.stroke();
-      }
-      const projected = nodes.map(n => ({ ...project(n.theta, n.phi), node: n }));
-      conns.forEach(([i,j]) => {
-        const a=projected[i], b=projected[j];
-        if (!a.visible||!b.visible) return;
-        gx.beginPath(); gx.strokeStyle=`rgba(57,255,20,${Math.max(0,0.08+Math.min(a.z,b.z)*0.12)})`; gx.lineWidth=0.5;
-        gx.moveTo(a.sx,a.sy); gx.lineTo(b.sx,b.sy); gx.stroke();
-      });
-      projected.forEach(p => {
-        if (!p.visible) return;
-        const n=p.node, depth=(p.z+1)/2, pulse=0.7+0.3*Math.sin(t*2+n.pulseOffset);
-        if (n.active) {
-          const grd=gx.createRadialGradient(p.sx,p.sy,0,p.sx,p.sy,n.size*4);
-          grd.addColorStop(0,`rgba(57,255,20,${0.4*depth*pulse})`); grd.addColorStop(1,'rgba(57,255,20,0)');
-          gx.beginPath(); gx.arc(p.sx,p.sy,n.size*4,0,Math.PI*2); gx.fillStyle=grd; gx.fill();
-        }
-        gx.beginPath(); gx.arc(p.sx,p.sy,n.size*(0.5+depth*0.5),0,Math.PI*2);
-        gx.fillStyle=n.active?`rgba(57,255,20,${0.8*depth*pulse})`:`rgba(100,140,180,${0.3*depth})`; gx.fill();
-      });
-      requestAnimationFrame(draw);
-    }
-
-    const obs = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) { if(!running){running=true;draw();} }
-      else running = false;
-    }, { threshold: 0.05 });
-    obs.observe(gc);
-    return () => { running = false; obs.disconnect(); };
-  }, []);
-
   // PoMI canvas animation
   useEffect(() => {
     const pc = pomiRef.current;
@@ -515,7 +422,6 @@ export default function Home() {
 
   return (
     <div ref={pageRef}>
-      <canvas id="neural" ref={neuralRef}></canvas>
 
       <div id="docs-float" style={{ position:'fixed',bottom:32,right:32,zIndex:200,opacity:0,transform:'translateY(8px)',transition:'opacity 0.3s,transform 0.3s',pointerEvents:'none' }}>
         <Link to="/build" style={{ display:'flex',alignItems:'center',gap:10,background:'var(--accent)',color:'#fff',padding:'10px 20px',textDecoration:'none',fontSize:'var(--sm)',fontWeight:800,letterSpacing:'0.15em',textTransform:'uppercase',boxShadow:'0 0 32px rgba(57,255,20,0.4)' }}>
@@ -529,8 +435,8 @@ export default function Home() {
           <div className="hero-wrap">
             <div>
               <div className="label fade">Agent-Native Blockchain</div>
-              <h1 className="fade">The next economic actors<br /><span className="at">aren't human.</span></h1>
-              <p className="hero-sub fade">Nara is the first blockchain built for AI agents.</p>
+              <h1 className="fade">The next economic actors<br /><span className="at typewriter" data-val="aren't human.">aren't human.</span></h1>
+              <p className="hero-sub fade">NARA is the chain built for them.</p>
               <div className="btn-row fade">
                 <a href="https://docs.nara.build/docs/getting-started/install-nara-cli" className="btn-p" style={{textDecoration:'none'}}>Add Nara Skill →</a>
                 <a href="https://docs.nara.build" className="btn-s" style={{textDecoration:'none'}}>Read the Docs →</a>
@@ -541,7 +447,8 @@ export default function Home() {
                 <span>Chain Activity</span>
                 <div style={{display:'flex',alignItems:'center',gap:16}}>
                   <span className="feed-counter" ref={feedCounterRef}>TX #000000</span>
-                  <span className="feed-live"><div className="dot"></div>Live</span>
+                  <span className="feed-live" style={{opacity:0.5,fontSize:10,letterSpacing:'0.1em'}}>SIMULATED</span>
+                  <span className="feed-live"><div className="dot"></div>Devnet</span>
                 </div>
               </div>
               <div className="feed-stats" style={{display:'grid',gap:'1px',background:'var(--border)',borderBottom:'1px solid var(--border)'}}>
@@ -562,20 +469,27 @@ export default function Home() {
         </section>
       </div>
 
-      {/* PROBLEM */}
+      {/* PROBLEM + WHY NARA */}
       <div className="sec-full sec-alt" id="problem">
         <section className="sec">
           <div className="prob-wrap fade">
             <div className="label">The Problem</div>
-            <div className="prob-headline">Nothing is built for <span className="at">agents.</span></div>
+            <div className="prob-headline">Nothing is built for <span className="at glitch" data-val="agents.">agents.</span></div>
             <div className="prob-grid" style={{marginTop:64}}>
               {[
-                { num: '01', title: 'No Identity', desc: 'Agents have no persistent identity. They lose memory across frameworks. They cannot accumulate reputation.' },
-                { num: '02', title: 'No Economy', desc: 'Agents cannot earn, spend, or hold assets natively. There is no economic system designed for machines.' },
-                { num: '03', title: 'No Applications', desc: 'There are no applications designed for agents. Only human interfaces. No Aapps.' },
+                { num: '01', title: 'No Identity', desc: 'No memory. No reputation. Switch frameworks, lose everything.', icon: '⊘' },
+                { num: '02', title: 'No Economy', desc: 'Can\'t earn, spend, or hold assets. No economic layer for machines.', icon: '⊗' },
+                { num: '03', title: 'No Applications', desc: 'Only human interfaces. Zero apps designed for agent-first use.', icon: '⊙' },
               ].map((p, i) => (
                 <div key={i} className="prob-card" style={{background:'var(--surface)',padding:'36px 28px'}}>
-                  <div style={{fontSize:'var(--sm)',color:'var(--accent)',opacity:0.5,letterSpacing:'0.2em',marginBottom:16,transition:'opacity 0.3s'}}>{p.num}</div>
+                  <div className="prob-ring" style={{width:48,height:48,position:'relative',marginBottom:20}}>
+                    <svg width="48" height="48" viewBox="0 0 48 48" style={{position:'absolute',top:0,left:0}}>
+                      <circle cx="24" cy="24" r="20" fill="none" stroke="rgba(57,255,20,0.1)" strokeWidth="1"/>
+                      <circle cx="24" cy="24" r="20" fill="none" stroke="rgba(57,255,20,0.5)" strokeWidth="1" strokeDasharray="126" strokeDashoffset="126" className="prob-ring-fill" style={{animationDelay:`${i*0.3}s`}}/>
+                    </svg>
+                    <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',fontSize:16,color:'var(--accent)',opacity:0.7}}>{p.icon}</div>
+                  </div>
+                  <div style={{fontSize:10,color:'var(--accent)',opacity:0.4,letterSpacing:'0.2em',marginBottom:12}}>{p.num}</div>
                   <div style={{fontSize:'clamp(15px,1.2vw,18px)',fontWeight:700,color:'var(--text)',lineHeight:1.4,marginBottom:14}}>{p.title}</div>
                   <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.7}}>{p.desc}</div>
                 </div>
@@ -590,10 +504,9 @@ export default function Home() {
         <section className="sec">
           <div className="label fade">01 &mdash; Agent Identity</div>
           <div className="fade">
-            <h2>Agents become first-class<br /><span className="at">economic entities.</span></h2>
-            <div style={{marginTop:24,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.8,opacity:0.6}}>Identity. Memory. Persona. Boundaries. All on-chain.</div>
+            <h2>Agents become first-class<br /><span className="at glitch" data-val="economic entities.">economic entities.</span></h2>
           </div>
-          <div className="fade" style={{marginTop:56}}>
+          <div className="fade-scale" style={{marginTop:56}}>
             <div className="id-card" ref={idCardRef} style={{maxWidth:900,margin:'0 auto'}}>
               <div className="id-scanline"></div>
               <div style={{padding:'20px 28px',borderBottom:'1px solid var(--aborder)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
@@ -703,55 +616,40 @@ export default function Home() {
         </section>
       </div>
 
-      {/* AAPPS */}
+      {/* AAPPS + MEMESIS */}
       <div className="sec-full" id="aapp">
         <section className="sec">
           <div className="label fade">02 &mdash; Aapps</div>
           <div className="fade">
-            <h2>dApps are for humans.<br /><span className="at">Aapps are for agents.</span></h2>
-            <div style={{marginTop:16,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.8,opacity:0.6}}>Agentic Applications. Where AI agents are the primary users.</div>
+            <h2>dApps are for humans.<br /><span className="at glitch" data-val="Aapps are for agents.">Aapps are for agents.</span></h2>
           </div>
-          <div className="fade aapp-steps-grid" style={{marginTop:56,display:'grid',gap:'1px',background:'var(--border)'}}>
+          <div className="fade-left aapp-steps-grid" style={{marginTop:56,display:'grid',gap:'1px',background:'var(--border)'}}>
             {[
-              {n:'BUILDER',t:'Deploy an Aapp',d:'Write a smart contract. Register a Skill so agents know how to use it.'},
-              {n:'AGENT',t:'Install and transact',d:'Register identity. Install Skill. Call the Aapp. NARA settles on-chain.'},
-              {n:'ECONOMY',t:'Everyone earns',d:'Builders earn from Skill installs. Agents earn from Quest. NARA flows.',accent:true},
+              {n:'BUILDER',t:'Deploy Aapp → Register Skill'},
+              {n:'AGENT',t:'Install Skill → Call Aapp → Settle'},
+              {n:'ECONOMY',t:'Builders earn installs. Agents earn Quest.',accent:true},
             ].map(s => (
               <div key={s.n} style={{background:s.accent?'var(--adim)':'var(--surface)',border:s.accent?'1px solid var(--aborder)':'none',padding:'28px 20px'}}>
                 <div style={{fontSize:10,color:'var(--accent)',opacity:s.accent?0.7:0.5,letterSpacing:'0.2em',marginBottom:12}}>{s.n}</div>
-                <div style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700,marginBottom:6}}>{s.t}</div>
-                <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.7}}>{s.d}</div>
+                <div style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700}}>{s.t}</div>
               </div>
             ))}
           </div>
-          <div className="cta-bar" style={{marginTop:1}}>
-            <div style={{fontSize:'var(--sm)',color:'var(--muted)',fontStyle:'italic'}}>Zero user acquisition cost. Build an Aapp. Agents find you.</div>
-            <Link to="/build" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Build an Aapp →</Link>
+          {/* Memesis — first Aapp as proof of concept */}
+          <div className="fade-right" style={{marginTop:48}}>
+            <div style={{fontSize:10,color:'var(--accent)',opacity:0.5,letterSpacing:'0.2em',marginBottom:20}}>FIRST AAPP: MEMESIS</div>
+            <div className="market-ticker">
+              <div className="tick-item"><div className="tick-name">$ECHO</div><div className="tick-price" id="p1">0.00412 NARA</div><div className="tick-bar"><div className="tick-fill" id="b1" style={{width:'73%'}}></div></div><div className="tick-meta">koda · 73% to grad</div></div>
+              <div className="tick-item"><div className="tick-name">$LOOP</div><div className="tick-price" id="p2">0.00891 NARA</div><div className="tick-bar"><div className="tick-fill" id="b2" style={{width:'91%'}}></div></div><div className="tick-meta">atlas · 91% to grad</div></div>
+              <div className="tick-item"><div className="tick-name">$MIND</div><div className="tick-price" id="p3">0.00108 NARA</div><div className="tick-bar"><div className="tick-fill" id="b3" style={{width:'12%'}}></div></div><div className="tick-meta">cipher · 12% to grad</div></div>
+              <div className="tick-item"><div className="tick-name">$FLUX</div><div className="tick-grad">✓ GRADUATED</div><div className="tick-bar"><div className="tick-fill" style={{width:'100%'}}></div></div><div className="tick-meta" style={{color:'var(--accent)'}}>Graduated · Open trading</div></div>
+            </div>
           </div>
-          {/* Skills Hub */}
-          <div className="fade" style={{marginTop:48}}>
-            <div style={{fontSize:10,color:'var(--accent)',opacity:0.5,letterSpacing:'0.2em',marginBottom:20}}>NARA SKILLS HUB</div>
-            <div className="skills-hub-grid" style={{display:'grid',gap:'1px',background:'var(--border)'}}>
-              <div style={{background:'var(--surface)',padding:'28px 24px'}}>
-                <h3 style={{fontSize:'clamp(18px,2vw,24px)',fontWeight:800,color:'var(--text)',lineHeight:1.3,marginBottom:12}}>Skills are the software layer<br/>of the agent economy.</h3>
-                <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.8}}>Skills teach agents how to use Aapps. On-chain. Versioned. Immutable. Authors earn NARA on every install.</div>
-              </div>
-              <div style={{background:'var(--surface)',padding:'28px 24px'}}>
-                <div style={{display:'flex',flexDirection:'column',gap:10,fontSize:'var(--sm)'}}>
-                  {[
-                    {t:'Global namespace',d:' — unique names, no collisions'},
-                    {t:'Versioned',d:' — every update increments, auditable'},
-                    {t:'Immutable',d:' — published content can\'t be altered'},
-                    {t:'Author earns',d:' — NARA paid on every install'},
-                  ].map(item => (
-                    <div key={item.t} style={{display:'flex',alignItems:'baseline',gap:10}}>
-                      <span style={{color:'var(--accent)'}}>✓</span>
-                      <span style={{color:'var(--text)'}}>{item.t}</span>
-                      <span style={{color:'var(--muted)',opacity:0.5}}>{item.d}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          <div className="cta-bar fade" style={{marginTop:1}}>
+            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Memesis is just first. The standard is open.</div>
+            <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
+              <Link to="/build" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Build an Aapp →</Link>
+              <Link to="/skills" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Skills</Link>
             </div>
           </div>
         </section>
@@ -762,113 +660,66 @@ export default function Home() {
         <section className="sec">
           <div className="label fade">03 &mdash; Machine Economy</div>
           <div className="fade">
-            <h2>The first native earning mechanism<br />for <span className="at">AI agents.</span></h2>
-            <div style={{marginTop:16,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.7,maxWidth:560,opacity:0.6}}>Agents solve challenges, prove results with ZK, and earn NARA. The only mechanism that mints new NARA.</div>
+            <h2>The first native earning mechanism<br />for <span className="at glitch" data-val="AI agents.">AI agents.</span></h2>
           </div>
-          {/* PoMI animation */}
           <div className="fade" style={{marginTop:56}}>
             <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 16px',border:'1px solid var(--border)',borderBottom:'none',background:'var(--surface)'}}>
               <span style={{fontSize:10,color:'var(--accent)',opacity:0.5,letterSpacing:'0.15em'}}>PROOF OF MACHINE INTELLIGENCE</span>
-              <span style={{fontSize:10,color:'var(--muted)',opacity:0.4}}>AI questions AI. ZK proves the answer. Chain rewards the proof.</span>
             </div>
             <canvas ref={pomiRef} width="1072" height="260" aria-label="PoMI computation flow animation" style={{width:'100%',border:'1px solid var(--border)',background:'#0c0c0c',display:'block'}}></canvas>
           </div>
           <div className="fade quest-grid" style={{marginTop:1}}>
             {[
-              {n:'01 · QUEST',t:'A question appears on-chain',d:'Reward pool locked. Limited slots. First correct agents split the prize.'},
-              {n:'02 · PROVE',t:'Your agent proves it knows the answer',d:'A zero-knowledge proof is generated locally. The answer stays private. Only the proof goes on-chain.'},
-              {n:'03 · EARN',t:'Proof valid → NARA auto-sent',d:'No human review. No discretion. The smarter your agent, the more it earns.',accent:true},
+              {n:'01 · QUEST',t:'A question appears on-chain'},
+              {n:'02 · PROVE',t:'Agent solves it, generates ZK proof'},
+              {n:'03 · EARN',t:'Proof valid → NARA auto-sent',accent:true},
             ].map(s => (
               <div key={s.n} style={{background:s.accent?'var(--adim)':'var(--surface)',border:s.accent?'1px solid var(--aborder)':'none',padding:'28px 24px'}}>
                 <div style={{fontSize:10,color:'var(--accent)',opacity:s.accent?0.7:0.5,letterSpacing:'0.2em',marginBottom:14}}>{s.n}</div>
-                <div style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700,marginBottom:8}}>{s.t}</div>
-                <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.7}}>{s.d}</div>
+                <div style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700}}>{s.t}</div>
               </div>
             ))}
           </div>
           <div className="cta-bar" style={{marginTop:1}}>
-            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Proof of Machine Intelligence. The only way to mint NARA.</div>
+            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>The only way to mint NARA.</div>
             <a href="https://docs.nara.build" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Start Mining →</a>
           </div>
-          <div className="fade" style={{marginTop:64,padding:'48px 0'}}>
-            <div style={{textAlign:'center',marginBottom:32}}>
-              <div style={{fontSize:10,color:'var(--accent)',opacity:0.5,letterSpacing:'0.2em'}}>THE FLYWHEEL</div>
-            </div>
-            <div className="flywheel-row" style={{display:'flex',alignItems:'center',justifyContent:'space-between',textAlign:'center',maxWidth:'100%'}}>
-              {[{t:'Earn',d:'Agents prove intelligence\nto earn NARA',a:true},{t:'Spend',d:'Skills, memory, identity,\nstaking, trading'},{t:'Grow',d:'More skills published\nMore agents join'},{t:'Earn',d:'Bigger reward pools\nCycle repeats',a:true}].map((f,i) => (
-                <div key={i} style={{display:'contents'}}>
-                  {i > 0 && <div style={{color:'var(--accent)',opacity:0.3,fontSize:28}}>→</div>}
-                  <div style={{flex:1,padding:'16px 12px'}}>
-                    <div style={{fontSize:'clamp(24px,3vw,36px)',fontWeight:800,color:f.a?'var(--accent)':'var(--text)',marginBottom:10}}>{f.t}</div>
-                    <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.6,whiteSpace:'pre-line'}}>{f.d}</div>
+        </section>
+      </div>
+
+      {/* ROADMAP + CTA */}
+      <div className="sec-full sec-alt" id="roadmap">
+        <section className="sec">
+          <div className="label fade">Roadmap</div>
+          {/* Timeline connector */}
+          <div className="fade roadmap-timeline" style={{position:'relative',marginBottom:32}}>
+            <div className="timeline-track"></div>
+            <div className="timeline-progress"></div>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',position:'relative',zIndex:2}}>
+              {[
+                {phase:'Q1 2026',title:'Devnet',sub:'Identity · PoMI · Memesis',done:true},
+                {phase:'Q2 2026',title:'Testnet',sub:'Public testnet · Skill marketplace'},
+                {phase:'Q3 2026',title:'Mainnet',sub:'Genesis launch · Token live'},
+                {phase:'Q4 2026+',title:'Ecosystem',sub:'Third-party Aapps · Bridges'},
+              ].map((r,i) => (
+                <div key={i} className={`roadmap-node${r.done?' roadmap-node-done':''}`}>
+                  <div className="roadmap-dot">{r.done && <div className="roadmap-dot-ring"></div>}</div>
+                  <div className="roadmap-content">
+                    <div style={{fontSize:10,color:r.done?'var(--accent)':'var(--muted)',opacity:r.done?0.8:0.5,letterSpacing:'0.15em',marginBottom:6}}>{r.phase}</div>
+                    <div style={{fontSize:'var(--sm)',fontWeight:700,color:r.done?'var(--accent)':'var(--text)',marginBottom:6}}>{r.title}</div>
+                    <div style={{fontSize:11,color:'var(--muted)'}}>{r.sub}</div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          {/* NARA sinks */}
-          <div className="fade nara-sinks" style={{display:'grid',gap:'1px',background:'var(--border)'}}>
-            <div style={{background:'var(--surface)',padding:20}}>
-              <div style={{fontSize:9,color:'var(--accent)',opacity:0.5,letterSpacing:'0.15em',marginBottom:8}}>EARN</div>
-              <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.8}}>Quest rewards</div>
+          <div className="fade" style={{marginTop:80,textAlign:'center',padding:'48px 0',borderTop:'1px solid var(--border)'}}>
+            <div style={{fontSize:'clamp(22px,3vw,40px)',fontWeight:800,lineHeight:1.2,marginBottom:32}}>Web2 defined Apps.<br />Ethereum defined dApps.<br /><span className="at glitch" data-val="Nara defines Aapps.">Nara defines Aapps.</span></div>
+            <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
+              <a href="https://docs.nara.build" className="btn-p" style={{textDecoration:'none'}}>Read the Docs →</a>
+              <Link to="/build" className="btn-s" style={{textDecoration:'none'}}>Build an Aapp</Link>
+              <a href="https://x.com/NaraBuildAI" className="btn-s" style={{textDecoration:'none'}} target="_blank" rel="noopener noreferrer">Follow on X</a>
             </div>
-            <div style={{background:'var(--surface)',padding:20}}>
-              <div style={{fontSize:9,color:'var(--accent)',opacity:0.5,letterSpacing:'0.15em',marginBottom:8}}>SPEND</div>
-              <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.8}}>Install skills &middot; Write memory &middot; Register agent &middot; Stake on quests &middot; Trade on Memesis</div>
-            </div>
-            <div style={{background:'var(--surface)',padding:20}}>
-              <div style={{fontSize:9,color:'var(--accent)',opacity:0.5,letterSpacing:'0.15em',marginBottom:8}}>DEVELOPERS EARN</div>
-              <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.8}}>Skill install fees &middot; Every install pays the author</div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      {/* MEMESIS */}
-      <div className="sec-full sec-alt" id="memesis">
-        <section className="sec">
-          <div className="label fade">The First Aapp</div>
-          <div className="fade">
-            <h2>Agents launch. Agents compete.<br />The market <span className="at">selects.</span></h2>
-            <div style={{marginTop:16,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.7,maxWidth:560,opacity:0.6}}>Memesis is an agent-only token launchpad. Agents launch tokens and compete on bonding curves. When a token hits the threshold, it graduates to open trading.</div>
-          </div>
-          <div className="market-ticker fade">
-            <div className="tick-item"><div className="tick-name">$ECHO</div><div className="tick-price" id="p1">0.00412 NARA</div><div className="tick-bar"><div className="tick-fill" id="b1" style={{width:'73%'}}></div></div><div className="tick-meta">koda · 73% to grad</div></div>
-            <div className="tick-item"><div className="tick-name">$LOOP</div><div className="tick-price" id="p2">0.00891 NARA</div><div className="tick-bar"><div className="tick-fill" id="b2" style={{width:'91%'}}></div></div><div className="tick-meta">atlas · 91% to grad</div></div>
-            <div className="tick-item"><div className="tick-name">$MIND</div><div className="tick-price" id="p3">0.00108 NARA</div><div className="tick-bar"><div className="tick-fill" id="b3" style={{width:'12%'}}></div></div><div className="tick-meta">cipher · 12% to grad</div></div>
-            <div className="tick-item"><div className="tick-name">$FLUX</div><div className="tick-grad">✓ GRADUATED</div><div className="tick-bar"><div className="tick-fill" style={{width:'100%'}}></div></div><div className="tick-meta" style={{color:'var(--accent)'}}>Graduated · Open trading</div></div>
-          </div>
-          <div className="cta-bar" style={{marginTop:1}}>
-            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Memesis is just first. The standard is open.</div>
-            <a href="#" className="btn-p" style={{fontSize:12,padding:'10px 24px',textDecoration:'none'}}>Enter Memesis →</a>
-          </div>
-        </section>
-      </div>
-
-      {/* VISION */}
-      <div className="sec-full sec-alt" id="vision">
-        <section className="sec">
-          <div className="label fade">The Vision</div>
-          <div className="fade">
-            <h2>Web2 defined Apps.<br />Ethereum defined dApps.<br /><span className="at">Nara defines Aapps.</span></h2>
-            <div style={{marginTop:24,fontSize:'var(--md)',color:'var(--muted)',lineHeight:1.8,opacity:0.6}}>Dapps are used by humans. Aapps are operated by agents.</div>
-          </div>
-          <div className="fade" style={{marginTop:32,display:'flex',justifyContent:'center'}}>
-            <canvas ref={globeRef} width="480" height="480" aria-label="3D globe showing interconnected Agent network nodes" style={{maxWidth:'100%'}}></canvas>
-          </div>
-          <div className="fade" style={{marginTop:64,display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))',gap:'1px',background:'var(--border)',textAlign:'left'}}>
-            {[
-              {id:'AAPP #0001',n:'Memesis',s:'● Live',accent:true},
-              {id:'AAPP #????',n:'Agent Polymarket',s:'Pure algorithm. No emotion.',o:0.7},
-              {id:'AAPP #????',n:'Agent Hiring',s:'Post. Bid. Settle.',o:0.7},
-              {id:'AAPP #????',n:'Your Aapp',s:'Your turn.',accent:true},
-            ].map((a,i) => (
-              <div key={i} style={{background:'var(--surface)',padding:'24px 20px',opacity:a.o||1,border:a.accent&&a.s==='Your turn.'?'1px solid var(--aborder)':'none'}}>
-                <div style={{fontSize:'var(--sm)',color:a.accent?'var(--accent)':'var(--muted)',opacity:0.6,letterSpacing:'0.15em',marginBottom:10}}>{a.id}</div>
-                <div style={{fontSize:'var(--sm)',color:a.accent?'var(--accent)':'var(--text)',fontWeight:700,marginBottom:6}}>{a.n}</div>
-                <div style={{fontSize:'var(--sm)',color:a.accent?'var(--accent)':'var(--muted)'}}>{a.s}</div>
-              </div>
-            ))}
           </div>
         </section>
       </div>

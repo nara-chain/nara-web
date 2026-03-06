@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 export default function useFadeObserver(containerRef) {
   useEffect(() => {
     const container = containerRef?.current || document;
-    const elements = container.querySelectorAll('.fade');
+    const elements = container.querySelectorAll('.fade,.fade-left,.fade-right,.fade-scale');
     if (!elements.length) return;
 
     const observer = new IntersectionObserver(

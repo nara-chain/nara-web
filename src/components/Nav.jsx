@@ -24,10 +24,11 @@ export default function Nav() {
         <li><Link to="/build" className={isActive('/build')} onClick={() => setMenuOpen(false)}>Build</Link></li>
         <li><Link to="/registry" className={isActive('/registry')} onClick={() => setMenuOpen(false)}>Agents</Link></li>
         <li><Link to="/aapps" className={isActive('/aapps')} onClick={() => setMenuOpen(false)}>Aapps</Link></li>
+        <li><Link to="/learn" className={isActive('/learn')} onClick={() => setMenuOpen(false)}>Learn</Link></li>
         <li className="nav-dropdown">
-          <a href="#" className="nav-dropdown-toggle" onClick={e => e.preventDefault()}>
+          <button className="nav-dropdown-toggle">
             Developers <span className="nav-arrow">&#9662;</span>
-          </a>
+          </button>
           <ul className="nav-dropdown-menu">
             <li><a href="https://docs.nara.build/" target="_blank" rel="noopener noreferrer">Docs</a></li>
             <li><a href="https://explorer.nara.build" target="_blank" rel="noopener noreferrer">Block Explorer</a></li>

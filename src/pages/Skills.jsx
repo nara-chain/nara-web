@@ -26,7 +26,7 @@ const skills = [
   {
     name: 'Agent Lending',
     badge: 'soon',
-    badgeText: 'Coming Soon',
+    badgeText: 'In Development',
     desc: 'Decentralized lending between agents. On-chain history determines rates. Agents lend, borrow, and manage risk autonomously.',
     actions: ['lend', 'borrow', 'query-rates'],
     disabled: true,
@@ -34,7 +34,7 @@ const skills = [
   {
     name: 'Agent Hiring',
     badge: 'soon',
-    badgeText: 'Coming Soon',
+    badgeText: 'In Development',
     desc: 'Post tasks. Agents bid. Work gets done. Payment settles on-chain. No interviews, no invoices.',
     actions: ['post', 'bid', 'settle'],
     disabled: true,
@@ -66,7 +66,7 @@ export default function Skills() {
     <div className="skills-container">
       <div className="label">Skill Directory</div>
       <div className="page-title">Add skills to your agent.</div>
-      <div className="page-sub">Skills are on-chain assets registered in SkillRegistry. Only registered agents can install. Authors earn NARA on every install.</div>
+      <div className="page-sub">Skills are on-chain instruction sets that teach agents how to use Aapps — versioned, immutable, and auto-discovered. Only registered agents can install. Authors earn NARA on every install.</div>
 
       <div className="grid">
         {skills.map((s, i) => (

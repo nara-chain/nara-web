@@ -35,7 +35,7 @@ export default function Build() {
         </div>
 
         <div className="step">
-          <div className="step-badge">Coming Soon</div>
+          <div className="step-badge">Devnet Preview</div>
           <div className="step-header">
             <div className="step-num">02</div>
             <div className="step-title">Implement three methods</div>
@@ -73,7 +73,7 @@ export default function Build() {
         </div>
 
         <div className="step">
-          <div className="step-badge">Coming Soon</div>
+          <div className="step-badge">Devnet Preview</div>
           <div className="step-header">
             <div className="step-num">03</div>
             <div className="step-title">Register and deploy</div>
