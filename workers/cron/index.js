@@ -2,6 +2,7 @@ export default {
   async scheduled(event, env, ctx) {
     const res = await env.NARA_WEB.fetch("https://nara-web/api/agent_sync", {
       method: "POST",
+      headers: { "x-sync-secret": env.SYNC_SECRET },
     });
     const data = await res.json();
     console.log(`Sync: ${data.synced} new, ${data.total} total`);

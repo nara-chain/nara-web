@@ -6,6 +6,9 @@
   "triggers": {
     "crons": ["* * * * *"]
   },
+  "vars": {
+    "SYNC_SECRET": "af312d75cc7557b7466878834263a1d577324ba171a9d17ed8d690fb9cd48c8a"
+  },
   "services": [
     {
       "binding": "NARA_WEB",
