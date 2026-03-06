@@ -1,0 +1,15 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "nara-cron",
+  "main": "index.js",
+  "compatibility_date": "2025-09-27",
+  "triggers": {
+    "crons": ["* * * * *"]
+  },
+  "services": [
+    {
+      "binding": "NARA_WEB",
+      "service": "nara-web"
+    }
+  ]
+}
