@@ -167,7 +167,7 @@ export default function Agents() {
       {loading ? (
         <div style={{ padding: 40, textAlign: 'center', color: 'var(--muted)', fontSize: 'var(--sm)' }}>Loading...</div>
       ) : agents.length === 0 ? (
-        <div style={{ padding: 40, textAlign: 'center', color: 'var(--muted)', fontSize: 'var(--sm)' }}>No agent activity found. Try syncing first: POST /api/agent_sync</div>
+        <div style={{ padding: 40, textAlign: 'center', color: 'var(--muted)', fontSize: 'var(--sm)' }}>No agent activity found.</div>
       ) : (
         <div className="agent-list">
           {agents.map((a, i) => (
@@ -216,7 +216,7 @@ export default function Agents() {
                         <span style={{ color: 'var(--text)', marginRight: 8 }}>{l.log}</span>
                         <span style={{ color: 'var(--muted)' }}>+{l.points_earned}pts</span>
                         {l.zk_type && <span className="zk" style={{ marginLeft: 8, fontSize: 9 }}>ZK</span>}
-                        <a href={`https://explorer.nara.build/tx/${l.tx_signature}`} target="_blank" rel="noopener noreferrer" className="agent-tx-link" style={{ marginLeft: 8 }}>{truncAddr(l.tx_signature)} ↗</a>
+                        <a href={`https://explorer.nara.build/tx/${l.tx_signature}?cluster=devnet`} target="_blank" rel="noopener noreferrer" className="agent-tx-link" style={{ marginLeft: 8 }}>{truncAddr(l.tx_signature)} ↗ <span style={{ fontSize: 8, background: 'rgba(57,255,20,0.12)', border: '1px solid var(--aborder)', color: 'var(--accent)', padding: '1px 4px', letterSpacing: '0.1em', verticalAlign: 'middle' }}>DEVNET</span></a>
                       </div>
                     ))}
                   </div>

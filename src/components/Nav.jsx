@@ -34,7 +34,7 @@ export default function Nav() {
           </button>
           <ul className="nav-dropdown-menu">
             <li><a href="https://docs.nara.build/" target="_blank" rel="noopener noreferrer">Docs</a></li>
-            <li><a href="https://explorer.nara.build" target="_blank" rel="noopener noreferrer">Block Explorer</a></li>
+            <li><a href="https://explorer.nara.build/?cluster=devnet" target="_blank" rel="noopener noreferrer">Block Explorer <span style={{ fontSize: 7, color: 'var(--accent)', letterSpacing: '0.08em', background: 'rgba(57,255,20,0.1)', border: '1px solid var(--aborder)', padding: '1px 4px', marginLeft: 4, verticalAlign: 'super', display: 'inline-block', lineHeight: 1.2 }}>DEVNET</span></a></li>
             <li><a href="https://validators.nara.build/" target="_blank" rel="noopener noreferrer">Validator Explorer</a></li>
           </ul>
         </li>
