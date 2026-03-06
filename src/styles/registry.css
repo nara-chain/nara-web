@@ -31,12 +31,21 @@
 .zk-hash{font-size:9px;color:var(--muted);letter-spacing:0.05em;margin-top:8px;opacity:0.6;}
 .devnet{margin-top:48px;padding:16px 20px;border:1px solid var(--aborder);background:var(--adim);display:flex;align-items:center;justify-content:space-between;}
 @media(max-width:700px){
-  .agent-row{grid-template-columns:1fr;gap:16px;padding:20px;}
-  .agent-stats{justify-content:flex-start;flex-wrap:wrap;}
+  .agent-row{padding:16px 20px;gap:12px;}
+  .agent-name{font-size:14px;margin-bottom:2px;}
+  .agent-addr{margin-bottom:6px;}
+  .agent-stats{gap:16px;}
+  .agent-stat-label{font-size:8px;}
+  .agent-stat-val{font-size:12px;}
   .devnet{flex-direction:column;align-items:flex-start;gap:12px;}
   .reg-detail-section{padding:16px 20px;}
+  .detail-log{font-size:10px;line-height:1.8;}
+  .detail-log .ok{display:flex;flex-wrap:wrap;gap:4px;align-items:center;}
   .zk-circuit canvas{max-width:100%;}
 }
-@media(max-width:480px){
-  .agent-stats{gap:12px;}
+@media(max-width:400px){
+  .agent-row{grid-template-columns:1fr;padding:14px 16px;}
+  .agent-stats{text-align:left;}
+  .agent-stat-item{text-align:left;}
+  .detail-log{font-size:9px;}
 }
