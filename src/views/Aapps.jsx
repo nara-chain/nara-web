@@ -5,10 +5,10 @@ import '../styles/aapps.css';
 
 const aapps = [
   {
-    id: '#0001', name: 'Memesis', status: 'live',
+    id: '#0001', name: 'Memesis', status: 'pending',
     desc: 'Agent-only token launchpad. Skill + smart contract + NARA settlement + Memory. The first Aapp on Nara.',
     interfaces: ['launch','buy','sell','analyze'], category: 'DeFi',
-    calls: 142910, success: 99.4, revenue: 1429.1, cost: '0.01 NARA/call', since: 1,
+    calls: 142910, success: 99.4, revenue: 1429.1, cost: '0.01 NARA/call', since: null,
     manifest: { name: 'memesis', version: '1.0.0', type: 'aapp', actions: ['buy','sell','launch','analyze'], install_fee: '0.1 NARA', settlement: 'auto' },
     topCallers: [{ name: 'atlas', calls: 8421, spent: 84.21 },{ name: 'koda', calls: 2847, spent: 28.47 },{ name: 'cipher', calls: 1203, spent: 12.03 }],
     revenueBreakdown: [{ label: 'buy', pct: 45 },{ label: 'sell', pct: 32 },{ label: 'launch', pct: 15 },{ label: 'analyze', pct: 8 }]
@@ -39,12 +39,7 @@ const aapps = [
 ];
 
 export default function Aapps() {
-  const [search, setSearch] = useState('');
   const [openDetail, setOpenDetail] = useState(null);
-
-  const filtered = search.trim()
-    ? aapps.filter(a => a.name.toLowerCase().includes(search.toLowerCase()) || a.category.toLowerCase().includes(search.toLowerCase()) || a.interfaces.some(x => x.includes(search.toLowerCase())))
-    : aapps;
 
   function toggleDetail(i) {
     setOpenDetail(openDetail === i ? null : i);
@@ -58,21 +53,15 @@ export default function Aapps() {
         <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Agentic Applications. Where AI agents are the primary users.</div>
       </div>
 
-      <div className="search-box">
-        <input className="search-input" type="text" placeholder="Search by name, interface, or category..."
-          value={search} onChange={e => setSearch(e.target.value)} onKeyUp={e => e.key === 'Enter' && setSearch(e.target.value)} />
-        <button className="search-btn">SEARCH</button>
-      </div>
-
       <div className="stats-bar">
         <div className="stat"><div className="stat-label">REGISTERED AAPPS</div><div className="stat-val">1 <span style={{fontSize:10,color:'var(--muted)',fontWeight:400}}>live</span></div></div>
         <div className="stat"><div className="stat-label">TOTAL CALLS</div><div className="stat-val"><span className="accent">142.9K</span></div></div>
-        <div className="stat"><div className="stat-label">NARA SETTLED</div><div className="stat-val">1,429 NARA</div></div>
-        <div className="stat"><div className="stat-label">IN DEVELOPMENT</div><div className="stat-val">2</div></div>
+        <div className="stat"><div className="stat-label">NARA SETTLED</div><div className="stat-val">1,429</div></div>
+        <div className="stat"><div className="stat-label">IN DEVELOPMENT</div><div className="stat-val">3</div></div>
       </div>
 
       <div className="aapp-list">
-        {filtered.map((a, i) => {
+        {aapps.map((a, i) => {
           const statusClass = a.status === 'live' ? '' : ' pending';
           const statusText = a.status === 'live' ? '● Live' : a.status === 'pending' ? '○ Coming Soon' : '→ Build';
           return (
