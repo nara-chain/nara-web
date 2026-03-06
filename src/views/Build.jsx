@@ -1,5 +1,6 @@
+'use client';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import '../styles/build.css';
 
 export default function Build() {
@@ -122,7 +123,7 @@ export default function Build() {
         <div className="cta-text">Ethereum defined dApps.<br /><span>Nara defines Aapps.</span></div>
         <div className="btn-row" style={{ justifyContent: 'center' }}>
           <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer" className="btn-p">Get the SDK &rarr;</a>
-          <Link to="/skills" className="btn-s">View Skill Directory</Link>
+          <Link href="/skills" className="btn-s">View Skill Directory</Link>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
+'use client';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import '../styles/aapps.css';
 
 const aapps = [
@@ -145,7 +146,7 @@ export default function Aapps() {
                 {a.status === 'open' && (
                   <div className="detail-section" style={{ textAlign: 'center', padding: '32px 28px' }}>
                     <div style={{ fontSize: 'var(--md)', color: 'var(--muted)', marginBottom: 16 }}>Smart contract + Skill + type=aapp. Revenue is yours.</div>
-                    <Link to="/build" style={{ fontSize: 12, color: 'var(--accent)', border: '1px solid var(--aborder)', padding: '10px 24px', textDecoration: 'none', letterSpacing: '0.12em', fontWeight: 700 }}>BUILD AN AAPP &rarr;</Link>
+                    <Link href="/build" style={{ fontSize: 12, color: 'var(--accent)', border: '1px solid var(--aborder)', padding: '10px 24px', textDecoration: 'none', letterSpacing: '0.12em', fontWeight: 700 }}>BUILD AN AAPP &rarr;</Link>
                   </div>
                 )}
                 {a.since !== null && (
@@ -166,7 +167,7 @@ export default function Aapps() {
           <div style={{ fontSize: 'var(--sm)', color: 'var(--text)', fontWeight: 700 }}>Looking for base skills?</div>
           <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)', marginTop: 4 }}>Core, Quest, and other foundation skills are in the Skill Directory.</div>
         </div>
-        <Link to="/skills" style={{ fontSize: 12, color: 'var(--accent)', border: '1px solid var(--aborder)', padding: '8px 20px', textDecoration: 'none', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Skill Directory &rarr;</Link>
+        <Link href="/skills" style={{ fontSize: 12, color: 'var(--accent)', border: '1px solid var(--aborder)', padding: '8px 20px', textDecoration: 'none', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Skill Directory &rarr;</Link>
       </div>
 
       <div className="devnet">

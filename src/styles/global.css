@@ -8,6 +8,7 @@
 html{scroll-behavior:smooth;}
 body{font-family:'JetBrains Mono','Cascadia Code','Fira Code','Consolas','Courier New',monospace;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(57,255,20,0.008) 2px,rgba(57,255,20,0.008) 4px);pointer-events:none;z-index:9999;}
+#neural{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0.35;}
 
 /* Nav */
 nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(12,12,12,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 48px;justify-content:space-between;}

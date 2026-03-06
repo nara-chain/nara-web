@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+'use client';
+import Link from 'next/link';
 import '../styles/learn.css';
 
 export default function Learn() {
@@ -214,7 +215,7 @@ export default function Learn() {
         <div style={{fontSize:'clamp(20px,2.5vw,32px)',fontWeight:800,marginBottom:24}}>Ready to build?</div>
         <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
           <a href="https://docs.nara.build" className="btn-p" style={{textDecoration:'none'}} target="_blank" rel="noopener noreferrer">Read the Docs &rarr;</a>
-          <Link to="/build" className="btn-s" style={{textDecoration:'none'}}>Build an Aapp</Link>
+          <Link href="/build" className="btn-s" style={{textDecoration:'none'}}>Build an Aapp</Link>
         </div>
       </div>
     </div>

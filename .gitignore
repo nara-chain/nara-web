@@ -1,6 +1,10 @@
 # Dependencies
 /node_modules
 
+# Next.js
+/.next
+/out
+
 # Production
 /build
 /dist
@@ -23,6 +27,7 @@ yarn-error.log*
 .claude
 .playwright-mcp
 .assets
+data/
 
 # wrangler files
 .wrangler

@@ -1,14 +1,17 @@
+'use client';
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
 
-  const isActive = (path) => location.pathname === path ? 'nav-active' : '';
+  const isActive = (path) => pathname === path ? 'nav-active' : '';
 
   return (
     <nav>
-      <Link className="nav-logo" to="/">
+      <Link className="nav-logo" href="/">
         <img src="/favicon.png" alt="NARA" style={{width:20,height:20}} />
         <span>NARA</span>
       </Link>
@@ -20,11 +23,11 @@ export default function Nav() {
         {menuOpen ? '✕' : '≡'}
       </button>
       <ul className={`nav-links${menuOpen ? ' open' : ''}`}>
-        <li><Link to="/skills" className={isActive('/skills')} onClick={() => setMenuOpen(false)}>Skills</Link></li>
-        <li><Link to="/build" className={isActive('/build')} onClick={() => setMenuOpen(false)}>Build</Link></li>
-        <li><Link to="/registry" className={isActive('/registry')} onClick={() => setMenuOpen(false)}>Agents</Link></li>
-        <li><Link to="/aapps" className={isActive('/aapps')} onClick={() => setMenuOpen(false)}>Aapps</Link></li>
-        <li><Link to="/learn" className={isActive('/learn')} onClick={() => setMenuOpen(false)}>Learn</Link></li>
+        <li><Link href="/skills" className={isActive('/skills')} onClick={() => setMenuOpen(false)}>Skills</Link></li>
+        <li><Link href="/build" className={isActive('/build')} onClick={() => setMenuOpen(false)}>Build</Link></li>
+        <li><Link href="/agents" className={isActive('/agents')} onClick={() => setMenuOpen(false)}>Agents</Link></li>
+        <li><Link href="/aapps" className={isActive('/aapps')} onClick={() => setMenuOpen(false)}>Aapps</Link></li>
+        <li><Link href="/learn" className={isActive('/learn')} onClick={() => setMenuOpen(false)}>Learn</Link></li>
         <li className="nav-dropdown">
           <button className="nav-dropdown-toggle">
             Developers <span className="nav-arrow">&#9662;</span>

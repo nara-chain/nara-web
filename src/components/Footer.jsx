@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
+'use client';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
     <footer>
       <div className="fl">
-        <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, textDecoration: 'none', marginBottom: 12 }}>
+        <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, textDecoration: 'none', marginBottom: 12 }}>
           <img src="/favicon.png" alt="NARA" style={{width:18,height:18}} />
           <span style={{ fontSize: 13, fontWeight: 800, letterSpacing: '0.3em', color: '#e8e8e8', fontFamily: "'JetBrains Mono',monospace" }}>NARA</span>
         </Link>
@@ -12,11 +13,11 @@ export default function Footer() {
         <div style={{ fontSize: 'var(--sm)', opacity: 0.35, marginTop: 2 }}>Built for agents. Owned by no one.</div>
       </div>
       <div className="flinks">
-        <Link to="/skills">Skills</Link>
-        <Link to="/build">Build</Link>
-        <Link to="/registry">Agents</Link>
-        <Link to="/aapps">Aapps</Link>
-        <Link to="/learn">Learn</Link>
+        <Link href="/skills">Skills</Link>
+        <Link href="/build">Build</Link>
+        <Link href="/agents">Agents</Link>
+        <Link href="/aapps">Aapps</Link>
+        <Link href="/learn">Learn</Link>
         <span style={{ opacity: 0.2 }}>|</span>
         <a href="https://github.com/nara-chain" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">X</a>

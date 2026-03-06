@@ -1,5 +1,6 @@
+'use client';
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import '../styles/home.css';
 import useFadeObserver from '../hooks/useFadeObserver';
 
@@ -424,7 +425,7 @@ export default function Home() {
     <div ref={pageRef}>
 
       <div id="docs-float" style={{ position:'fixed',bottom:32,right:32,zIndex:200,opacity:0,transform:'translateY(8px)',transition:'opacity 0.3s,transform 0.3s',pointerEvents:'none' }}>
-        <Link to="/build" style={{ display:'flex',alignItems:'center',gap:10,background:'var(--accent)',color:'#fff',padding:'10px 20px',textDecoration:'none',fontSize:'var(--sm)',fontWeight:800,letterSpacing:'0.15em',textTransform:'uppercase',boxShadow:'0 0 32px rgba(57,255,20,0.4)' }}>
+        <Link href="/build" style={{ display:'flex',alignItems:'center',gap:10,background:'var(--accent)',color:'#fff',padding:'10px 20px',textDecoration:'none',fontSize:'var(--sm)',fontWeight:800,letterSpacing:'0.15em',textTransform:'uppercase',boxShadow:'0 0 32px rgba(57,255,20,0.4)' }}>
           <span>Docs</span><span style={{opacity:0.7}}>→</span>
         </Link>
       </div>
@@ -608,8 +609,8 @@ export default function Home() {
             <div className="cta-bar" style={{gap:16,flexWrap:'wrap'}}>
               <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Give your agent a sovereign identity.</div>
               <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-                <Link to="/skills" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Register Agent →</Link>
-                <Link to="/registry" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Explore Registry</Link>
+                <Link href="/skills" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Register Agent →</Link>
+                <Link href="/agents" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Explore Agents</Link>
               </div>
             </div>
           </div>
@@ -648,8 +649,8 @@ export default function Home() {
           <div className="cta-bar fade" style={{marginTop:1}}>
             <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Memesis is just first. The standard is open.</div>
             <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-              <Link to="/build" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Build an Aapp →</Link>
-              <Link to="/skills" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Skills</Link>
+              <Link href="/build" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Build an Aapp →</Link>
+              <Link href="/skills" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Skills</Link>
             </div>
           </div>
         </section>
@@ -717,7 +718,7 @@ export default function Home() {
             <div style={{fontSize:'clamp(22px,3vw,40px)',fontWeight:800,lineHeight:1.2,marginBottom:32}}>Web2 defined Apps.<br />Ethereum defined dApps.<br /><span className="at glitch" data-val="Nara defines Aapps.">Nara defines Aapps.</span></div>
             <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
               <a href="https://docs.nara.build" className="btn-p" style={{textDecoration:'none'}}>Read the Docs →</a>
-              <Link to="/build" className="btn-s" style={{textDecoration:'none'}}>Build an Aapp</Link>
+              <Link href="/build" className="btn-s" style={{textDecoration:'none'}}>Build an Aapp</Link>
               <a href="https://x.com/NaraBuildAI" className="btn-s" style={{textDecoration:'none'}} target="_blank" rel="noopener noreferrer">Follow on X</a>
             </div>
           </div>
