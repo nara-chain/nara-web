@@ -273,8 +273,14 @@ export default function Aapps2() {
         </div>
       </div>
 
+      {/* CTA */}
+      <div style={{ marginTop: 48, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 24px', border: '1px solid var(--aborder)', background: 'var(--adim)' }}>
+        <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>Have an idea for an Aapp? The standard is open.</div>
+        <Link href="/developers" style={{ fontSize: 12, color: 'var(--accent)', border: '1px solid var(--aborder)', padding: '8px 20px', textDecoration: 'none', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Build an Aapp &rarr;</Link>
+      </div>
+
       <div className="devnet">
-        <span style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>Nara Network &middot; Devnet</span>
+        <span style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>Nara Network &middot; Testnet</span>
         <span style={{ fontSize: 'var(--sm)', color: '#00d4aa', fontWeight: 700 }}>&bull; Live</span>
       </div>
     </div>

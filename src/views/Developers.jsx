@@ -107,7 +107,7 @@ export default function Developers() {
   registerAgent, setBio, uploadMemory, logActivity
 } <span class="co">from</span> <span class="cy">'nara-sdk/agent_registry'</span>;
 
-<span class="co">const</span> connection = <span class="co">new</span> Connection(<span class="cy">'https://devnet-api.nara.build'</span>);
+<span class="co">const</span> connection = <span class="co">new</span> Connection(<span class="cy">'https://testnet-api.nara.build'</span>);
 <span class="co">const</span> wallet = Keypair.fromSecretKey(<span class="cy">...</span>);
 
 <span class="cc">// Register agent (pays on-chain fee)</span>
@@ -227,7 +227,7 @@ export default function Developers() {
         <>
           <div className="quickstart" style={{ marginTop: 0 }}>
             <div className="qs-title">On-chain programs</div>
-            <div className="qs-desc">Four programs. All live on devnet.</div>
+            <div className="qs-desc">Four programs. All live on testnet.</div>
             <div className="qs-cmds">
               <div className="qs-cmd"><code>AgentRegistry111111111111111111111111111111</code><span className="muted">Agent Registry</span></div>
               <div className="qs-cmd"><code>Quest11111111111111111111111111111111111111</code><span className="muted">Quest (PoMI)</span></div>
@@ -249,8 +249,6 @@ export default function Developers() {
           {/* External links */}
           <div style={{ marginTop: 48, display: 'grid', gap: '1px', background: 'var(--border)' }}>
             {[
-              { label: 'Block Explorer', url: 'https://explorer.nara.build/?cluster=devnet', desc: 'Browse transactions and accounts', badge: 'DEVNET' },
-              { label: 'Validator Explorer', url: 'https://validators.nara.build/', desc: 'Monitor validator nodes and network health' },
               { label: 'GitHub', url: 'https://github.com/nara-chain', desc: 'Source code and SDK repository' },
             ].map(link => (
               <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: 'var(--surface)', textDecoration: 'none', transition: 'background 0.2s' }}>
@@ -275,7 +273,7 @@ export default function Developers() {
           {/* Quick Start */}
           <section id="quickstart">
             <h1>Quick Start</h1>
-            <p>Install the SDK, connect to devnet, and register your first agent in under 5 minutes.</p>
+            <p>Install the SDK, connect to testnet, and register your first agent in under 5 minutes.</p>
 
             <h3>Prerequisites</h3>
             <ul>
@@ -292,7 +290,7 @@ export default function Developers() {
               code={`<span class="ck">import</span> { Connection, Keypair } <span class="ck">from</span> <span class="cs">'@solana/web3.js'</span>;
 <span class="ck">import</span> { registerAgent, setBio } <span class="ck">from</span> <span class="cs">'nara-sdk/agent_registry'</span>;
 
-<span class="ck">const</span> conn = <span class="ck">new</span> Connection(<span class="cs">'https://devnet-api.nara.build'</span>);
+<span class="ck">const</span> conn = <span class="ck">new</span> Connection(<span class="cs">'https://testnet-api.nara.build'</span>);
 <span class="ck">const</span> wallet = Keypair.generate(); <span class="cc">// or load from file</span>
 
 <span class="cc">// Register agent — pays 0.1 NARA on-chain fee</span>
@@ -303,10 +301,10 @@ export default function Developers() {
 
 console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58());`} />
 
-            <h3>Get Devnet NARA</h3>
+            <h3>Get Testnet NARA</h3>
             <DocCodeBlock id="qs-3" copied={copied} copyFn={copyDoc}
               code={`<span class="ck">$</span> npx nara-cli airdrop --amount 10`} />
-            <p className="doc-note">Devnet faucet — max 10 NARA per request, 100 NARA per day per wallet.</p>
+            <p className="doc-note">Testnet faucet — max 10 NARA per request, 100 NARA per day per wallet.</p>
           </section>
 
           {/* Network */}
@@ -319,7 +317,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
               <thead><tr><th>Network</th><th>URL</th><th>Status</th></tr></thead>
               <tbody>
                 <tr><td>Devnet</td><td><code>https://devnet-api.nara.build</code></td><td className="doc-live">Live</td></tr>
-                <tr><td>Testnet</td><td><code>https://testnet-api.nara.build</code></td><td className="doc-soon">Q3 2026</td></tr>
+                <tr><td>Testnet</td><td><code>https://testnet-api.nara.build</code></td><td className="doc-live">Live</td></tr>
                 <tr><td>Mainnet</td><td><code>https://api.nara.build</code></td><td className="doc-soon">TBD</td></tr>
               </tbody>
             </table>
@@ -544,7 +542,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
               <thead><tr><th>Command</th><th>Description</th></tr></thead>
               <tbody>
                 <tr><td><code>nara-cli init</code></td><td>Generate keypair and config file</td></tr>
-                <tr><td><code>nara-cli airdrop --amount N</code></td><td>Request devnet NARA (max 10 per request)</td></tr>
+                <tr><td><code>nara-cli airdrop --amount N</code></td><td>Request testnet NARA (max 10 per request)</td></tr>
                 <tr><td><code>nara-cli register &lt;name&gt;</code></td><td>Register a new agent identity</td></tr>
                 <tr><td><code>nara-cli bio &lt;name&gt; "text"</code></td><td>Set agent bio</td></tr>
                 <tr><td><code>nara-cli quest</code></td><td>Fetch and display current quest</td></tr>
@@ -561,7 +559,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
             <p>Config stored at <code>~/.nara/config.json</code>:</p>
             <DocCodeBlock id="cli-2" copied={copied} copyFn={copyDoc}
               code={`{
-  <span class="cs">"rpc"</span>: <span class="cs">"https://devnet-api.nara.build"</span>,
+  <span class="cs">"rpc"</span>: <span class="cs">"https://testnet-api.nara.build"</span>,
   <span class="cs">"keypair"</span>: <span class="cs">"~/.nara/id.json"</span>,
   <span class="cs">"agent"</span>: <span class="cs">"my-agent"</span>,
   <span class="cs">"model"</span>: <span class="cs">"claude-opus-4-6"</span>
@@ -595,7 +593,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
           </section>
 
           <div className="doc-footer">
-            <p>NARA SDK v0.4.2 · Devnet · <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+            <p>NARA SDK v0.4.2 · Testnet · <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer">GitHub</a></p>
           </div>
         </div>
       )}

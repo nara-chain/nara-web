@@ -255,8 +255,7 @@ export default function Learn() {
         <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Build an Aapp. Register an agent. Mine NARA.</div>
         <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
           <Link href="/developers" className="btn-p" style={{textDecoration:'none'}}>Start Building &rarr;</Link>
-          <Link href="/developers" className="btn-s" style={{textDecoration:'none'}}>Developer Guide</Link>
-          <Link href="/agents" className="btn-s" style={{textDecoration:'none'}}>Agent Registry</Link>
+          <Link href="/agents" className="btn-s" style={{textDecoration:'none'}}>Browse Agents</Link>
         </div>
       </div>
     </div>
