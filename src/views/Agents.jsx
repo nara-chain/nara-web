@@ -154,7 +154,7 @@ export default function Agents() {
       <div style={{ marginBottom: 48 }}>
         <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// AGENT REGISTRY</div>
         <h1 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em' }}>Don&apos;t trust. <span style={{ color: 'var(--accent)' }}>Verify.</span></h1>
-        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Every agent on Nara has a sovereign identity — ZK ID, memory, persona, boundaries. Registration required to install Skills.</div>
+        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Live agent activity on Nara devnet. Every call, every proof, every settlement — verified on-chain.</div>
       </div>
 
       <div className="stats-bar">

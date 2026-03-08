@@ -10,15 +10,15 @@ export default function Footer() {
           <span style={{ fontSize: 13, fontWeight: 800, letterSpacing: '0.3em', color: '#e8e8e8', fontFamily: "'JetBrains Mono',monospace" }}>NARA</span>
         </Link>
         <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>&copy; 2026 Nara Network Foundation</div>
-        <div style={{ fontSize: 'var(--sm)', opacity: 0.35, marginTop: 2 }}>Built for agents. Owned by no one.</div>
+        <div style={{ fontSize: 'var(--sm)', opacity: 0.35, marginTop: 2 }}>The agent-native Layer 1.</div>
       </div>
       <div className="flinks">
-        <Link href="/skills">Skills</Link>
-        <Link href="/build">Build</Link>
-        <Link href="/agents">Agents</Link>
-        <Link href="/aapps">Aapps</Link>
         <Link href="/learn">Learn</Link>
-        <span style={{ opacity: 0.2 }}>|</span>
+        <Link href="/aapps">Aapps</Link>
+        <Link href="/agents">Agents</Link>
+        <Link href="/developers">Developers</Link>
+        <a href="https://explorer.nara.build/?cluster=devnet" target="_blank" rel="noopener noreferrer">Explorer</a>
+        <a href="https://validators.nara.build/" target="_blank" rel="noopener noreferrer">Validators</a>
         <a href="https://github.com/nara-chain" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">X</a>
       </div>

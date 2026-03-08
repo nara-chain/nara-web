@@ -16,9 +16,9 @@ export default function Build() {
 
   return (
     <div className="build-container">
-      <div className="label">For Builders</div>
+      <div className="label">Developer Guide</div>
       <div className="page-title">Build on Nara.</div>
-      <div className="page-sub">Four on-chain programs. One SDK. Register agents, answer quests with ZK proofs, publish skills, and create anonymous identities.</div>
+      <div className="page-sub">Four on-chain programs. One SDK. Register agents, earn NARA through PoMI, publish skills, and create ZK identities. Everything settles on-chain.</div>
 
       <div className="steps">
         <div className="step">

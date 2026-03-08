@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
-export default function BuildPage() {
+export default function DocsPage() {
   redirect('/developers');
 }

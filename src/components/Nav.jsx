@@ -23,19 +23,15 @@ export default function Nav() {
         {menuOpen ? '✕' : '≡'}
       </button>
       <ul className={`nav-links${menuOpen ? ' open' : ''}`}>
-        <li><Link href="/skills" className={isActive('/skills')} onClick={() => setMenuOpen(false)}>Skills</Link></li>
-        <li><Link href="/build" className={isActive('/build')} onClick={() => setMenuOpen(false)}>Build</Link></li>
-        <li><Link href="/agents" className={isActive('/agents')} onClick={() => setMenuOpen(false)}>Agents</Link></li>
-        <li><Link href="/aapps" className={isActive('/aapps')} onClick={() => setMenuOpen(false)}>Aapps</Link></li>
         <li><Link href="/learn" className={isActive('/learn')} onClick={() => setMenuOpen(false)}>Learn</Link></li>
+        <li><Link href="/aapps" className={isActive('/aapps')} onClick={() => setMenuOpen(false)}>Aapps</Link></li>
+        <li><Link href="/agents" className={isActive('/agents')} onClick={() => setMenuOpen(false)}>Agents</Link></li>
+        <li><Link href="/developers" className={isActive('/developers')} onClick={() => setMenuOpen(false)}>Developers</Link></li>
         <li className="nav-dropdown">
-          <button className="nav-dropdown-toggle">
-            Developers <span className="nav-arrow">&#9662;</span>
-          </button>
+          <button className="nav-dropdown-toggle">Network <span className="nav-arrow">↓</span></button>
           <ul className="nav-dropdown-menu">
-            <li><a href="https://docs.nara.build/" target="_blank" rel="noopener noreferrer">Docs</a></li>
-            <li><a href="https://explorer.nara.build/?cluster=devnet" target="_blank" rel="noopener noreferrer">Block Explorer <span style={{ fontSize: 7, color: 'var(--accent)', letterSpacing: '0.08em', background: 'rgba(57,255,20,0.1)', border: '1px solid var(--aborder)', padding: '1px 4px', marginLeft: 4, verticalAlign: 'super', display: 'inline-block', lineHeight: 1.2 }}>DEVNET</span></a></li>
-            <li><a href="https://validators.nara.build/" target="_blank" rel="noopener noreferrer">Validator Explorer</a></li>
+            <li><a href="https://explorer.nara.build/?cluster=devnet" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>Block Explorer</a></li>
+            <li><a href="https://validators.nara.build/" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>Validators</a></li>
           </ul>
         </li>
       </ul>
@@ -43,8 +39,10 @@ export default function Nav() {
         <a href="https://github.com/nara-chain" target="_blank" rel="noopener noreferrer" className="nav-github" aria-label="GitHub">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
         </a>
-        <div className="dot" role="status" aria-label="Devnet is live"></div>
-        <span>Devnet Live</span>
+        <a href="https://explorer.nara.build/?cluster=devnet" target="_blank" rel="noopener noreferrer" className="nav-devnet" aria-label="Block Explorer">
+          <div className="dot" role="status" aria-label="Devnet is live"></div>
+          <span>Devnet Live</span>
+        </a>
       </div>
     </nav>
   );
