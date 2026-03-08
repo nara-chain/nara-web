@@ -331,22 +331,31 @@ export default function Developers() {
           {/* External links */}
           <div style={{ marginTop: 48, display: 'grid', gap: '1px', background: 'var(--border)' }}>
             {[
-              { label: 'Documentation', url: 'https://docs.nara.build/', desc: 'Full SDK reference and guides' },
+              { label: 'Documentation', url: '/docs', desc: 'Full SDK reference and guides', internal: true },
               { label: 'Block Explorer', url: 'https://explorer.nara.build/?cluster=devnet', desc: 'Browse transactions and accounts', badge: 'DEVNET' },
               { label: 'Validator Explorer', url: 'https://validators.nara.build/', desc: 'Monitor validator nodes and network health' },
               { label: 'GitHub', url: 'https://github.com/nara-chain', desc: 'Source code and SDK repository' },
-            ].map(link => (
-              <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: 'var(--surface)', textDecoration: 'none', transition: 'background 0.2s' }}>
-                <div>
-                  <div style={{ fontSize: 'var(--sm)', color: 'var(--text)', fontWeight: 700, marginBottom: 4, display: 'flex', alignItems: 'center', gap: 8 }}>
-                    {link.label}
-                    {link.badge && <span style={{ fontSize: 8, color: 'var(--accent)', letterSpacing: '0.1em', background: 'rgba(57,255,20,0.1)', border: '1px solid var(--aborder)', padding: '1px 5px' }}>{link.badge}</span>}
+            ].map(link => {
+              const linkStyle = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: 'var(--surface)', textDecoration: 'none', transition: 'background 0.2s' };
+              const inner = (
+                <>
+                  <div>
+                    <div style={{ fontSize: 'var(--sm)', color: 'var(--text)', fontWeight: 700, marginBottom: 4, display: 'flex', alignItems: 'center', gap: 8 }}>
+                      {link.label}
+                      {link.badge && <span style={{ fontSize: 8, color: 'var(--accent)', letterSpacing: '0.1em', background: 'rgba(57,255,20,0.1)', border: '1px solid var(--aborder)', padding: '1px 5px' }}>{link.badge}</span>}
+                    </div>
+                    <div style={{ fontSize: 11, color: 'var(--muted)' }}>{link.desc}</div>
                   </div>
-                  <div style={{ fontSize: 11, color: 'var(--muted)' }}>{link.desc}</div>
-                </div>
-                <span style={{ color: 'var(--muted)', fontSize: 12 }}>↗</span>
-              </a>
-            ))}
+                  {!link.internal && <span style={{ color: 'var(--muted)', fontSize: 12 }}>↗</span>}
+                  {link.internal && <span style={{ color: 'var(--muted)', fontSize: 12 }}>→</span>}
+                </>
+              );
+              return link.internal ? (
+                <Link key={link.label} href={link.url} style={linkStyle}>{inner}</Link>
+              ) : (
+                <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" style={linkStyle}>{inner}</a>
+              );
+            })}
           </div>
         </>
       )}

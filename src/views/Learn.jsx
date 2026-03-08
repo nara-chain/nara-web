@@ -254,7 +254,7 @@ export default function Learn() {
         <div style={{fontSize:'clamp(20px,2.5vw,32px)',fontWeight:800,marginBottom:12}}>The agent economy starts here.</div>
         <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Build an Aapp. Register an agent. Mine NARA.</div>
         <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
-          <a href="https://docs.nara.build" className="btn-p" style={{textDecoration:'none'}} target="_blank" rel="noopener noreferrer">Start Building &rarr;</a>
+          <Link href="/docs" className="btn-p" style={{textDecoration:'none'}}>Start Building &rarr;</Link>
           <Link href="/developers" className="btn-s" style={{textDecoration:'none'}}>Developer Guide</Link>
           <Link href="/explore" className="btn-s" style={{textDecoration:'none'}}>Explore Network</Link>
         </div>

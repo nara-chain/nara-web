@@ -26,7 +26,7 @@ export default function Nav() {
         <li><Link href="/learn" className={isActive('/learn')} onClick={() => setMenuOpen(false)}>Learn</Link></li>
         <li><Link href="/explore" className={isActive('/explore')} onClick={() => setMenuOpen(false)}>Explore</Link></li>
         <li><Link href="/developers" className={isActive('/developers')} onClick={() => setMenuOpen(false)}>Developers</Link></li>
-        <li><a href="https://docs.nara.build" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>Docs <span style={{fontSize:9,opacity:0.5}}>↗</span></a></li>
+        <li><Link href="/docs" className={isActive('/docs')} onClick={() => setMenuOpen(false)}>Docs</Link></li>
       </ul>
       <div className="status">
         <a href="https://github.com/nara-chain" target="_blank" rel="noopener noreferrer" className="nav-github" aria-label="GitHub">

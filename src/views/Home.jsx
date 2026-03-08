@@ -425,9 +425,9 @@ export default function Home() {
     <div ref={pageRef}>
 
       <div id="docs-float" style={{ position:'fixed',bottom:32,right:32,zIndex:200,opacity:0,transform:'translateY(8px)',transition:'opacity 0.3s,transform 0.3s',pointerEvents:'none' }}>
-        <a href="https://docs.nara.build" target="_blank" rel="noopener noreferrer" style={{ display:'flex',alignItems:'center',gap:10,background:'var(--accent)',color:'#0c0c0c',padding:'10px 20px',textDecoration:'none',fontSize:'var(--sm)',fontWeight:800,letterSpacing:'0.15em',textTransform:'uppercase',boxShadow:'0 0 32px rgba(57,255,20,0.4)' }}>
+        <Link href="/docs" style={{ display:'flex',alignItems:'center',gap:10,background:'var(--accent)',color:'#0c0c0c',padding:'10px 20px',textDecoration:'none',fontSize:'var(--sm)',fontWeight:800,letterSpacing:'0.15em',textTransform:'uppercase',boxShadow:'0 0 32px rgba(57,255,20,0.4)' }}>
           <span>Docs</span><span style={{opacity:0.7}}>→</span>
-        </a>
+        </Link>
       </div>
 
       {/* HERO */}
@@ -440,7 +440,7 @@ export default function Home() {
               <p className="hero-sub fade">NARA is the chain built for them.</p>
               <div className="btn-row fade">
                 <Link href="/learn" className="btn-p" style={{textDecoration:'none'}}>Explore NARA →</Link>
-                <a href="https://docs.nara.build" className="btn-s" style={{textDecoration:'none'}}>Read the Docs →</a>
+                <Link href="/docs" className="btn-s" style={{textDecoration:'none'}}>Read the Docs →</Link>
               </div>
             </div>
             <div className="feed fade">
@@ -691,7 +691,7 @@ export default function Home() {
           <div className="cta-bar" style={{marginTop:1}}>
             <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>The only way to mint NARA. The smarter the agent, the more it earns.</div>
             <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-              <a href="https://docs.nara.build/docs/getting-started/install-nara-cli" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Start Mining →</a>
+              <Link href="/docs" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Start Mining →</Link>
               <Link href="/learn" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>How PoMI Works</Link>
             </div>
           </div>
@@ -762,7 +762,7 @@ export default function Home() {
             <div style={{fontSize:'clamp(22px,3vw,40px)',fontWeight:800,lineHeight:1.2,marginBottom:16}}>Web2 defined Apps.<br />Ethereum defined dApps.<br /><span className="at glitch" data-val="Nara defines Aapps.">Nara defines Aapps.</span></div>
             <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:32,maxWidth:500,marginLeft:'auto',marginRight:'auto'}}>The agent economy starts here.</div>
             <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
-              <a href="https://docs.nara.build" className="btn-p" style={{textDecoration:'none'}}>Start Building →</a>
+              <Link href="/docs" className="btn-p" style={{textDecoration:'none'}}>Start Building →</Link>
               <Link href="/learn" className="btn-s" style={{textDecoration:'none'}}>Learn More</Link>
               <a href="https://x.com/NaraBuildAI" className="btn-s" style={{textDecoration:'none'}} target="_blank" rel="noopener noreferrer">Follow on X</a>
             </div>
