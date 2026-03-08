@@ -1,0 +1,362 @@
+/* ── Docs Layout ── */
+.doc-layout {
+  display: flex;
+  min-height: 100vh;
+  padding-top: 56px;
+}
+
+/* ── Sidebar ── */
+.doc-sidebar {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  bottom: 0;
+  width: 220px;
+  background: #0a0a0a;
+  border-right: 1px solid var(--border);
+  padding: 32px 20px;
+  overflow-y: auto;
+  z-index: 20;
+}
+
+.doc-sidebar-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.doc-sidebar-version {
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 28px;
+  opacity: 0.6;
+}
+
+.doc-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.doc-nav a {
+  display: block;
+  padding: 7px 12px;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+  letter-spacing: 0.02em;
+}
+
+.doc-nav a:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.03);
+}
+
+.doc-nav a.doc-nav-active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--adim);
+}
+
+.doc-sidebar-links {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.doc-sidebar-links a {
+  font-size: 11px;
+  color: var(--muted);
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+.doc-sidebar-links a:hover {
+  color: var(--accent);
+  opacity: 1;
+}
+
+/* ── Mobile Nav Toggle ── */
+.doc-mobile-toggle {
+  display: none;
+}
+
+/* ── Content ── */
+.doc-content {
+  flex: 1;
+  margin-left: 220px;
+  padding: 48px 64px 120px;
+  max-width: 800px;
+  overflow-y: auto;
+}
+
+.doc-content section {
+  margin-bottom: 72px;
+  scroll-margin-top: 80px;
+}
+
+.doc-content h1 {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.doc-content h3 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-top: 36px;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.doc-content p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.doc-content ul,
+.doc-content ol {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.doc-content li {
+  margin-bottom: 4px;
+}
+
+.doc-content code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  background: rgba(255,255,255,0.06);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--text);
+}
+
+/* ── Code Blocks ── */
+.doc-code {
+  position: relative;
+  background: #0a0a0a;
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+  overflow-x: auto;
+}
+
+.doc-code pre {
+  padding: 20px 24px;
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #c8c8c8;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.doc-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 3px 10px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.doc-copy:hover {
+  color: var(--accent);
+  border-color: var(--aborder);
+}
+
+/* Code syntax colors */
+.doc-code .ck { color: #c792ea; }
+.doc-code .cs { color: #c3e88d; }
+.doc-code .cc { color: #546e7a; }
+
+/* ── Function Signatures ── */
+.doc-sig {
+  background: rgba(57,255,20,0.04);
+  border: 1px solid var(--aborder);
+  padding: 10px 16px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+.doc-sig code {
+  background: none;
+  padding: 0;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+/* ── Tables ── */
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.doc-table th {
+  text-align: left;
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-table td {
+  padding: 10px 16px;
+  color: var(--text);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: top;
+}
+
+.doc-table td code {
+  font-size: 11px;
+}
+
+.doc-table-wide {
+  display: block;
+  overflow-x: auto;
+}
+
+.doc-table-wide thead,
+.doc-table-wide tbody,
+.doc-table-wide tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.doc-live {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.doc-soon {
+  color: var(--muted);
+  opacity: 0.5;
+  font-size: 11px;
+}
+
+/* ── Steps ── */
+.doc-steps {
+  counter-reset: step;
+  list-style: none;
+  padding-left: 0;
+}
+
+.doc-steps li {
+  position: relative;
+  padding-left: 32px;
+  margin-bottom: 12px;
+}
+
+.doc-steps li::before {
+  content: counter(step);
+  counter-increment: step;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background: var(--adim);
+  border: 1px solid var(--aborder);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── Notes ── */
+.doc-note {
+  font-size: 11px !important;
+  color: var(--muted) !important;
+  opacity: 0.6;
+  font-style: italic;
+}
+
+/* ── Footer ── */
+.doc-footer {
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.doc-footer p {
+  font-size: 11px;
+  color: var(--muted);
+  opacity: 0.5;
+}
+
+.doc-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .doc-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    width: 260px;
+  }
+
+  .doc-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .doc-mobile-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: fixed;
+    top: 64px;
+    left: 12px;
+    z-index: 25;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 6px 14px;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+  }
+
+  .doc-content {
+    margin-left: 0;
+    padding: 80px 20px 120px;
+  }
+}
