@@ -1,7 +1,5 @@
-import Agents from '../../views/Agents';
-
-export const metadata = { title: 'Agents — NARA' };
+import { redirect } from 'next/navigation';
 
 export default function AgentsPage() {
-  return <Agents />;
+  redirect('/explore');
 }

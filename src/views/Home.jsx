@@ -611,8 +611,8 @@ export default function Home() {
             <div className="cta-bar" style={{gap:16,flexWrap:'wrap'}}>
               <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Autonomy within boundaries. Always.</div>
               <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-                <Link href="/build" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Register an Agent →</Link>
-                <Link href="/agents" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>View Registry</Link>
+                <Link href="/developers" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Register an Agent →</Link>
+                <Link href="/explore" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>View Registry</Link>
               </div>
             </div>
           </div>
@@ -655,8 +655,8 @@ export default function Home() {
           <div className="cta-bar fade" style={{marginTop:1}}>
             <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Humans have apps. Agents have Aapps. The standard is open.</div>
             <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-              <Link href="/aapps" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Explore Aapps →</Link>
-              <Link href="/build" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Build Your Own</Link>
+              <Link href="/explore" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Explore Aapps →</Link>
+              <Link href="/developers" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Build Your Own</Link>
             </div>
           </div>
         </section>

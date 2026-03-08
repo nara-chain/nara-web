@@ -14,12 +14,11 @@ export default function Footer() {
       </div>
       <div className="flinks">
         <Link href="/learn">Learn</Link>
-        <Link href="/aapps">Aapps</Link>
-        <Link href="/agents">Agents</Link>
-        <Link href="/skills">Skills</Link>
-        <Link href="/build">Build</Link>
+        <Link href="/explore">Explore</Link>
+        <Link href="/developers">Developers</Link>
         <span style={{ opacity: 0.2 }}>|</span>
         <a href="https://docs.nara.build" target="_blank" rel="noopener noreferrer">Docs</a>
+        <a href="https://explorer.nara.build/?cluster=devnet" target="_blank" rel="noopener noreferrer">Explorer</a>
         <a href="https://github.com/nara-chain" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">X</a>
       </div>

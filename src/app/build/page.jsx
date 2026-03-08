@@ -1,7 +1,5 @@
-import Build from '../../views/Build';
-
-export const metadata = { title: 'Build — NARA' };
+import { redirect } from 'next/navigation';
 
 export default function BuildPage() {
-  return <Build />;
+  redirect('/developers');
 }
