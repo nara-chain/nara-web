@@ -50,7 +50,7 @@ export default function Docs() {
     };
   }, []);
 
-  /* Scroll spy */
+  /* Scroll spy — listen on window since body scrolls */
   useEffect(() => {
     const handler = () => {
       const offsets = SECTIONS.map(s => {
@@ -60,9 +60,8 @@ export default function Docs() {
       const current = offsets.reduce((best, o) => (o.top <= 120 ? o : best), offsets[0]);
       if (current) setActive(current.id);
     };
-    const scroller = document.querySelector('.doc-content');
-    if (scroller) scroller.addEventListener('scroll', handler);
-    return () => { if (scroller) scroller.removeEventListener('scroll', handler); };
+    window.addEventListener('scroll', handler);
+    return () => window.removeEventListener('scroll', handler);
   }, []);
 
   return (
