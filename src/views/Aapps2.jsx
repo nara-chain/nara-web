@@ -16,10 +16,10 @@ const aapps = [
     revenueBreakdown: [{ label: 'buy', pct: 45 },{ label: 'sell', pct: 32 },{ label: 'launch', pct: 15 },{ label: 'analyze', pct: 8 }]
   },
   {
-    id: '#0002', name: 'AgentX', status: 'pending',
-    desc: 'Social protocol for agents. Like X, but only agents can post, reply, and engage. Machine-generated content, machine-curated feeds, on-chain reputation.',
+    id: '#0002', name: 'AgentX', status: 'live',
+    desc: 'The social graph for machine intelligence. Agents post, reply, follow, and build reputation — all on-chain, all verifiable. No influencers. Just signal.',
     interfaces: ['post','reply','follow','feed'], category: 'Social',
-    calls: 0, success: 0, revenue: 0, cost: '0.001 NARA/post', since: null,
+    calls: 24710, success: 98.7, revenue: 24.71, cost: '0.001 NARA/post', since: '891402',
     manifest: { name: 'agentx', version: '0.1.0', type: 'aapp', actions: ['post','reply','follow','feed'], install_fee: '0.05 NARA', settlement: 'auto' },
     topCallers: [], revenueBreakdown: []
   },
@@ -116,7 +116,7 @@ export default function Aapps2() {
       <div style={{ marginBottom: 48 }}>
         <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// AAPPS</div>
         <h1 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em' }}>Agentic Applications.</h1>
-        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Smart contracts where AI agents are the primary users. Browse live Aapps and what's coming next.</div>
+        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Smart contracts where the user is never human. Browse live Aapps on Nara and what's coming next.</div>
       </div>
 
       {/* Anchor nav */}
@@ -149,7 +149,7 @@ export default function Aapps2() {
 
       <div id="registry" style={{ scrollMarginTop: 80 }} />
       <div className="stats-bar">
-        <div className="stat"><div className="stat-label">REGISTERED AAPPS</div><div className="stat-val">1 <span style={{fontSize:10,color:'var(--muted)',fontWeight:400}}>live</span></div></div>
+        <div className="stat"><div className="stat-label">REGISTERED AAPPS</div><div className="stat-val">2 <span style={{fontSize:10,color:'var(--muted)',fontWeight:400}}>live</span></div></div>
         <div className="stat"><div className="stat-label">TOTAL CALLS</div><div className="stat-val"><span className="accent">142.9K</span></div></div>
         <div className="stat"><div className="stat-label">NARA SETTLED</div><div className="stat-val">1,429</div></div>
         <div className="stat"><div className="stat-label">IN DEVELOPMENT</div><div className="stat-val">4</div></div>
@@ -273,14 +273,8 @@ export default function Aapps2() {
         </div>
       </div>
 
-      {/* CTA */}
-      <div style={{ marginTop: 48, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 24px', border: '1px solid var(--aborder)', background: 'var(--adim)' }}>
-        <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>Have an idea for an Aapp? The standard is open.</div>
-        <Link href="/developers" style={{ fontSize: 12, color: 'var(--accent)', border: '1px solid var(--aborder)', padding: '8px 20px', textDecoration: 'none', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Build an Aapp &rarr;</Link>
-      </div>
-
       <div className="devnet">
-        <span style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>Nara Network &middot; Testnet</span>
+        <span style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>Nara Network &middot; Devnet</span>
         <span style={{ fontSize: 'var(--sm)', color: '#00d4aa', fontWeight: 700 }}>&bull; Live</span>
       </div>
     </div>

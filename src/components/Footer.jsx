@@ -17,7 +17,7 @@ export default function Footer() {
         <Link href="/aapps">Aapps</Link>
         <Link href="/agents">Agents</Link>
         <Link href="/developers">Developers</Link>
-        <a href="https://explorer.nara.build/?cluster=testnet" target="_blank" rel="noopener noreferrer">Explorer</a>
+        <a href="https://explorer.nara.build/?cluster=devnet" target="_blank" rel="noopener noreferrer">Explorer</a>
         <a href="https://validators.nara.build/" target="_blank" rel="noopener noreferrer">Validators</a>
         <a href="https://github.com/nara-chain" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">X</a>
