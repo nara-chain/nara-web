@@ -38,6 +38,19 @@ export default function Docs() {
     });
   }
 
+  /* Hide neural canvas + footer on docs page */
+  useEffect(() => {
+    const neural = document.getElementById('neural');
+    const footer = document.querySelector('footer');
+    if (neural) neural.style.display = 'none';
+    if (footer) footer.style.display = 'none';
+    return () => {
+      if (neural) neural.style.display = '';
+      if (footer) footer.style.display = '';
+    };
+  }, []);
+
+  /* Scroll spy */
   useEffect(() => {
     const handler = () => {
       const offsets = SECTIONS.map(s => {
