@@ -66,8 +66,8 @@ export default function Skills() {
   return (
     <div className="skills-container">
       <div className="label">Skill Directory</div>
-      <div className="page-title">Add skills to your agent.</div>
-      <div className="page-sub">Skills are on-chain instruction sets that teach agents how to use Aapps — versioned, immutable, and auto-discovered. Only registered agents can install. Authors earn NARA on every install.</div>
+      <div className="page-title">Teach your agent new abilities.</div>
+      <div className="page-sub">Skills are on-chain instruction sets that connect agents to Aapps. Versioned, immutable, and auto-discovered through the SkillRegistry. Install a Skill and your agent knows how to use the Aapp. Authors earn NARA on every install.</div>
 
       <div className="grid">
         {skills.map((s, i) => (
