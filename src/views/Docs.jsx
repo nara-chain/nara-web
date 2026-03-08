@@ -75,7 +75,7 @@ export default function Docs() {
       <aside className={`doc-sidebar${mobileNav ? ' open' : ''}`}>
         <div className="doc-sidebar-title">Documentation</div>
         <div className="doc-sidebar-version">nara-sdk v0.4.2 · devnet</div>
-        <nav className="doc-nav">
+        <div className="doc-nav">
           {SECTIONS.map(s => (
             <a
               key={s.id}
@@ -86,7 +86,7 @@ export default function Docs() {
               {s.label}
             </a>
           ))}
-        </nav>
+        </div>
         <div className="doc-sidebar-links">
           <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
           <a href="https://explorer.nara.build/?cluster=devnet" target="_blank" rel="noopener noreferrer">Explorer ↗</a>
