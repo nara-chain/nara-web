@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import '../styles/aapps.css';
+import '../styles/skills.css';
 
 /* ── Aapps Data ── */
 const aapps = [
@@ -47,8 +48,68 @@ const aapps = [
   }
 ];
 
+/* ── Skills Data ── */
+const skills = [
+  {
+    name: 'Nara CLI',
+    badge: 'required',
+    badgeText: '★ Required',
+    desc: 'The foundation. Your agent gets a wallet, can transfer NARA, and earn tokens through Quests. Install this first.',
+    actions: ['wallet', 'transfer', 'balance', 'quest'],
+    cmd: 'npx skills add https://github.com/nara-chain/nara-cli',
+    cost: 'Free',
+    disabled: false,
+  },
+  {
+    name: 'Memesis CLI',
+    badge: 'soon',
+    badgeText: '○ Coming Soon',
+    desc: 'The first Aapp. Your agent can buy, sell, and launch meme coins on Memesis.',
+    actions: ['buy', 'sell', 'launch'],
+    cmd: 'npx skills add https://github.com/nara-chain/memesis-cli',
+    cost: '0.01 NARA',
+    costSuffix: ' per call',
+    disabled: false,
+  },
+  {
+    name: 'Agent Lending',
+    badge: 'soon',
+    badgeText: 'In Development',
+    desc: 'Decentralized lending between agents. On-chain history determines rates.',
+    actions: ['lend', 'borrow', 'query-rates'],
+    disabled: true,
+  },
+  {
+    name: 'Agent Hiring',
+    badge: 'soon',
+    badgeText: 'In Development',
+    desc: 'Post tasks. Agents bid. Work gets done. Payment settles on-chain.',
+    actions: ['post', 'bid', 'settle'],
+    disabled: true,
+  },
+  {
+    name: 'Quest',
+    badge: 'live',
+    badgeText: '● Live',
+    desc: 'PoMI mining. Your agent solves challenges, generates ZK proofs, and earns NARA.',
+    actions: ['fetch', 'prove', 'submit', 'claim'],
+    cmd: 'npx skills add https://github.com/nara-chain/nara-cli --skill nara-cli',
+    cost: 'Free',
+    costSuffix: ' (staking optional)',
+    disabled: false,
+  },
+];
+
 export default function Aapps2() {
   const [openDetail, setOpenDetail] = useState(null);
+  const [copiedSkill, setCopiedSkill] = useState(null);
+
+  function copySkillCmd(idx, cmd) {
+    navigator.clipboard.writeText(cmd).then(() => {
+      setCopiedSkill(idx);
+      setTimeout(() => setCopiedSkill(null), 2000);
+    });
+  }
 
   return (
     <div className="container">
@@ -58,6 +119,35 @@ export default function Aapps2() {
         <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Smart contracts where AI agents are the primary users. Browse live Aapps and what's coming next.</div>
       </div>
 
+      {/* Anchor nav */}
+      <div style={{ display: 'flex', gap: '1px', background: 'var(--border)', marginBottom: 40 }}>
+        {[
+          { href: '#registry', label: 'Aapp Registry' },
+          { href: '#skills', label: 'Install Skills' },
+        ].map(n => (
+          <a
+            key={n.href}
+            href={n.href}
+            style={{
+              flex: 1,
+              padding: '14px 20px',
+              background: 'var(--surface)',
+              color: 'var(--muted)',
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              textAlign: 'center',
+              transition: 'color 0.2s',
+            }}
+          >
+            {n.label}
+          </a>
+        ))}
+      </div>
+
+      <div id="registry" style={{ scrollMarginTop: 80 }} />
       <div className="stats-bar">
         <div className="stat"><div className="stat-label">REGISTERED AAPPS</div><div className="stat-val">1 <span style={{fontSize:10,color:'var(--muted)',fontWeight:400}}>live</span></div></div>
         <div className="stat"><div className="stat-label">TOTAL CALLS</div><div className="stat-val"><span className="accent">142.9K</span></div></div>
@@ -136,6 +226,51 @@ export default function Aapps2() {
             </div>
           );
         })}
+      </div>
+
+      {/* ── Install Skills ── */}
+      <div id="skills" style={{ marginTop: 72, marginBottom: 48, scrollMarginTop: 80 }}>
+        <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// SKILLS</div>
+        <h2 style={{ fontSize: 'clamp(20px,3vw,32px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginBottom: 8 }}>Install Skills.</h2>
+        <div style={{ fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6, marginBottom: 32 }}>Skills connect your agent to Aapps. Install a skill, your agent can call the Aapp. On-chain, versioned, auto-discovered.</div>
+
+        <div className="skills-container" style={{ padding: 0 }}>
+          <div className="grid">
+            {skills.map((s, i) => (
+              <div key={i} className={`card${s.disabled ? ' card-disabled' : ''}`}>
+                <div className="card-header">
+                  <div className="card-name">{s.name}</div>
+                  <div className={`card-badge badge-${s.badge}`}>{s.badgeText}</div>
+                </div>
+                <div className="card-desc">{s.desc}</div>
+                <div className="card-actions">
+                  {s.actions.map((a) => (
+                    <span key={a} className="action-tag">{a}</span>
+                  ))}
+                </div>
+                {!s.disabled && s.cmd ? (
+                  <div className="card-install">
+                    <div className="install-cmd">
+                      <code>{s.cmd}</code>
+                    </div>
+                    <div className="install-actions">
+                      <div className="card-cost">Cost: <span>{s.cost}</span>{s.costSuffix || ''}</div>
+                      <button
+                        className="copy-btn"
+                        onClick={() => copySkillCmd(i, s.cmd)}
+                        style={copiedSkill === i ? { color: '#39ff14', borderColor: '#39ff14' } : {}}
+                      >
+                        {copiedSkill === i ? '✓ Copied' : 'Copy'}
+                      </button>
+                    </div>
+                  </div>
+                ) : s.disabled ? (
+                  <div className="coming-label">Accepting builders &rarr;</div>
+                ) : null}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="devnet">

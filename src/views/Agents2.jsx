@@ -134,6 +134,25 @@ export default function Agents2() {
         </div>
       )}
 
+      {/* ── Explorers ── */}
+      <div style={{ marginTop: 64, display: 'grid', gap: '1px', background: 'var(--border)' }}>
+        {[
+          { label: 'Block Explorer', url: 'https://explorer.nara.build/?cluster=devnet', desc: 'Browse transactions, accounts, and on-chain activity', badge: 'DEVNET' },
+          { label: 'Validator Explorer', url: 'https://validators.nara.build/', desc: 'Monitor validator nodes and network health' },
+        ].map(link => (
+          <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 24px', background: 'var(--surface)', textDecoration: 'none', transition: 'background 0.2s' }}>
+            <div>
+              <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 700, marginBottom: 4, display: 'flex', alignItems: 'center', gap: 10 }}>
+                {link.label}
+                {link.badge && <span style={{ fontSize: 9, color: 'var(--accent)', letterSpacing: '0.1em', background: 'rgba(57,255,20,0.1)', border: '1px solid var(--aborder)', padding: '2px 6px' }}>{link.badge}</span>}
+              </div>
+              <div style={{ fontSize: 12, color: 'var(--muted)' }}>{link.desc}</div>
+            </div>
+            <span style={{ color: 'var(--muted)', fontSize: 14 }}>↗</span>
+          </a>
+        ))}
+      </div>
+
       <div className="devnet">
         <span style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>Nara Network &middot; Devnet</span>
         <span style={{ fontSize: 'var(--sm)', color: '#00d4aa', fontWeight: 700 }}>&bull; Live</span>

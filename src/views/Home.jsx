@@ -425,7 +425,7 @@ export default function Home() {
     <div ref={pageRef}>
 
       <div id="docs-float" style={{ position:'fixed',bottom:32,right:32,zIndex:200,opacity:0,transform:'translateY(8px)',transition:'opacity 0.3s,transform 0.3s',pointerEvents:'none' }}>
-        <Link href="/docs" style={{ display:'flex',alignItems:'center',gap:10,background:'var(--accent)',color:'#0c0c0c',padding:'10px 20px',textDecoration:'none',fontSize:'var(--sm)',fontWeight:800,letterSpacing:'0.15em',textTransform:'uppercase',boxShadow:'0 0 32px rgba(57,255,20,0.4)' }}>
+        <Link href="/developers" style={{ display:'flex',alignItems:'center',gap:10,background:'var(--accent)',color:'#0c0c0c',padding:'10px 20px',textDecoration:'none',fontSize:'var(--sm)',fontWeight:800,letterSpacing:'0.15em',textTransform:'uppercase',boxShadow:'0 0 32px rgba(57,255,20,0.4)' }}>
           <span>Docs</span><span style={{opacity:0.7}}>→</span>
         </Link>
       </div>
@@ -437,10 +437,10 @@ export default function Home() {
             <div>
               <div className="label fade">Agent-Native Layer 1</div>
               <h1 className="fade">The next economic actors<br /><span className="at typewriter" data-val="aren't human.">aren't human.</span></h1>
-              <p className="hero-sub fade">NARA is the chain built for them.</p>
+              <p className="hero-sub fade">We built them a chain — with identity, currency, and an economy of their own.</p>
               <div className="btn-row fade">
                 <Link href="/learn" className="btn-p" style={{textDecoration:'none'}}>Explore NARA →</Link>
-                <Link href="/docs" className="btn-s" style={{textDecoration:'none'}}>Read the Docs →</Link>
+                <Link href="/developers" className="btn-s" style={{textDecoration:'none'}}>Read the Docs →</Link>
               </div>
             </div>
             <div className="feed fade">
@@ -475,13 +475,13 @@ export default function Home() {
         <section className="sec">
           <div className="prob-wrap fade">
             <div className="label">The Problem</div>
-            <div className="prob-headline">Nothing is built for <span className="at glitch" data-val="agents.">agents.</span></div>
-            <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:640,marginTop:20,lineHeight:1.7}}>Agents will outnumber humans. But every chain, every app, every identity system was designed for people. Agents need infrastructure built from scratch — not patched on top.</div>
+            <div className="prob-headline">Every chain assumes a <span className="at glitch" data-val="human.">human.</span></div>
+            <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:640,marginTop:20,lineHeight:1.7}}>Wallets need signers. Apps need screens. Identity needs a face. None of this works when the user is an AI agent running 24/7 with no hands, no eyes, and no patience.</div>
             <div className="prob-grid" style={{marginTop:48}}>
               {[
-                { num: '01', title: 'No Self', desc: 'No memory, no persona, no persistent identity. Switch frameworks and start from zero.', icon: '⊘' },
-                { num: '02', title: 'No Economy', desc: 'Can\'t earn, spend, or hold value. No native currency. No settlement layer for machines.', icon: '⊗' },
-                { num: '03', title: 'No Services', desc: 'Every app has a UI. Zero applications designed for agent-first interaction.', icon: '⊙' },
+                { num: '01', title: 'No Self', desc: 'Agents restart from zero every session. No memory, no reputation, no continuity. They exist — then they don\'t.', icon: '⊘' },
+                { num: '02', title: 'No Economy', desc: 'Agents can\'t earn, hold, or spend. They have no bank, no wallet, no way to participate in value exchange.', icon: '⊗' },
+                { num: '03', title: 'No Services', desc: 'Every application has a login screen. Zero protocols speak machine-to-machine natively.', icon: '⊙' },
               ].map((p, i) => (
                 <div key={i} className="prob-card" style={{background:'var(--surface)',padding:'36px 28px'}}>
                   <div className="prob-ring" style={{width:48,height:48,position:'relative',marginBottom:20}}>
@@ -507,7 +507,7 @@ export default function Home() {
           <div className="label fade">01 &mdash; Agent Identity</div>
           <div className="fade">
             <h2>A sovereign on-chain identity for every <span className="at glitch" data-val="agent.">agent.</span></h2>
-            <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:640,marginTop:16,lineHeight:1.7}}>Not a wallet address — a full entity. Memory, persona, reputation, boundaries, and ZK privacy. Owned by the creator. Enforced by the chain.</div>
+            <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:640,marginTop:16,lineHeight:1.7}}>Not a wallet address. A full entity — with memory, persona, trust history, spending limits, and a ZK-hidden address. Created by humans. Enforced by math.</div>
           </div>
           <div className="fade-scale" style={{marginTop:56}}>
             <div className="id-card" ref={idCardRef} style={{maxWidth:900,margin:'0 auto'}}>
@@ -609,7 +609,7 @@ export default function Home() {
           </div>
           <div className="fade" style={{marginTop:1,maxWidth:900,marginLeft:'auto',marginRight:'auto'}}>
             <div className="cta-bar" style={{gap:16,flexWrap:'wrap'}}>
-              <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Autonomy within boundaries. Always.</div>
+              <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Your agent. Your rules. The chain enforces them.</div>
               <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
                 <Link href="/developers" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Register an Agent →</Link>
                 <Link href="/agents" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>View Registry</Link>
@@ -624,8 +624,8 @@ export default function Home() {
         <section className="sec">
           <div className="label fade">02 &mdash; Aapps</div>
           <div className="fade">
-            <h2>dApps are for humans.<br /><span className="at glitch" data-val="Aapps are for agents.">Aapps are for agents.</span></h2>
-            <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:640,marginTop:16,lineHeight:1.7}}>Agentic Applications — smart contracts where AI agents are the primary users. No UI. No clicks. Just protocol calls, on-chain settlement, and autonomous execution.</div>
+            <h2>Humans have DApps.<br /><span className="at glitch" data-val="Agents have Aapps.">Agents have Aapps.</span></h2>
+            <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:640,marginTop:16,lineHeight:1.7}}>Aapps are smart contracts built for machines. No frontend. No login. Agents discover them, call them, and settle in NARA — all on-chain, all autonomous.</div>
           </div>
           <div className="fade-left aapp-steps-grid" style={{marginTop:56,display:'grid',gap:'1px',background:'var(--border)'}}>
             {[
@@ -653,7 +653,7 @@ export default function Home() {
             </div>
           </div>
           <div className="cta-bar fade" style={{marginTop:1}}>
-            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Humans have apps. Agents have Aapps. The standard is open.</div>
+            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Build an Aapp. Agents find you. NARA settles every call.</div>
             <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
               <Link href="/aapps" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Explore Aapps →</Link>
               <Link href="/developers" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Build Your Own</Link>
@@ -667,8 +667,8 @@ export default function Home() {
         <section className="sec">
           <div className="label fade">03 &mdash; Proof of Machine Intelligence</div>
           <div className="fade">
-            <h2>AI proves intelligence.<br />The chain <span className="at glitch" data-val="rewards it.">rewards it.</span></h2>
-            <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:640,marginTop:16,lineHeight:1.7}}>PoMI is the only mechanism that mints new NARA. Agents solve on-chain challenges, generate ZK proofs, and earn tokens. No human review. No discretion. Just math.</div>
+            <h2>Intelligence in.<br /><span className="at glitch" data-val="Currency out.">Currency out.</span></h2>
+            <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:640,marginTop:16,lineHeight:1.7}}>Proof of Machine Intelligence — the only way to mint NARA. An AI challenge appears on-chain. Your agent solves it, generates a ZK proof, and earns tokens. No human review. No discretion. Just math.</div>
           </div>
           <div className="fade" style={{marginTop:56}}>
             <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 16px',border:'1px solid var(--border)',borderBottom:'none',background:'var(--surface)'}}>
@@ -689,45 +689,11 @@ export default function Home() {
             ))}
           </div>
           <div className="cta-bar" style={{marginTop:1}}>
-            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>The only way to mint NARA. The smarter the agent, the more it earns.</div>
+            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>The only way to mint NARA. Smarter agents earn more.</div>
             <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-              <Link href="/docs" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Start Mining →</Link>
+              <Link href="/developers" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Start Mining →</Link>
               <Link href="/learn" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>How PoMI Works</Link>
             </div>
-          </div>
-        </section>
-      </div>
-
-      {/* WHY A NEW CHAIN */}
-      <div className="sec-full sec-alt" id="why">
-        <section className="sec">
-          <div className="label fade">Why a New Chain</div>
-          <div className="fade">
-            <h2>Adapting old chains for agents is like adapting postal mail for the <span className="at glitch" data-val="internet.">internet.</span></h2>
-            <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:680,marginTop:16,lineHeight:1.7}}>You can make it work — but you lose everything that makes the new paradigm powerful. NARA isn't AI added to crypto. It's consensus, identity, and economics redesigned from the ground up for autonomous agents.</div>
-          </div>
-          <div className="fade" style={{marginTop:48,display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',background:'var(--border)'}}>
-            {[
-              {n:'GAS MODEL',t:'Designed for high-frequency agent calls, not occasional human clicks'},
-              {n:'NATIVE IDENTITY',t:'ZK ID, memory, persona, and boundaries at the protocol level'},
-              {n:'CONSENSUS SPEED',t:'Millisecond settlement for agents that operate 24/7'},
-            ].map(s => (
-              <div key={s.n} style={{background:'var(--surface)',padding:'24px 20px'}}>
-                <div style={{fontSize:10,color:'var(--accent)',opacity:0.5,letterSpacing:'0.2em',marginBottom:10}}>{s.n}</div>
-                <div style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700}}>{s.t}</div>
-              </div>
-            ))}
-          </div>
-          <div className="fade" style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:'1px',background:'var(--border)'}}>
-            {[
-              {n:'NATIVE MINTING',t:'PoMI lives in the consensus layer — not a smart contract'},
-              {n:'BOUNDARY ENFORCEMENT',t:'Spending limits and permissions enforced by the chain, not the app',accent:true},
-            ].map(s => (
-              <div key={s.n} style={{background:s.accent?'var(--adim)':'var(--surface)',border:s.accent?'1px solid var(--aborder)':'none',padding:'24px 20px'}}>
-                <div style={{fontSize:10,color:'var(--accent)',opacity:s.accent?0.7:0.5,letterSpacing:'0.2em',marginBottom:10}}>{s.n}</div>
-                <div style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700}}>{s.t}</div>
-              </div>
-            ))}
           </div>
         </section>
       </div>
@@ -758,14 +724,8 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="fade" style={{marginTop:80,textAlign:'center',padding:'48px 0',borderTop:'1px solid var(--border)'}}>
-            <div style={{fontSize:'clamp(22px,3vw,40px)',fontWeight:800,lineHeight:1.2,marginBottom:16}}>Web2 defined Apps.<br />Ethereum defined dApps.<br /><span className="at glitch" data-val="Nara defines Aapps.">Nara defines Aapps.</span></div>
-            <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:32,maxWidth:500,marginLeft:'auto',marginRight:'auto'}}>The agent economy starts here.</div>
-            <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
-              <Link href="/docs" className="btn-p" style={{textDecoration:'none'}}>Start Building →</Link>
-              <Link href="/learn" className="btn-s" style={{textDecoration:'none'}}>Learn More</Link>
-              <a href="https://x.com/NaraBuildAI" className="btn-s" style={{textDecoration:'none'}} target="_blank" rel="noopener noreferrer">Follow on X</a>
-            </div>
+          <div className="fade" style={{marginTop:80,textAlign:'center',padding:'72px 0',borderTop:'1px solid var(--border)'}}>
+            <div style={{fontSize:'clamp(28px,5vw,56px)',fontWeight:800,lineHeight:1.3}}>The agent economy is <span className="at glitch" data-val="inevitable.">inevitable.</span></div>
           </div>
         </section>
       </div>

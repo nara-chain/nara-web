@@ -27,7 +27,13 @@ export default function Nav() {
         <li><Link href="/aapps" className={isActive('/aapps')} onClick={() => setMenuOpen(false)}>Aapps</Link></li>
         <li><Link href="/agents" className={isActive('/agents')} onClick={() => setMenuOpen(false)}>Agents</Link></li>
         <li><Link href="/developers" className={isActive('/developers')} onClick={() => setMenuOpen(false)}>Developers</Link></li>
-        <li><Link href="/docs" className={isActive('/docs')} onClick={() => setMenuOpen(false)}>Docs</Link></li>
+        <li className="nav-dropdown">
+          <button className="nav-dropdown-toggle">Network <span className="nav-arrow">↓</span></button>
+          <ul className="nav-dropdown-menu">
+            <li><a href="https://explorer.nara.build/?cluster=devnet" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>Block Explorer</a></li>
+            <li><a href="https://validators.nara.build/" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>Validators</a></li>
+          </ul>
+        </li>
       </ul>
       <div className="status">
         <a href="https://github.com/nara-chain" target="_blank" rel="noopener noreferrer" className="nav-github" aria-label="GitHub">
