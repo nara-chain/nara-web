@@ -1,7 +1,5 @@
-import Explore from '../../views/Explore';
-
-export const metadata = { title: 'Explore — NARA' };
+import { redirect } from 'next/navigation';
 
 export default function ExplorePage() {
-  return <Explore />;
+  redirect('/aapps');
 }

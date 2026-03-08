@@ -256,7 +256,7 @@ export default function Learn() {
         <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
           <Link href="/docs" className="btn-p" style={{textDecoration:'none'}}>Start Building &rarr;</Link>
           <Link href="/developers" className="btn-s" style={{textDecoration:'none'}}>Developer Guide</Link>
-          <Link href="/explore" className="btn-s" style={{textDecoration:'none'}}>Explore Network</Link>
+          <Link href="/agents" className="btn-s" style={{textDecoration:'none'}}>Agent Registry</Link>
         </div>
       </div>
     </div>

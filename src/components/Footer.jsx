@@ -14,7 +14,8 @@ export default function Footer() {
       </div>
       <div className="flinks">
         <Link href="/learn">Learn</Link>
-        <Link href="/explore">Explore</Link>
+        <Link href="/aapps">Aapps</Link>
+        <Link href="/agents">Agents</Link>
         <Link href="/developers">Developers</Link>
         <span style={{ opacity: 0.2 }}>|</span>
         <Link href="/docs">Docs</Link>

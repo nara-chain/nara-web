@@ -365,7 +365,7 @@ export default function Developers() {
         <div className="cta-text">Every function call is an on-chain transaction.<br /><span>Verifiable. Immutable. Sovereign.</span></div>
         <div className="btn-row" style={{ justifyContent: 'center' }}>
           <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer" className="btn-p">Get the SDK &rarr;</a>
-          <Link href="/explore" className="btn-s">Explore Network</Link>
+          <Link href="/agents" className="btn-s">Explore Network</Link>
         </div>
       </div>
     </div>

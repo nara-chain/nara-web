@@ -1,5 +1,7 @@
-import { redirect } from 'next/navigation';
+import Aapps2 from '../../views/Aapps2';
+
+export const metadata = { title: 'Aapps — NARA' };
 
 export default function AappsPage() {
-  redirect('/explore');
+  return <Aapps2 />;
 }
