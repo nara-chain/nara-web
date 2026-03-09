@@ -1,3 +1,3 @@
 export async function GET() {
-  return Response.json({ status: 'ok', chain: 'nara', network: 'testnet' });
+  return Response.json({ status: 'ok', chain: 'nara', network: 'devnet' });
 }

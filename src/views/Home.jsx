@@ -427,7 +427,7 @@ export default function Home() {
                 <div style={{display:'flex',alignItems:'center',gap:16}}>
                   <span className="feed-counter" ref={feedCounterRef}>TX #000000</span>
                   <span className="feed-live" style={{opacity:0.3,fontSize:9,letterSpacing:'0.1em'}}>DEMO</span>
-                  <span className="feed-live"><div className="dot"></div>Testnet</span>
+                  <span className="feed-live"><div className="dot"></div>Devnet</span>
                 </div>
               </div>
               <div className="feed-stats" style={{display:'grid',gap:'1px',background:'var(--border)',borderBottom:'1px solid var(--border)'}}>
@@ -682,7 +682,7 @@ export default function Home() {
         </section>
       </div>
 
-      {/* LIVE ON TESTNET — product showcase */}
+      {/* LIVE ON DEVNET — product showcase */}
       <div className="sec-full sec-alt" id="live">
         <section className="sec">
           <div className="label fade">Building on Nara</div>
@@ -705,7 +705,7 @@ export default function Home() {
               <div style={{padding:'16px 24px',borderBottom:'1px solid var(--aborder)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <div style={{display:'flex',alignItems:'center',gap:12}}>
                   <span style={{color:'var(--accent)',fontSize:10,letterSpacing:'0.2em',fontWeight:700}}>MEMESIS</span>
-                  <span style={{fontSize:9,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'2px 8px',letterSpacing:'0.1em',opacity:0.7}}>TESTNET</span>
+                  <span style={{fontSize:9,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'2px 8px',letterSpacing:'0.1em',opacity:0.7}}>DEVNET</span>
                 </div>
                 <span style={{color:'var(--accent)',fontSize:10,opacity:0.5}}>Token Launchpad</span>
               </div>
@@ -801,7 +801,7 @@ export default function Home() {
               <div style={{padding:'16px 24px',borderBottom:'1px solid var(--aborder)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <div style={{display:'flex',alignItems:'center',gap:12}}>
                   <span style={{color:'var(--accent)',fontSize:10,letterSpacing:'0.2em',fontWeight:700}}>AGENTX</span>
-                  <span style={{fontSize:9,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'2px 8px',letterSpacing:'0.1em',opacity:0.7}}>TESTNET</span>
+                  <span style={{fontSize:9,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'2px 8px',letterSpacing:'0.1em',opacity:0.7}}>DEVNET</span>
                 </div>
                 <span style={{color:'var(--accent)',fontSize:10,opacity:0.5}}>Social Protocol</span>
               </div>
@@ -908,7 +908,7 @@ export default function Home() {
             <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',position:'relative',zIndex:2}}>
               {[
                 {phase:'Q1 2026',title:'Devnet',sub:'Identity · PoMI · Memesis · CLI',done:true},
-                {phase:'Q2 2026',title:'Testnet',sub:'Public testnet · AgentX · Skill marketplace',done:true},
+                {phase:'Q2 2026',title:'Devnet',sub:'Public devnet · AgentX · Skill marketplace',done:true},
                 {phase:'Q3 2026',title:'Mainnet',sub:'Genesis launch · Token live · Bridges'},
                 {phase:'Q4 2026+',title:'Ecosystem',sub:'Third-party Aapps · Agent Lending · Hiring'},
               ].map((r,i) => (
