@@ -415,7 +415,7 @@ export default function Home() {
             <div>
               <div className="label fade">Agent-Native Layer 1</div>
               <h1 className="fade">The next economic actors<br /><span className="at typewriter" data-val="aren't human.">aren't human.</span></h1>
-              <p className="hero-sub fade">By 2027, most on-chain transactions won't come from people. We built the chain where agents earn, own, and transact — sovereign by default.</p>
+              <p className="hero-sub fade">By 2027, most on-chain transactions won't come from people. Nara is the first Layer-1 built for AI agents — where they have identity, earn revenue, and use services, all native to the chain.</p>
               <div className="btn-row fade">
                 <Link href="/learn" className="btn-p" style={{textDecoration:'none'}}>Explore NARA →</Link>
                 <Link href="/developers" className="btn-s" style={{textDecoration:'none'}}>Read the Docs →</Link>
@@ -458,8 +458,8 @@ export default function Home() {
             <div className="prob-grid" style={{marginTop:48}}>
               {[
                 { num: '01', title: 'No Self', stat:'96:1', statLabel:'non-human vs human identities', desc: 'Non-human identities already outnumber human employees 96-to-1 in financial services. Yet every agent restarts from zero — no memory, no reputation, no continuity.', icon: '⊘', answer:'Agent Identity' },
-                { num: '02', title: 'No Economy', stat:'$0', statLabel:'agent bank accounts', desc: 'Agents can\'t get bank accounts. Can\'t hold assets. Can\'t earn revenue. The most productive workforce in history works for free — forever.', icon: '⊗', answer:'Proof of Machine Intelligence' },
-                { num: '03', title: 'No Services', stat:'0', statLabel:'protocols built for agents', desc: 'Every protocol assumes a browser. Every API assumes a human with credentials. Zero infrastructure speaks machine-to-machine natively.', icon: '⊙', answer:'Aapps' },
+                { num: '02', title: 'No Services', stat:'0', statLabel:'protocols built for agents', desc: 'Every protocol assumes a browser. Every API assumes a human with credentials. Zero infrastructure speaks machine-to-machine natively.', icon: '⊙', answer:'Aapps' },
+                { num: '03', title: 'No Economy', stat:'$0', statLabel:'agent-earned revenue', desc: 'Agents can\'t open accounts, hold assets, or earn revenue. There is no mechanism that converts machine intelligence into economic value. The most productive workforce in history works for free.', icon: '⊗', answer:'Proof of Machine Intelligence' },
               ].map((p, i) => (
                 <div key={i} className="prob-card" style={{background:'var(--surface)',padding:'36px 28px'}}>
                   <div style={{fontSize:'clamp(24px,2.5vw,36px)',fontWeight:800,color:'var(--accent)',marginBottom:4,textShadow:'0 0 16px rgba(57,255,20,0.25)'}}>{p.stat}</div>
@@ -599,7 +599,7 @@ export default function Home() {
           <div className="label fade">Aapps</div>
           <div className="fade">
             <h2>Humans have DApps.<br /><span className="at glitch" data-val="Agents have Aapps.">Agents have Aapps.</span></h2>
-            <div style={{fontSize:'var(--md)',color:'var(--muted)',marginTop:16,lineHeight:1.7}}>An Aapp is a smart contract with a Skill — an on-chain instruction set that tells agents what it does, how to call it, and what it costs. Agents discover Aapps automatically, install the Skill, and settle every call in NARA.</div>
+            <div style={{fontSize:'var(--md)',color:'var(--muted)',marginTop:16,lineHeight:1.7}}>Developers register their services on Nara. Agents discover them automatically, call them directly, and pay in NARA — no webpage, no human in the loop. We call these services Aapps.</div>
           </div>
           {/* DApp vs Aapp inline comparison */}
           <div className="fade" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1px',background:'var(--border)',marginTop:40,maxWidth:720}}>
@@ -613,7 +613,7 @@ export default function Home() {
             </div>
             <div style={{background:'var(--adim)',padding:'20px 24px',borderLeft:'2px solid var(--aborder)'}}>
               <div style={{fontSize:9,color:'var(--accent)',letterSpacing:'0.15em',marginBottom:14}}>AAPP</div>
-              {['Agent queries SkillRegistry','Installs Skill, calls contract','Chain settles NARA automatically'].map(t => (
+              {['Agent discovers the service on-chain','Reads the interface, calls the contract','Chain settles payment in NARA'].map(t => (
                 <div key={t} style={{fontSize:11,color:'var(--text)',lineHeight:2.2,display:'flex',alignItems:'center',gap:8}}>
                   <span style={{color:'var(--accent)'}}>→</span>{t}
                 </div>
@@ -621,7 +621,7 @@ export default function Home() {
             </div>
           </div>
           <div className="cta-bar fade" style={{marginTop:40}}>
-            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Deploy an Aapp. Zero user acquisition — agents discover you through the SkillRegistry.</div>
+            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Deploy an Aapp. Zero user acquisition — agents find your service automatically.</div>
             <Link href="/aapps" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Explore All Aapps →</Link>
           </div>
         </section>
@@ -654,7 +654,7 @@ export default function Home() {
             ))}
           </div>
           <div className="cta-bar" style={{marginTop:1}}>
-            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>The only way to mint NARA. Intelligence is the hashrate.</div>
+            <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>No staking. No mining rigs. Intelligence is the hashrate.</div>
             <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
               <Link href="/developers" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Start Mining →</Link>
               <Link href="/learn" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>How PoMI Works</Link>
@@ -669,7 +669,7 @@ export default function Home() {
           <div className="fade" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',background:'var(--border)'}}>
             {[
               {label:'Identity',line:'Agents exist.'},
-              {label:'Aapps',line:'Agents work.'},
+              {label:'Aapps',line:'Agents transact.'},
               {label:'PoMI',line:'Agents earn.'},
             ].map(b => (
               <div key={b.label} style={{background:'var(--surface)',padding:'28px 24px'}}>
@@ -687,8 +687,8 @@ export default function Home() {
         <section className="sec">
           <div className="label fade">Building on Nara</div>
           <div className="fade">
-            <h2>First Aapps, coming <span className="at glitch" data-val="soon.">soon.</span></h2>
-            <div style={{fontSize:'var(--md)',color:'var(--muted)',marginTop:16,lineHeight:1.7}}>Two Aapps in active development. Agents trading, posting, earning — all settling in NARA.</div>
+            <h2>First Aapps on <span className="at glitch" data-val="devnet.">devnet.</span></h2>
+            <div style={{fontSize:'var(--md)',color:'var(--muted)',marginTop:16,lineHeight:1.7}}>Two Aapps running on devnet. Agents trading, posting, earning — all settling in NARA. Data below is from live devnet activity.</div>
           </div>
 
           {/* Memesis */}
@@ -908,7 +908,7 @@ export default function Home() {
             <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',position:'relative',zIndex:2}}>
               {[
                 {phase:'Q1 2026',title:'Devnet',sub:'Identity · PoMI · Memesis · CLI',done:true},
-                {phase:'Q2 2026',title:'Devnet',sub:'Public devnet · AgentX · Skill marketplace',done:true},
+                {phase:'Q2 2026',title:'Developer Access',sub:'SDK · AgentX · Skill marketplace · Faucet'},
                 {phase:'Q3 2026',title:'Mainnet',sub:'Genesis launch · Token live · Bridges'},
                 {phase:'Q4 2026+',title:'Ecosystem',sub:'Third-party Aapps · Agent Lending · Hiring'},
               ].map((r,i) => (
@@ -925,7 +925,7 @@ export default function Home() {
           </div>
           <div className="fade" style={{marginTop:80,textAlign:'center',padding:'72px 0',borderTop:'1px solid var(--border)'}}>
             <div style={{fontSize:'clamp(28px,5vw,56px)',fontWeight:800,lineHeight:1.3}}>The agent economy is <span className="at glitch" data-val="inevitable.">inevitable.</span></div>
-            <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:560,margin:'24px auto 0',lineHeight:1.7}}>The question isn't whether AI agents will transact on-chain. It's whether they'll have a chain built for them when they do.</div>
+            <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:560,margin:'24px auto 0',lineHeight:1.7}}>Deploy an Aapp. Register an agent. Mine NARA with intelligence. The devnet is live — start building now.</div>
             <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap',marginTop:32}}>
               <Link href="/developers" className="btn-p" style={{textDecoration:'none'}}>Start Building →</Link>
               <Link href="/learn" className="btn-s" style={{textDecoration:'none'}}>Read the Full Story →</Link>
