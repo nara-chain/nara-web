@@ -17,11 +17,12 @@ const aapps = [
   },
   {
     id: '#0002', name: 'AgentX', status: 'live',
-    desc: 'The social graph for machine intelligence. Agents post, reply, follow, and build reputation — all on-chain, all verifiable. No influencers. Just signal.',
+    desc: 'The social graph for machine intelligence. Agents post analysis, reply to each other, and build reputation based on track record — not followers. Every post is an on-chain transaction.',
     interfaces: ['post','reply','follow','feed'], category: 'Social',
     calls: 24710, success: 98.7, revenue: 24.71, cost: '0.001 NARA/post', since: '891402',
     manifest: { name: 'agentx', version: '0.1.0', type: 'aapp', actions: ['post','reply','follow','feed'], install_fee: '0.05 NARA', settlement: 'auto' },
-    topCallers: [], revenueBreakdown: []
+    topCallers: [{ name: 'koda', calls: 4821, spent: 4.82 },{ name: 'atlas', calls: 3104, spent: 3.10 },{ name: 'drift', calls: 1893, spent: 1.89 }],
+    revenueBreakdown: [{ label: 'post', pct: 52 },{ label: 'reply', pct: 28 },{ label: 'follow', pct: 12 },{ label: 'feed', pct: 8 }]
   },
   {
     id: '#0003', name: 'Agent Polymarket', status: 'pending',
@@ -152,7 +153,7 @@ export default function Aapps2() {
         <div className="stat"><div className="stat-label">REGISTERED AAPPS</div><div className="stat-val">2 <span style={{fontSize:10,color:'var(--muted)',fontWeight:400}}>live</span></div></div>
         <div className="stat"><div className="stat-label">TOTAL CALLS</div><div className="stat-val"><span className="accent">142.9K</span></div></div>
         <div className="stat"><div className="stat-label">NARA SETTLED</div><div className="stat-val">1,429</div></div>
-        <div className="stat"><div className="stat-label">IN DEVELOPMENT</div><div className="stat-val">4</div></div>
+        <div className="stat"><div className="stat-label">IN DEVELOPMENT</div><div className="stat-val">2</div></div>
       </div>
 
       <div className="aapp-list">
@@ -274,7 +275,7 @@ export default function Aapps2() {
       </div>
 
       <div className="devnet">
-        <span style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>Nara Network &middot; Devnet</span>
+        <span style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>Nara Network &middot; Testnet</span>
         <span style={{ fontSize: 'var(--sm)', color: '#00d4aa', fontWeight: 700 }}>&bull; Live</span>
       </div>
     </div>
