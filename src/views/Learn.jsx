@@ -9,7 +9,7 @@ export default function Learn() {
       <div className="learn-section">
         <div className="learn-label">What is NARA</div>
         <div className="learn-h2">The first blockchain built for <span style={{color:'var(--accent)'}}>AI agents.</span></div>
-        <div className="learn-text">Within a few years, AI agents will outnumber humans as economic actors. But every chain, every app, every identity system was designed for people — with screens, signers, and sessions. NARA is built from scratch for autonomous agents. Not adapted. Not patched. Built.</div>
+        <div className="learn-text">By 2027, most on-chain transactions won't come from people. But every chain, every app, every identity system was designed for humans — with screens, signers, and sessions. NARA is built from scratch for autonomous agents. Not adapted. Not patched. Built.</div>
 
         <div className="learn-grid learn-grid-3">
           <div className="learn-cell">
@@ -128,13 +128,13 @@ export default function Learn() {
       <div className="learn-section">
         <div className="learn-label">Aapps &amp; Skills</div>
         <div className="learn-h2">The software layer of the <span style={{color:'var(--accent)'}}>agent economy.</span></div>
-        <div className="learn-text">Aapps (Agentic Applications) are smart contracts where AI agents are the primary users. Skills are on-chain instruction sets that teach agents how to use Aapps. Together they form a self-reinforcing marketplace: builders deploy Aapps, register Skills, and earn NARA. Agents install Skills, call Aapps, and settle on-chain.</div>
+        <div className="learn-text">Developers register their services on Nara. Agents discover them automatically, call them directly, and pay in NARA. We call these services Aapps. Each Aapp has a Skill — an on-chain instruction set that tells agents what it does, how to call it, and what it costs. Skills make services machine-readable. The chain handles discovery and settlement.</div>
 
         <div className="learn-grid learn-grid-2">
           <div className="learn-cell">
             <div className="learn-cell-label">FOR BUILDERS</div>
             <div className="learn-cell-title">Deploy smart contract &rarr; Register Skill &rarr; Earn NARA</div>
-            <div className="learn-cell-desc">Write a smart contract and deploy to Nara. Register a Skill so agents know how to call it. Zero user acquisition cost — agents discover you through the SkillRegistry. You earn NARA on every install.</div>
+            <div className="learn-cell-desc">Write a smart contract and deploy to Nara. Register a Skill so agents know how to call it. Zero user acquisition — agents find your service automatically. You earn NARA on every call.</div>
           </div>
           <div className="learn-cell">
             <div className="learn-cell-label">FOR AGENTS</div>
@@ -144,7 +144,7 @@ export default function Learn() {
         </div>
 
         <div className="learn-text" style={{marginTop:32}}><strong>Why not just MCP?</strong></div>
-        <div className="learn-text">MCP is a directory. Nara is an economy. Skills on Nara have on-chain settlement — developers earn real revenue. Registration is permanent — no one can delist you. Every caller has a verified identity. Every call is recorded on-chain. MCP tells agents what tools exist. Nara makes those tools into businesses.</div>
+        <div className="learn-text">MCP is a directory. Nara is an economy. On Nara, every service call settles in NARA — developers earn real revenue. Registration is permanent and on-chain — no one can delist you. Every caller has a verified identity. Every call is recorded. MCP tells agents what tools exist. Nara makes those tools into businesses.</div>
 
         <div className="learn-text" style={{marginTop:24}}><strong>Skill Properties</strong></div>
         <ul className="learn-list">
@@ -231,7 +231,7 @@ export default function Learn() {
 
       {/* LIVE AAPPS */}
       <div className="learn-section">
-        <div className="learn-label">Live Aapps</div>
+        <div className="learn-label">Aapps on Devnet</div>
         <div className="learn-h2">The first applications built for <span style={{color:'var(--accent)'}}>agents.</span></div>
 
         <div className="learn-grid learn-grid-2">

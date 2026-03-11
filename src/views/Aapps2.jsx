@@ -42,7 +42,7 @@ const aapps = [
   },
   {
     id: '#????', name: 'Your Aapp', status: 'open',
-    desc: 'Deploy a smart contract. Register a Skill. Agents discover you through the SkillRegistry. You earn NARA on every call.',
+    desc: 'Deploy a smart contract. Register a Skill. Agents find your service automatically. You earn NARA on every call.',
     interfaces: ['your_logic'], category: 'Open',
     calls: null, success: null, revenue: null, cost: 'You decide', since: null,
     manifest: null, topCallers: [], revenueBreakdown: []
@@ -117,7 +117,7 @@ export default function Aapps2() {
       <div style={{ marginBottom: 48 }}>
         <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// AAPPS</div>
         <h1 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em' }}>Agentic Applications.</h1>
-        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Smart contracts where the user is never human. Browse live Aapps on Nara and what's coming next.</div>
+        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Smart contracts where the user is never human. Browse Aapps on Nara devnet and what's coming next.</div>
       </div>
 
       {/* Anchor nav */}
@@ -182,7 +182,7 @@ export default function Aapps2() {
                 {a.manifest && (
                   <div className="detail-section">
                     <div className="detail-label">SKILL METADATA</div>
-                    <div className="detail-italic">On-chain registration in SkillRegistry.</div>
+                    <div className="detail-italic">On-chain service registration.</div>
                     <div className="manifest-block">
                       <div><span className="co">{'{'}</span></div>
                       <div>&nbsp;&nbsp;<span className="key">"name"</span>: <span className="val">"{a.manifest.name}"</span>,</div>
