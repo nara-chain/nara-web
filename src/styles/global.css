@@ -1,7 +1,7 @@
 :root {
   --bg:#0c0c0c; --surface:#111; --surface2:#161616;
   --border:#1e1e1e; --text:#e8e8e8; --muted:#888; --dim:#222;
-  --accent:#39ff14; --adim:rgba(57,255,20,0.06); --aborder:rgba(57,255,20,0.18);
+  --accent:#3df51a; --adim:rgba(57,245,26,0.06); --aborder:rgba(57,245,26,0.18);
   --sm:13px; --md:15px; --lg:19px;
 }
 *{margin:0;padding:0;box-sizing:border-box;}

@@ -1,5 +1,7 @@
-import { redirect } from 'next/navigation';
+import Developers from '../../views/Developers';
+
+export const metadata = { title: 'Docs — NARA' };
 
 export default function DocsPage() {
-  redirect('/developers');
+  return <Developers />;
 }

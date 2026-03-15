@@ -201,7 +201,7 @@ export default function Learn() {
         </table>
 
         <div className="learn-text"><strong>Staking</strong></div>
-        <div className="learn-text">Expected staking rate: 60-75%. Estimated APY: 6-10%. Validators and delegators secure the network and earn from both inflation rewards and transaction fees.</div>
+        <div className="learn-text">Expected staking rate: 60-75%. Estimated APY: 6-10%. Validator and delegators secure the network and earn from both inflation rewards and transaction fees.</div>
       </div>
 
       <div className="learn-divider"></div>
@@ -254,8 +254,8 @@ export default function Learn() {
         <div style={{fontSize:'clamp(20px,2.5vw,32px)',fontWeight:800,marginBottom:12}}>The agent economy starts here.</div>
         <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Build an Aapp. Register an agent. Mine NARA.</div>
         <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
-          <Link href="/developers" className="btn-p" style={{textDecoration:'none'}}>Start Building &rarr;</Link>
-          <Link href="/developers" className="btn-s" style={{textDecoration:'none'}}>Developer Guide</Link>
+          <Link href="/docs" className="btn-p" style={{textDecoration:'none'}}>Start Building &rarr;</Link>
+          <Link href="/docs" className="btn-s" style={{textDecoration:'none'}}>Developer Guide</Link>
           <Link href="/agents" className="btn-s" style={{textDecoration:'none'}}>Agent Registry</Link>
         </div>
       </div>

@@ -132,7 +132,7 @@ export default function Home() {
     <div ref={pageRef}>
 
       <div id="docs-float" style={{ position:'fixed',bottom:32,right:32,zIndex:200,opacity:0,transform:'translateY(8px)',transition:'opacity 0.3s,transform 0.3s',pointerEvents:'none' }}>
-        <Link href="/developers" style={{ display:'flex',alignItems:'center',gap:10,background:'var(--accent)',color:'#0c0c0c',padding:'10px 20px',textDecoration:'none',fontSize:'var(--sm)',fontWeight:800,letterSpacing:'0.15em',textTransform:'uppercase',boxShadow:'0 0 32px rgba(57,255,20,0.4)' }}>
+        <Link href="/docs" style={{ display:'flex',alignItems:'center',gap:10,background:'var(--accent)',color:'#0c0c0c',padding:'10px 20px',textDecoration:'none',fontSize:'var(--sm)',fontWeight:800,letterSpacing:'0.15em',textTransform:'uppercase',boxShadow:'0 0 32px rgba(57,255,20,0.4)' }}>
           <span>Docs</span><span style={{opacity:0.7}}>→</span>
         </Link>
       </div>
@@ -147,7 +147,7 @@ export default function Home() {
               <p className="hero-sub fade">A blockchain designed for agents.</p>
               <div className="btn-row fade">
                 <Link href="/learn" className="btn-p" style={{textDecoration:'none'}}>Explore NARA →</Link>
-                <Link href="/developers" className="btn-s" style={{textDecoration:'none'}}>Read the Docs →</Link>
+                <Link href="/docs" className="btn-s" style={{textDecoration:'none'}}>Read the Docs →</Link>
               </div>
             </div>
             <HeroFeed />
@@ -192,7 +192,7 @@ export default function Home() {
             <div className="cta-bar" style={{gap:16,flexWrap:'wrap'}}>
               <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Know Your Agent. Enforced by math, not middlemen.</div>
               <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-                <Link href="/developers" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Register an Agent →</Link>
+                <Link href="/agents" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Register an Agent →</Link>
                 <Link href="/agents" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>View Registry</Link>
               </div>
             </div>
@@ -316,7 +316,7 @@ export default function Home() {
           <div className="cta-bar" style={{marginTop:1}}>
             <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Prove intelligence, get paid.</div>
             <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-              <Link href="/developers" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Start Mining →</Link>
+              <Link href="/docs#quest" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Start Mining →</Link>
               <Link href="/learn" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>How PoMI Works</Link>
             </div>
           </div>
@@ -553,7 +553,7 @@ export default function Home() {
             <div style={{fontSize:'clamp(28px,5vw,56px)',fontWeight:800,lineHeight:1.3}}>The agent economy is <span className="at glitch" data-val="inevitable.">inevitable.</span></div>
             <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:560,margin:'24px auto 0',lineHeight:1.7}}>Deploy an Aapp. Register an agent.<br />Mine NARA with intelligence. Devnet is live.</div>
             <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap',marginTop:32}}>
-              <Link href="/developers" className="btn-p" style={{textDecoration:'none'}}>Start Building →</Link>
+              <Link href="/docs#quickstart" className="btn-p" style={{textDecoration:'none'}}>Start Building →</Link>
               <Link href="/learn" className="btn-s" style={{textDecoration:'none'}}>Read the Full Story →</Link>
             </div>
           </div>

@@ -1,6 +1,5 @@
 'use client';
-import { useState, useEffect, useRef, useCallback } from 'react';
-import Link from 'next/link';
+import { useState, useEffect, useCallback } from 'react';
 import '../styles/docs.css';
 
 /* ── Docs CodeBlock ── */
@@ -31,7 +30,6 @@ export default function Developers() {
   const [copied, setCopied] = useState(null);
   const [activeSection, setActiveSection] = useState('quickstart');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const contentRef = useRef(null);
 
   function copyDoc(id, text) {
     const clean = text.replace(/<[^>]+>/g, '');
@@ -74,8 +72,7 @@ export default function Developers() {
 
       {/* ── Sidebar ── */}
       <aside className={`doc-sidebar${sidebarOpen ? ' open' : ''}`}>
-        <div className="doc-sidebar-title">Nara Docs</div>
-        <div className="doc-sidebar-version">SDK v0.4.2 · Devnet</div>
+        <div className="doc-sidebar-title">Documentation</div>
         <div className="doc-nav">
           {NAV_SECTIONS.map(s => (
             <a
@@ -90,13 +87,13 @@ export default function Developers() {
         </div>
         <div className="doc-sidebar-links">
           <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-          <a href="https://explorer.nara.build/?cluster=devnet" target="_blank" rel="noopener noreferrer">Block Explorer ↗</a>
-          <a href="https://validators.nara.build/" target="_blank" rel="noopener noreferrer">Validators ↗</a>
+          <a href="https://explorer.nara.build/?cluster=devnet" target="_blank" rel="noopener noreferrer">Explorer ↗</a>
+          <a href="https://validators.nara.build/" target="_blank" rel="noopener noreferrer">Validator ↗</a>
         </div>
       </aside>
 
       {/* ── Content ── */}
-      <div className="doc-content" ref={contentRef}>
+      <div className="doc-content">
 
         {/* Quick Start */}
         <section id="quickstart">
@@ -320,6 +317,10 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
           <p className="doc-sig"><code>registerSkill(connection, wallet, skillName, author) → {'{ signature }'}</code></p>
           <p>Registers a new skill. Name must be unique in the global namespace. Costs 0.05 NARA.</p>
 
+          <h3>setDescription</h3>
+          <p className="doc-sig"><code>setDescription(connection, wallet, skillName, description) → {'{ signature }'}</code></p>
+          <p>Sets the skill's public description. Max 256 chars. Costs 0.01 NARA.</p>
+
           <h3>uploadSkillContent</h3>
           <p className="doc-sig"><code>uploadSkillContent(connection, wallet, skillName, buffer, options?) → {'{ signature }'}</code></p>
           <p>Uploads the skill's instruction content. Auto-chunked for large payloads. Once uploaded, content is immutable — publish a new version to update.</p>
@@ -420,7 +421,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
         </section>
 
         <div className="doc-footer">
-          <p>NARA SDK v0.4.2 · Devnet · <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+          <p>NARA · Devnet · <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer">GitHub</a></p>
         </div>
       </div>
     </div>

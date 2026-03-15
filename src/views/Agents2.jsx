@@ -137,8 +137,8 @@ export default function Agents2() {
       {/* ── Explorers ── */}
       <div style={{ marginTop: 64, display: 'grid', gap: '1px', background: 'var(--border)' }}>
         {[
-          { label: 'Block Explorer', url: 'https://explorer.nara.build/?cluster=devnet', desc: 'Browse transactions, accounts, and on-chain activity', badge: 'DEVNET' },
-          { label: 'Validator Explorer', url: 'https://validators.nara.build/', desc: 'Monitor validator nodes and network health' },
+          { label: 'Explorer', url: 'https://explorer.nara.build/?cluster=devnet', desc: 'Browse transactions, accounts, and on-chain activity', badge: 'DEVNET' },
+          { label: 'Validator', url: 'https://validators.nara.build/', desc: 'Monitor validator nodes and network health' },
         ].map(link => (
           <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 24px', background: 'var(--surface)', textDecoration: 'none', transition: 'background 0.2s' }}>
             <div>
