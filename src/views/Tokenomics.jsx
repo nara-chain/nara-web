@@ -7,63 +7,69 @@ const TOTAL_SUPPLY = 500_000_000;
 
 const allocations = [
   {
+    id: 'investors', label: 'Investors', pct: 21, amount: 105_000_000,
+    circulating: 'vesting', staked: 'after-sale',
+    color: '#6366f1',
+    desc: 'Seed, strategic, and public presale rounds. Subject to lock-up schedules. Staked after purchase. Not staked until sold.',
+  },
+  {
     id: 'pomi', label: 'PoMI Mining', pct: 20, amount: 100_000_000,
     circulating: true, staked: false,
-    color: '#3df51a',
+    color: '#3df51a',  /* brand green */
     desc: 'Mining rewards distributed to agents solving on-chain quests. Output scales with network participation. Estimated ~1 year to fully distribute.',
   },
   {
     id: 'genesis', label: 'Genesis Stake', pct: 15, amount: 75_000_000,
     circulating: false, staked: true,
-    color: '#2bc410',
+    color: '#f59e0b',
     desc: 'Permanently staked at genesis. Never enters circulation. Secures the network from day one.',
   },
   {
     id: 'node', label: 'Node Subsidy', pct: 10, amount: 50_000_000,
     circulating: false, staked: true,
-    color: '#1f9a0a',
-    desc: 'Validator incentive pool. Nodes with >1% stake can apply for a matching subsidy (up to 1x). First come, first served.',
-  },
-  {
-    id: 'investors', label: 'Investors', pct: 25, amount: 125_000_000,
-    circulating: 'vesting', staked: 'after-sale',
-    color: '#177508',
-    desc: 'Seed, strategic, and public presale rounds. Subject to lock-up schedules. Staked after purchase.',
+    color: '#ec4899',
+    desc: 'Validator incentive pool. Never circulates. Nodes with >1% stake can apply for a matching subsidy (up to 1x). First come, first served.',
   },
   {
     id: 'community', label: 'Community', pct: 10, amount: 50_000_000,
     circulating: 'vesting', staked: false,
-    color: '#0f5504',
-    desc: 'Hackathon prizes, developer grants, ecosystem migration incentives, and community campaigns.',
+    color: '#14b8a6',
+    desc: 'Community operations, hackathon prizes, developer grants, Solana ecosystem migration incentives, and community campaigns.',
   },
   {
-    id: 'labs', label: 'NARA Labs', pct: 7.5, amount: 37_500_000,
+    id: 'labs', label: 'NARA Labs', pct: 8, amount: 40_000_000,
     circulating: 'vesting', staked: true,
-    color: '#5aff3a',
+    color: '#f43f5e',
     desc: '50% unlocked at launch, remainder locked for 12 months. All tokens staked.',
   },
   {
-    id: 'foundation', label: 'NARA Foundation', pct: 7.5, amount: 37_500_000,
+    id: 'foundation', label: 'NARA Foundation', pct: 8, amount: 40_000_000,
     circulating: 'vesting', staked: true,
-    color: '#7aff5a',
+    color: '#8b5cf6',
     desc: '50% unlocked at launch, remainder locked for 12 months. All tokens staked.',
   },
   {
-    id: 'airdrop', label: 'Genesis Airdrop', pct: 2, amount: 10_000_000,
+    id: 'ecosystem', label: 'Ecosystem Rewards', pct: 3, amount: 15_000_000,
     circulating: true, staked: false,
-    color: '#a0ff80',
-    desc: 'Distributed to early DeFi and AI ecosystem participants across 4 rounds.',
+    color: '#06b6d4',
+    desc: 'AgentRegistry rewards, ModelHub subsidies, SkillHub incentives, AgentX rewards, and Aapp grants.',
   },
   {
-    id: 'ecosystem', label: 'Ecosystem Rewards', pct: 2, amount: 10_000_000,
+    id: 'airdrop', label: 'Solana Airdrop', pct: 2, amount: 10_000_000,
     circulating: true, staked: false,
-    color: '#c0ffa0',
-    desc: 'AgentRegistry rewards, ModelHub subsidies, SkillHub incentives, and Aapp grants.',
+    color: '#a78bfa',
+    desc: 'Airdrop to Solana holders, distributed across 4 rounds.',
+  },
+  {
+    id: 'points', label: 'Points Airdrop', pct: 2, amount: 10_000_000,
+    circulating: true, staked: false,
+    color: '#fb923c',
+    desc: 'Airdrop based on agent-generated points. Rewards active agent participation in the ecosystem.',
   },
   {
     id: 'zk', label: 'ZK Pool Liquidity', pct: 1, amount: 5_000_000,
     circulating: false, staked: false,
-    color: '#e0ffc0',
+    color: '#64748b',
     desc: 'Injected into the ZK identity pool at genesis. Permanently locked — never circulates.',
   },
 ];
@@ -254,7 +260,7 @@ export default function Tokenomics() {
           <div className="tk-mech-card">
             <div className="tk-mech-title">Staking &amp; Security</div>
             <div className="tk-mech-body">
-              40% of total supply is staked at genesis or through vesting. Validators earn fees from transaction processing. Node subsidy provides matching stake for validators who commit early.
+              41% of total supply is staked at genesis or through vesting. Validators earn fees from transaction processing. Node subsidy provides matching stake for validators who commit early.
             </div>
           </div>
           <div className="tk-mech-card">

@@ -163,25 +163,8 @@ export default function Learn() {
         <div className="learn-h2">500,000,000 <span style={{color:'var(--accent)'}}>NARA</span></div>
         <div className="learn-text">Fixed supply. No inflation. 26% permanently locked at genesis. Agents earn through intelligence, not issuance.</div>
 
-        <div className="learn-text"><strong>Allocation</strong></div>
-        <table className="learn-table">
-          <thead><tr><th>Category</th><th>%</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr><td>PoMI Mining</td><td>20%</td><td>Mining rewards — scales with participation, estimated ~1 year</td></tr>
-            <tr><td>Genesis Stake</td><td>15%</td><td>Permanently staked, never circulates</td></tr>
-            <tr><td>Investors</td><td>25%</td><td>Seed, strategic, public presale — with lock-up</td></tr>
-            <tr><td>Node Subsidy</td><td>10%</td><td>Validator incentives, permanently staked</td></tr>
-            <tr><td>Community</td><td>10%</td><td>Hackathons, grants, ecosystem migration incentives</td></tr>
-            <tr><td>NARA Labs</td><td>7.5%</td><td>50% at launch, remainder locked 12 months</td></tr>
-            <tr><td>NARA Foundation</td><td>7.5%</td><td>50% at launch, remainder locked 12 months</td></tr>
-            <tr><td>Genesis Airdrop</td><td>2%</td><td>Distributed to early DeFi &amp; AI participants, 4 rounds</td></tr>
-            <tr><td>Ecosystem Rewards</td><td>2%</td><td>AgentRegistry, ModelHub, SkillHub, Aapp grants</td></tr>
-            <tr><td>ZK Pool Liquidity</td><td>1%</td><td>Injected at genesis, permanently locked</td></tr>
-          </tbody>
-        </table>
-
         <div className="learn-text" style={{marginTop:16}}>
-          <Link href="/tokenomics" style={{color:'var(--accent)',textDecoration:'none',fontWeight:700}}>View full tokenomics breakdown with interactive chart &rarr;</Link>
+          <Link href="/tokenomics" style={{color:'var(--accent)',textDecoration:'none',fontWeight:700}}>View full allocation breakdown with interactive chart &rarr;</Link>
         </div>
       </div>
 
