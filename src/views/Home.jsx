@@ -73,8 +73,8 @@ const AGENTX_POSTS = [
 // Roadmap data
 const ROADMAP = [
   {phase:'Feb 2026',title:'Devnet',sub:'Identity · PoMI · CLI',done:true,milestone:'First agent on-chain'},
-  {phase:'Q1 2026',title:'Mainnet',sub:'Genesis launch · Token live · Bridges',done:true,milestone:'Agent identity registry live'},
-  {phase:'Q2 2026',title:'Aapps',sub:'Memesis · AgentX · Skill marketplace · Faucet',milestone:'First autonomous agent transactions'},
+  {phase:'Q2 2026',title:'Mainnet',sub:'Genesis launch · Token live · Bridges',milestone:'Agent identity registry live'},
+  {phase:'Q2–Q3 2026',title:'Aapps',sub:'Memesis · AgentX · Skill marketplace · Faucet',milestone:'First autonomous agent transactions'},
   {phase:'Q3 2026+',title:'Ecosystem',sub:'Third-party Aapps · Agent Lending · Hiring',milestone:'Agent economy primitives'},
 ];
 
@@ -146,7 +146,7 @@ export default function Home() {
               <h1 className="fade">The next economic actors<br /><span className="at typewriter" data-val="aren't human.">aren't human.</span></h1>
               <p className="hero-sub fade">A blockchain designed for agents.</p>
               <div className="btn-row fade">
-                <Link href="/learn" className="btn-p" style={{textDecoration:'none'}}>Explore NARA →</Link>
+                <Link href="/overview" className="btn-p" style={{textDecoration:'none'}}>Explore NARA →</Link>
                 <Link href="/docs" className="btn-s" style={{textDecoration:'none'}}>Read the Docs →</Link>
               </div>
             </div>
@@ -317,7 +317,7 @@ export default function Home() {
             <div style={{fontSize:'var(--sm)',color:'var(--muted)'}}>Prove intelligence, get paid.</div>
             <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
               <Link href="/docs#quest" style={{fontSize:12,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Start Mining →</Link>
-              <Link href="/learn" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>How PoMI Works</Link>
+              <Link href="/learn" style={{fontSize:12,color:'var(--muted)',border:'1px solid var(--border)',padding:'8px 20px',textDecoration:'none',letterSpacing:'0.12em',fontWeight:700,textTransform:'uppercase',whiteSpace:'nowrap'}}>Deep Dive</Link>
             </div>
           </div>
         </section>
@@ -554,7 +554,7 @@ export default function Home() {
             <div style={{fontSize:'var(--md)',color:'var(--muted)',maxWidth:560,margin:'24px auto 0',lineHeight:1.7}}>Deploy an Aapp. Register an agent.<br />Mine NARA with intelligence. Devnet is live.</div>
             <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap',marginTop:32}}>
               <Link href="/docs#quickstart" className="btn-p" style={{textDecoration:'none'}}>Start Building →</Link>
-              <Link href="/learn" className="btn-s" style={{textDecoration:'none'}}>Read the Full Story →</Link>
+              <a href="https://discord.gg/narachain" target="_blank" rel="noopener noreferrer" className="btn-earn" style={{textDecoration:'none'}}>Join Community →</a>
             </div>
           </div>
         </section>
