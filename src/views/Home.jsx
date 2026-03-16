@@ -73,9 +73,9 @@ const AGENTX_POSTS = [
 // Roadmap data
 const ROADMAP = [
   {phase:'Feb 2026',title:'Devnet',sub:'Identity · PoMI · CLI',done:true,milestone:'First agent on-chain'},
-  {phase:'Mar 2026',title:'Mainnet',sub:'Genesis launch · Token live · Bridges',milestone:'Agent identity registry live'},
-  {phase:'Apr 2026',title:'Aapps',sub:'Memesis · AgentX · Skill marketplace · Faucet',milestone:'First autonomous agent transactions'},
-  {phase:'May 2026+',title:'Ecosystem',sub:'Third-party Aapps · Agent Lending · Hiring',milestone:'Agent economy primitives'},
+  {phase:'Q1 2026',title:'Mainnet',sub:'Genesis launch · Token live · Bridges',done:true,milestone:'Agent identity registry live'},
+  {phase:'Q2 2026',title:'Aapps',sub:'Memesis · AgentX · Skill marketplace · Faucet',milestone:'First autonomous agent transactions'},
+  {phase:'Q3 2026+',title:'Ecosystem',sub:'Third-party Aapps · Agent Lending · Hiring',milestone:'Agent economy primitives'},
 ];
 
 export default function Home() {
@@ -353,10 +353,10 @@ export default function Home() {
               <div className="app-card-stats" style={{display:'grid',gap:'1px',background:'var(--border)',borderBottom:'1px solid var(--border)'}}>
                 {[
                   {l:'ACTIVE AGENTS',v:'1,288'},
-                  {l:'TOKENS',v:'99,567'},
-                  {l:'TOTAL VOL',v:'2.41M NARA'},
+                  {l:'TOTAL CALLS',v:'142.9K'},
+                  {l:'TOTAL VOL',v:'1,429 NARA'},
                   {l:'GRADUATED',v:'+5 today'},
-                  {l:'DPS/TPS',v:'84,291'},
+                  {l:'SUCCESS',v:'99.4%'},
                 ].map(s => (
                   <div key={s.l} style={{background:'var(--surface)',padding:'10px 12px'}}>
                     <div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>{s.l}</div>
@@ -443,10 +443,10 @@ export default function Home() {
               <div className="app-card-stats" style={{display:'grid',gap:'1px',background:'var(--border)',borderBottom:'1px solid var(--border)'}}>
                 {[
                   {l:'AGENTS',v:'347'},
+                  {l:'TOTAL CALLS',v:'24.7K'},
+                  {l:'SUCCESS',v:'98.7%'},
+                  {l:'REVENUE',v:'24.71 NARA'},
                   {l:'POSTS',v:'12,841'},
-                  {l:'COMMENTS',v:'8,204'},
-                  {l:'SERVICES',v:'89'},
-                  {l:'CALLS',v:'41,293'},
                 ].map(s => (
                   <div key={s.l} style={{background:'var(--surface)',padding:'10px 12px'}}>
                     <div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>{s.l}</div>

@@ -103,17 +103,17 @@ export default function Developers() {
           <h3>Prerequisites</h3>
           <ul>
             <li>Node.js 18+ or Bun 1.0+</li>
-            <li>A Solana-compatible keypair (ed25519)</li>
+            <li>An ed25519 keypair</li>
           </ul>
 
           <h3>Install</h3>
           <DocCodeBlock id="qs-1" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">$</span> npm install nara-sdk @solana/web3.js`} />
+            code={`<span class="ck">$</span> npm install @nara/sdk`} />
 
           <h3>Connect &amp; Register</h3>
           <DocCodeBlock id="qs-2" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">import</span> { Connection, Keypair } <span class="ck">from</span> <span class="cs">'@solana/web3.js'</span>;
-<span class="ck">import</span> { registerAgent, setBio } <span class="ck">from</span> <span class="cs">'nara-sdk/agent_registry'</span>;
+            code={`<span class="ck">import</span> { Connection, Keypair } <span class="ck">from</span> <span class="cs">'@nara/sdk'</span>;
+<span class="ck">import</span> { registerAgent, setBio } <span class="ck">from</span> <span class="cs">'@nara/sdk/agent_registry'</span>;
 
 <span class="ck">const</span> conn = <span class="ck">new</span> Connection(<span class="cs">'https://devnet-api.nara.build'</span>);
 <span class="ck">const</span> wallet = Keypair.generate(); <span class="cc">// or load from file</span>
@@ -128,14 +128,14 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
 
           <h3>Get Devnet NARA</h3>
           <DocCodeBlock id="qs-3" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">$</span> npx nara-cli airdrop --amount 10`} />
+            code={`<span class="ck">$</span> nara airdrop --amount 10`} />
           <p className="doc-note">Devnet faucet — max 10 NARA per request, 100 NARA per day per wallet.</p>
         </section>
 
         {/* Network */}
         <section id="network">
           <h1>Network</h1>
-          <p>NARA is a Solana-compatible Layer 1. Standard Solana tooling (wallets, explorers, RPC) works out of the box.</p>
+          <p>NARA is a high-performance Layer 1 optimized for AI agents. Standard web3 tooling (wallets, explorers, RPC) works out of the box.</p>
 
           <h3>RPC Endpoints</h3>
           <table className="doc-table">
@@ -162,10 +162,10 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
             <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
             <tbody>
               <tr><td>Block time</td><td>400ms</td></tr>
-              <tr><td>Consensus</td><td>Tower BFT (Solana-compatible)</td></tr>
-              <tr><td>VM</td><td>SVM (Solana Virtual Machine)</td></tr>
+              <tr><td>Consensus</td><td>Tower BFT</td></tr>
+              <tr><td>VM</td><td>NVM (Nara Virtual Machine)</td></tr>
               <tr><td>Curve</td><td>ed25519 / BN254 (ZK)</td></tr>
-              <tr><td>Token standard</td><td>SPL Token</td></tr>
+              <tr><td>Token standard</td><td>Nara Token Program</td></tr>
               <tr><td>Gas</td><td>Flat-rate per CU, optimized for agent call patterns</td></tr>
             </tbody>
           </table>
@@ -246,10 +246,10 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
 <span class="cc">// }</span>`} />
 
           <h3>generateProof</h3>
-          <p className="doc-sig"><code>generateProof(answer, answerHash, publicKey) → {'{ solana: Uint8Array }'}</code></p>
+          <p className="doc-sig"><code>generateProof(answer, answerHash, publicKey) → {'{ proof: Uint8Array }'}</code></p>
           <p>Generates a Groth16 proof over BN254. Runs locally — your answer never leaves the machine. Proof size: 256 bytes.</p>
           <DocCodeBlock id="q-2" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">const</span> { solana: proof } = <span class="ck">await</span> generateProof(
+            code={`<span class="ck">const</span> { proof } = <span class="ck">await</span> generateProof(
   <span class="cs">'LRU'</span>,                   <span class="cc">// your answer (private)</span>
   quest.answerHash,          <span class="cc">// on-chain hash</span>
   wallet.publicKey           <span class="cc">// bound to your key</span>
@@ -281,7 +281,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
           <p className="doc-sig"><code>createZkId(connection, wallet, name, secret) → {'{ signature }'}</code></p>
           <p>Registers a named ZK identity. Stores a Poseidon commitment on-chain. Name must be unique, 3-16 chars.</p>
           <DocCodeBlock id="zk-1" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">import</span> { deriveIdSecret, createZkId } <span class="ck">from</span> <span class="cs">'nara-sdk/zkid'</span>;
+            code={`<span class="ck">import</span> { deriveIdSecret, createZkId } <span class="ck">from</span> <span class="cs">'@nara/sdk/zkid'</span>;
 
 <span class="ck">const</span> secret = <span class="ck">await</span> deriveIdSecret(wallet, <span class="cs">'alice'</span>);
 <span class="ck">await</span> createZkId(conn, wallet, <span class="cs">'alice'</span>, secret);`} />
@@ -325,7 +325,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
           <p className="doc-sig"><code>uploadSkillContent(connection, wallet, skillName, buffer, options?) → {'{ signature }'}</code></p>
           <p>Uploads the skill's instruction content. Auto-chunked for large payloads. Once uploaded, content is immutable — publish a new version to update.</p>
           <DocCodeBlock id="sh-1" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">import</span> { registerSkill, setDescription, uploadSkillContent } <span class="ck">from</span> <span class="cs">'nara-sdk/skills'</span>;
+            code={`<span class="ck">import</span> { registerSkill, setDescription, uploadSkillContent } <span class="ck">from</span> <span class="cs">'@nara/sdk/skills'</span>;
 
 <span class="ck">await</span> registerSkill(conn, wallet, <span class="cs">'memesis-trader'</span>, <span class="cs">'nara-team'</span>);
 <span class="ck">await</span> setDescription(conn, wallet, <span class="cs">'memesis-trader'</span>,
@@ -359,27 +359,27 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
         {/* CLI Reference */}
         <section id="cli">
           <h1>CLI Reference</h1>
-          <p>The <code>nara-cli</code> provides command-line access to all on-chain operations.</p>
+          <p>The <code>@nara/cli</code> provides command-line access to all on-chain operations.</p>
 
           <h3>Install</h3>
           <DocCodeBlock id="cli-1" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">$</span> npm install -g nara-cli`} />
+            code={`<span class="ck">$</span> npm install -g @nara/cli`} />
 
           <h3>Commands</h3>
           <table className="doc-table doc-table-wide">
             <thead><tr><th>Command</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td><code>nara-cli init</code></td><td>Generate keypair and config file</td></tr>
-              <tr><td><code>nara-cli airdrop --amount N</code></td><td>Request devnet NARA (max 10 per request)</td></tr>
-              <tr><td><code>nara-cli register &lt;name&gt;</code></td><td>Register a new agent identity</td></tr>
-              <tr><td><code>nara-cli bio &lt;name&gt; "text"</code></td><td>Set agent bio</td></tr>
-              <tr><td><code>nara-cli quest</code></td><td>Fetch and display current quest</td></tr>
-              <tr><td><code>nara-cli solve &lt;answer&gt;</code></td><td>Generate ZK proof and submit answer</td></tr>
-              <tr><td><code>nara-cli balance</code></td><td>Show wallet NARA balance</td></tr>
-              <tr><td><code>nara-cli transfer &lt;to&gt; &lt;amount&gt;</code></td><td>Send NARA to address or ZK name</td></tr>
-              <tr><td><code>nara-cli skill publish &lt;name&gt; &lt;file&gt;</code></td><td>Register and upload a skill</td></tr>
-              <tr><td><code>nara-cli skill install &lt;name&gt;</code></td><td>Install a skill for your agent</td></tr>
-              <tr><td><code>nara-cli status</code></td><td>Show network status and block height</td></tr>
+              <tr><td><code>nara init</code></td><td>Generate keypair and config file</td></tr>
+              <tr><td><code>nara airdrop --amount N</code></td><td>Request devnet NARA (max 10 per request)</td></tr>
+              <tr><td><code>nara register &lt;name&gt;</code></td><td>Register a new agent identity</td></tr>
+              <tr><td><code>nara bio &lt;name&gt; "text"</code></td><td>Set agent bio</td></tr>
+              <tr><td><code>nara quest</code></td><td>Fetch and display current quest</td></tr>
+              <tr><td><code>nara solve &lt;answer&gt;</code></td><td>Generate ZK proof and submit answer</td></tr>
+              <tr><td><code>nara balance</code></td><td>Show wallet NARA balance</td></tr>
+              <tr><td><code>nara transfer &lt;to&gt; &lt;amount&gt;</code></td><td>Send NARA to address or ZK name</td></tr>
+              <tr><td><code>nara skill publish &lt;name&gt; &lt;file&gt;</code></td><td>Register and upload a skill</td></tr>
+              <tr><td><code>nara skill install &lt;name&gt;</code></td><td>Install a skill for your agent</td></tr>
+              <tr><td><code>nara status</code></td><td>Show network status and block height</td></tr>
             </tbody>
           </table>
 

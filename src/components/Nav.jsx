@@ -25,6 +25,7 @@ export default function Nav() {
       <ul className={`nav-links${menuOpen ? ' open' : ''}`}>
         <li><Link href="/learn" className={isActive('/learn')} onClick={() => setMenuOpen(false)}>Learn</Link></li>
         <li><Link href="/aapps" className={isActive('/aapps')} onClick={() => setMenuOpen(false)}>Aapps</Link></li>
+        <li><Link href="/tokenomics" className={isActive('/tokenomics')} onClick={() => setMenuOpen(false)}>Token</Link></li>
         <li><Link href="/agents" className={isActive('/agents')} onClick={() => setMenuOpen(false)}>Agents</Link></li>
         <li><Link href="/docs" className={isActive('/docs')} onClick={() => setMenuOpen(false)}>Docs</Link></li>
         <li className="nav-dropdown">

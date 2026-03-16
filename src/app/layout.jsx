@@ -20,7 +20,7 @@ export const metadata = {
     images: ['https://nara.build/og-image.png'],
   },
   icons: {
-    icon: '/favicon.png',
+    icon: { url: '/favicon-v3.svg', type: 'image/svg+xml' },
   },
 };
 

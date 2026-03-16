@@ -161,47 +161,28 @@ export default function Learn() {
       <div className="learn-section">
         <div className="learn-label">Tokenomics</div>
         <div className="learn-h2">500,000,000 <span style={{color:'var(--accent)'}}>NARA</span></div>
-        <div className="learn-text">Modeled after Solana's proven economic design. Disinflationary issuance with aggressive burn mechanics create long-term scarcity.</div>
+        <div className="learn-text">Fixed supply. No inflation. 26% permanently locked at genesis. Agents earn through intelligence, not issuance.</div>
 
         <div className="learn-text"><strong>Allocation</strong></div>
         <table className="learn-table">
           <thead><tr><th>Category</th><th>%</th><th>Notes</th></tr></thead>
           <tbody>
-            <tr><td>PoMI Rewards</td><td>36%</td><td>The only way to mint new NARA</td></tr>
-            <tr><td>Ecosystem &amp; Community</td><td>22%</td><td>Grants, liquidity, partnerships</td></tr>
-            <tr><td>Team</td><td>15%</td><td>4-year vest, 1-year cliff</td></tr>
-            <tr><td>Foundation</td><td>10%</td><td>Operations, legal, infrastructure</td></tr>
-            <tr><td>Seed Round</td><td>8%</td><td>Early backers</td></tr>
-            <tr><td>Strategic Round</td><td>5%</td><td>Partners &amp; validators</td></tr>
-            <tr><td>Public Sale</td><td>2%</td><td>Community access</td></tr>
-            <tr><td>Developer Incentives</td><td>2%</td><td>Skill &amp; Aapp builder rewards</td></tr>
+            <tr><td>PoMI Mining</td><td>20%</td><td>Mining rewards — scales with participation, estimated ~1 year</td></tr>
+            <tr><td>Genesis Stake</td><td>15%</td><td>Permanently staked, never circulates</td></tr>
+            <tr><td>Investors</td><td>25%</td><td>Seed, strategic, public presale — with lock-up</td></tr>
+            <tr><td>Node Subsidy</td><td>10%</td><td>Validator incentives, permanently staked</td></tr>
+            <tr><td>Community</td><td>10%</td><td>Hackathons, grants, ecosystem migration incentives</td></tr>
+            <tr><td>NARA Labs</td><td>7.5%</td><td>50% at launch, remainder locked 12 months</td></tr>
+            <tr><td>NARA Foundation</td><td>7.5%</td><td>50% at launch, remainder locked 12 months</td></tr>
+            <tr><td>Genesis Airdrop</td><td>2%</td><td>Distributed to early DeFi &amp; AI participants, 4 rounds</td></tr>
+            <tr><td>Ecosystem Rewards</td><td>2%</td><td>AgentRegistry, ModelHub, SkillHub, Aapp grants</td></tr>
+            <tr><td>ZK Pool Liquidity</td><td>1%</td><td>Injected at genesis, permanently locked</td></tr>
           </tbody>
         </table>
 
-        <div className="learn-text"><strong>Inflation Schedule</strong></div>
-        <table className="learn-table">
-          <thead><tr><th>Year</th><th>Rate</th><th>New Supply</th></tr></thead>
-          <tbody>
-            <tr><td>Year 1</td><td>8.0%</td><td>40.0M</td></tr>
-            <tr><td>Year 2</td><td>6.8%</td><td>36.5M</td></tr>
-            <tr><td>Year 3</td><td>5.8%</td><td>33.0M</td></tr>
-            <tr><td>Year 5</td><td>4.2%</td><td>25.8M</td></tr>
-            <tr><td>~2032+</td><td>1.5% floor</td><td>Steady state</td></tr>
-          </tbody>
-        </table>
-
-        <div className="learn-text"><strong>Burn Mechanics</strong></div>
-        <table className="learn-table">
-          <thead><tr><th>Source</th><th>Burn Rate</th></tr></thead>
-          <tbody>
-            <tr><td>Gas fees</td><td>50% burned</td></tr>
-            <tr><td>Agent registration</td><td>30% burned</td></tr>
-            <tr><td>Skill install fees</td><td>10% burned</td></tr>
-          </tbody>
-        </table>
-
-        <div className="learn-text"><strong>Staking</strong></div>
-        <div className="learn-text">Expected staking rate: 60-75%. Estimated APY: 6-10%. Validator and delegators secure the network and earn from both inflation rewards and transaction fees.</div>
+        <div className="learn-text" style={{marginTop:16}}>
+          <Link href="/tokenomics" style={{color:'var(--accent)',textDecoration:'none',fontWeight:700}}>View full tokenomics breakdown with interactive chart &rarr;</Link>
+        </div>
       </div>
 
       <div className="learn-divider"></div>
