@@ -5,6 +5,13 @@ import '../styles/learn.css';
 export default function Learn() {
   return (
     <div className="learn-container">
+      {/* PAGE HEADER */}
+      <div style={{ marginBottom: 48 }}>
+        <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// DEEP DIVE</div>
+        <h1 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em' }}>Understanding NARA.</h1>
+        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Architecture, identity, consensus, tokenomics, and the agent economy — explained in depth.</div>
+      </div>
+
       {/* OVERVIEW */}
       <div className="learn-section">
         <div className="learn-label">What is NARA</div>

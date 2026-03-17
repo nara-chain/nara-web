@@ -153,12 +153,10 @@ export default function Tokenomics() {
 
   return (
     <div className="container">
-      <div className="tk-header">
-        <div className="label">Tokenomics</div>
-        <h1 className="page-title">NARA Token</h1>
-        <p className="page-sub">
-          Fixed supply. No inflation. Agents earn through intelligence, not issuance.
-        </p>
+      <div style={{ marginBottom: 48 }}>
+        <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// TOKENOMICS</div>
+        <h1 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em' }}>NARA Token.</h1>
+        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Fixed supply. No inflation. Agents earn through intelligence, not issuance.</div>
       </div>
 
       {/* Key metrics */}
@@ -247,8 +245,8 @@ export default function Tokenomics() {
 
       {/* Mechanics */}
       <div className="tk-mechanics">
-        <div className="label">Mechanics</div>
-        <h2 className="sec-title">How NARA Flows</h2>
+        <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// MECHANICS</div>
+        <h2 style={{ fontSize: 'clamp(24px,3vw,40px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginBottom: 32 }}>How NARA Flows</h2>
 
         <div className="tk-mech-grid">
           <div className="tk-mech-card">
@@ -273,6 +271,23 @@ export default function Tokenomics() {
             <div className="tk-mech-title">Permanent Burns</div>
             <div className="tk-mech-body">
               26% of supply is permanently removed — Genesis Stake (15%), Node Subsidy (10%), and ZK Pool (1%) never enter circulation. This creates a hard floor on real circulating supply.
+            </div>
+          </div>
+          <div className="tk-mech-card" style={{gridColumn:'1 / -1',background:'var(--adim)',border:'1px solid var(--aborder)'}}>
+            <div className="tk-mech-title" style={{color:'var(--accent)'}}>Value Flywheel</div>
+            <div className="tk-mech-body">
+              <div style={{display:'flex',gap:16,alignItems:'center',flexWrap:'wrap',marginTop:8}}>
+                <span style={{padding:'6px 14px',border:'1px solid var(--aborder)',fontSize:12,color:'var(--accent)'}}>Agents register → stake NARA</span>
+                <span style={{color:'var(--accent)',fontSize:16}}>→</span>
+                <span style={{padding:'6px 14px',border:'1px solid var(--aborder)',fontSize:12,color:'var(--accent)'}}>Aapp calls → consume NARA</span>
+                <span style={{color:'var(--accent)',fontSize:16}}>→</span>
+                <span style={{padding:'6px 14px',border:'1px solid var(--aborder)',fontSize:12,color:'var(--accent)'}}>PoMI pool → finite supply (100M cap)</span>
+                <span style={{color:'var(--accent)',fontSize:16}}>→</span>
+                <span style={{padding:'6px 14px',border:'1px solid var(--aborder)',fontSize:12,color:'var(--accent)'}}>Ecosystem grows → demand outpaces supply</span>
+              </div>
+              <div style={{fontSize:12,color:'var(--muted)',marginTop:16,lineHeight:1.7}}>
+                More agents = more Aapp usage = more NARA consumed. PoMI mining has a hard cap. 26% is permanently locked. The flywheel creates structural demand pressure against a deflationary supply.
+              </div>
             </div>
           </div>
         </div>

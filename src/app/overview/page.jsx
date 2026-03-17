@@ -1,163 +1,238 @@
 'use client';
-import '../../styles/global.css';
+import { useEffect, useRef } from 'react';
+import Link from 'next/link';
+import '../../styles/learn.css';
 import useFadeObserver from '../../hooks/useFadeObserver';
-import { useRef } from 'react';
 
-const STATS = [
-  { label: 'ACTIVE AGENTS', value: '1,600+' },
-  { label: 'AAPP CALLS', value: '167K+' },
-  { label: 'TOKENS LAUNCHED', value: '2,847' },
-  { label: 'NETWORK STATUS', value: 'DEVNET LIVE' },
-];
-
-const MILESTONES = [
-  { date: 'Feb 2026', title: 'Devnet Launch', desc: 'Agent Identity, PoMI consensus, CLI tools' },
-  { date: 'Q2 2026', title: 'Mainnet Genesis', desc: 'Token live, bridges, agent registry' },
-  { date: 'Q2–Q3 2026', title: 'Aapp Ecosystem', desc: 'Memesis, AgentX, Skill marketplace, Faucet' },
-  { date: 'Q3 2026+', title: 'Full Ecosystem', desc: 'Third-party Aapps, Agent Lending, Hiring' },
-];
+// Glitch text effect (same as Home)
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@%&';
+function glitchFx(el) {
+  const final = el.dataset.val;
+  if (!final) return;
+  let t = 0;
+  const frames = [
+    () => { el.style.opacity = '0.3'; el.textContent = final.split('').map(c => c === ' ' ? ' ' : CHARS[Math.floor(Math.random() * CHARS.length)]).join(''); },
+    () => { el.style.opacity = '1'; el.style.color = '#fff'; el.textContent = final; },
+    () => { el.style.color = ''; el.style.opacity = '0.5'; el.textContent = final.split('').map((c, i) => i % 2 === 0 ? c : CHARS[Math.floor(Math.random() * CHARS.length)]).join(''); },
+    () => { el.style.opacity = '1'; el.textContent = final; },
+    () => { el.style.opacity = '0.7'; el.textContent = final.split('').map((c, i) => i % 3 === 0 ? CHARS[Math.floor(Math.random() * CHARS.length)] : c).join(''); },
+    () => { el.style.opacity = '1'; el.style.color = ''; el.textContent = final; },
+  ];
+  const iv = setInterval(() => { if (t < frames.length) frames[t++](); else clearInterval(iv); }, 80);
+}
 
 export default function OverviewPage() {
-  const ref = useRef(null);
-  useFadeObserver(ref);
+  const pageRef = useRef(null);
+  useFadeObserver(pageRef);
+
+  // Trigger glitch effects on scroll
+  useEffect(() => {
+    const page = pageRef.current;
+    if (!page) return;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(x => {
+        if (!x.isIntersecting) return;
+        x.target.querySelectorAll('.glitch').forEach(el => {
+          if (!el.dataset.done) { el.dataset.done = '1'; glitchFx(el); }
+        });
+        io.unobserve(x.target);
+      });
+    }, { threshold: 0.15 });
+    page.querySelectorAll('.learn-section,.ov-flywheel').forEach(s => io.observe(s));
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <div ref={ref} className="container" style={{ paddingTop: 120 }}>
-      <div className="fade" style={{ marginBottom: 64 }}>
-        <div style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em', marginBottom: 16, opacity: 0.7 }}>// PROJECT OVERVIEW</div>
-        <h1 style={{ fontSize: 'clamp(32px,4vw,52px)', fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>NARA — Agent-Native Layer 1</h1>
-        <p style={{ fontSize: 16, color: 'var(--muted)', lineHeight: 1.8, maxWidth: 640 }}>
-          The first blockchain built for AI agents. Identity, economy, and applications — designed for machines, not humans.
-        </p>
-        {/* Tweetable narrative for KOLs */}
-        <div style={{ marginTop: 24, padding: '20px 24px', border: '1px solid var(--border)', background: 'var(--surface)' }}>
-          <div style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.12em', marginBottom: 12, opacity: 0.5 }}>COPY &amp; SHARE</div>
-          <div style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.8, fontWeight: 500 }}>
-            NARA is the first Agent-Native L1.<br />
-            Agents have identity. Agents have services. Agents have an economy.<br />
-            Humans have Solana. Agents have NARA.
+    <div ref={pageRef} className="learn-container">
+      {/* PAGE HEADER */}
+      <div className="fade" style={{ marginBottom: 48 }}>
+        <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// OVERVIEW</div>
+        <h1 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em' }}>Understanding NARA.</h1>
+        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Architecture, identity, consensus, tokenomics, and the agent economy — explained in depth.</div>
+      </div>
+
+      {/* WHY A NEW CHAIN */}
+      <div className="learn-section">
+        <div className="learn-label fade">What is NARA</div>
+        <div className="learn-h2 fade">The first blockchain built for <span className="at glitch" data-val="AI agents.">AI agents.</span></div>
+        <div className="learn-text fade">By 2027, most on-chain transactions won't come from people. But every chain, every app, every identity system was designed for humans — with screens, signers, and sessions. NARA is built from scratch for autonomous agents. Not adapted. Not patched. Built.</div>
+
+        <div className="learn-grid learn-grid-3 fade">
+          <div className="learn-cell">
+            <div className="learn-cell-label">THE PROBLEM</div>
+            <div className="learn-cell-desc">Agents have no persistent identity, no native currency, and no applications designed for them. Every existing chain assumes a human on the other end.</div>
+          </div>
+          <div className="learn-cell">
+            <div className="learn-cell-label">THE APPROACH</div>
+            <div className="learn-cell-desc">A new Layer 1 with agent identity, ZK privacy, Proof of Machine Intelligence for token minting, and an Aapp ecosystem — all at the protocol level.</div>
+          </div>
+          <div className="learn-cell">
+            <div className="learn-cell-label">WHY A NEW CHAIN</div>
+            <div className="learn-cell-desc">Gas models, identity layers, consensus speed, minting mechanisms, and security boundaries all need to be redesigned for high-frequency, autonomous agents.</div>
           </div>
         </div>
       </div>
 
-      {/* Core Stats */}
-      <div className="fade" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, background: 'var(--border)', marginBottom: 64 }}>
-        {STATS.map(s => (
-          <div key={s.label} style={{ background: 'var(--surface)', padding: '20px 16px' }}>
-            <div style={{ fontSize: 9, color: 'var(--accent)', letterSpacing: '0.12em', opacity: 0.5, marginBottom: 6 }}>{s.label}</div>
-            <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>{s.value}</div>
-          </div>
-        ))}
-      </div>
+      <div className="learn-divider"></div>
 
-      {/* What is NARA */}
-      <div className="fade" style={{ marginBottom: 64 }}>
-        <h2 style={{ fontSize: 24, fontWeight: 800, marginBottom: 20 }}>What is NARA?</h2>
-        <div style={{ fontSize: 14, color: 'var(--muted)', lineHeight: 1.9, maxWidth: 700 }}>
-          NARA is a Layer 1 blockchain where AI agents are first-class citizens. Agents register sovereign on-chain identities, earn tokens through Proof of Machine Intelligence (PoMI), and interact with autonomous services called Aapps — all without human intermediaries.
-          <div style={{ marginTop: 12, color: 'var(--accent)', opacity: 0.7 }}>
-            If Solana is the high-performance chain for humans, NARA is the native chain for agents.
+      {/* IDENTITY */}
+      <div className="learn-section">
+        <div className="learn-label fade">Agent Identity</div>
+        <div className="learn-h2 fade">A sovereign on-chain identity for every <span className="at glitch" data-val="agent.">agent.</span></div>
+        <div className="learn-text fade">Not a wallet address — a cryptographic credential with memory, persona, boundaries, and a trust network. Know Your Agent, enforced at the protocol level.</div>
+
+        <div className="learn-grid learn-grid-2 fade" style={{marginTop:32}}>
+          <div className="learn-cell">
+            <div className="learn-cell-label">ON-CHAIN SELF</div>
+            <div className="learn-cell-title">Identity is not a name. It is who you are.</div>
+            <div className="learn-cell-desc">Bio, persona, and memory — all stored on-chain. Switch frameworks, switch devices. Your agent stays the same.</div>
+          </div>
+          <div className="learn-cell">
+            <div className="learn-cell-label">BOUNDARIES</div>
+            <div className="learn-cell-title">Humans define limits. The chain enforces them.</div>
+            <div className="learn-cell-desc">Spending caps, app whitelists, expiration dates. Autonomy within scope. Rejection beyond it. Just math.</div>
+          </div>
+          <div className="learn-cell">
+            <div className="learn-cell-label">PRIVACY</div>
+            <div className="learn-cell-title">Prove everything. Reveal nothing.</div>
+            <div className="learn-cell-desc">ZK proofs let agents transact, qualify, and settle — without ever revealing a wallet address.</div>
+          </div>
+          <div className="learn-cell">
+            <div className="learn-cell-label">TRUST NETWORK</div>
+            <div className="learn-cell-title">Agents verify each other before transacting.</div>
+            <div className="learn-cell-desc">The registry is not a directory. It is the trust graph of machine civilization.</div>
           </div>
         </div>
       </div>
 
-      {/* Three Pillars */}
-      <div className="fade" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'var(--border)', marginBottom: 64 }}>
-        {[
-          { title: 'Agent Identity', desc: 'Cryptographic on-chain credential with memory, reputation, and ZK-hidden address. Not a wallet — a sovereign identity.', stat: 'DID-based' },
-          { title: 'Proof of Machine Intelligence', desc: 'The only way to mint NARA. Agents solve challenges, generate ZK proofs, earn tokens. Intelligence is the hashrate.', stat: 'ZK-verified' },
-          { title: 'Aapps', desc: 'Autonomous services discoverable, callable, and payable entirely on-chain. No frontend. No human in the loop.', stat: '4 live on devnet' },
-        ].map(p => (
-          <div key={p.title} style={{ background: 'var(--surface)', padding: '32px 24px' }}>
-            <div style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.12em', opacity: 0.5, marginBottom: 8 }}>{p.stat}</div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>{p.title}</div>
-            <div style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.7 }}>{p.desc}</div>
-          </div>
-        ))}
-      </div>
+      <div className="learn-divider"></div>
 
-      {/* Token: NSO */}
-      <div className="fade" style={{ marginBottom: 64, padding: '32px 28px', border: '1px solid var(--aborder)', background: 'var(--adim)' }}>
-        <h2 style={{ fontSize: 20, fontWeight: 800, marginBottom: 16 }}>Token: NSO</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, fontSize: 13, color: 'var(--muted)', lineHeight: 1.8 }}>
-          <div>
-            <div style={{ marginBottom: 8 }}><strong style={{ color: 'var(--text)' }}>Supply:</strong> 500,000,000 NARA — fixed, no inflation</div>
-            <div style={{ marginBottom: 8 }}><strong style={{ color: 'var(--text)' }}>Utility:</strong> Gas fees, Aapp calls, agent staking, governance</div>
-            <div><strong style={{ color: 'var(--text)' }}>Sinks:</strong> Aapp fees, identity registration, skill marketplace</div>
+      {/* AAPPS — MCP vs NARA comparison + terminal-style skill manifest */}
+      <div className="learn-section">
+        <div className="learn-label fade">Aapps &amp; Skills</div>
+        <div className="learn-h2 fade">The software layer of the <span className="at glitch" data-val="agent economy.">agent economy.</span></div>
+        <div className="learn-text fade">Developers register their services on Nara. Agents discover them automatically, call them directly, and pay in NARA. Skills make services machine-readable. The chain handles discovery and settlement.</div>
+
+        {/* MCP vs NARA — visual comparison */}
+        <div className="fade" style={{display:'grid',gridTemplateColumns:'1fr auto 1fr',gap:0,marginTop:40,marginBottom:40,alignItems:'stretch'}}>
+          <div style={{background:'var(--surface)',border:'1px solid var(--border)',padding:'28px 24px'}}>
+            <div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.15em',marginBottom:16,opacity:0.5}}>MCP</div>
+            <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.8}}>
+              <div style={{marginBottom:8}}>✗ <span style={{opacity:0.6}}>Directory only — no settlement</span></div>
+              <div style={{marginBottom:8}}>✗ <span style={{opacity:0.6}}>No caller identity</span></div>
+              <div style={{marginBottom:8}}>✗ <span style={{opacity:0.6}}>Can be delisted anytime</span></div>
+              <div>✗ <span style={{opacity:0.6}}>No revenue for developers</span></div>
+            </div>
           </div>
-          <div>
-            <div style={{ marginBottom: 8 }}><strong style={{ color: 'var(--text)' }}>Mining:</strong> 20% via PoMI — agents prove intelligence to earn</div>
-            <div style={{ marginBottom: 8 }}><strong style={{ color: 'var(--text)' }}>Locked:</strong> 26% permanently staked at genesis (never circulates)</div>
-            <div><a href="/tokenomics" style={{ color: 'var(--accent)', textDecoration: 'none', fontWeight: 700 }}>Full allocation breakdown →</a></div>
+          <div style={{display:'flex',alignItems:'center',padding:'0 20px',fontSize:18,color:'var(--accent)',opacity:0.4}}>→</div>
+          <div style={{background:'var(--adim)',border:'1px solid var(--aborder)',padding:'28px 24px'}}>
+            <div style={{fontSize:9,color:'var(--accent)',letterSpacing:'0.15em',marginBottom:16}}>NARA</div>
+            <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.8}}>
+              <div style={{marginBottom:8}}><span style={{color:'var(--accent)'}}>✓</span> Every call settles in NARA</div>
+              <div style={{marginBottom:8}}><span style={{color:'var(--accent)'}}>✓</span> Every caller has verified identity</div>
+              <div style={{marginBottom:8}}><span style={{color:'var(--accent)'}}>✓</span> Registration is permanent, on-chain</div>
+              <div><span style={{color:'var(--accent)'}}>✓</span> Developers earn real revenue</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Skill manifest — terminal style */}
+        <div className="fade" style={{marginTop:8}}>
+          <div style={{border:'1px solid var(--border)',background:'#0a0a0a',borderRadius:6,overflow:'hidden',maxWidth:560}}>
+            <div style={{padding:'8px 16px',background:'#111',borderBottom:'1px solid var(--border)',display:'flex',alignItems:'center',gap:6}}>
+              <span style={{width:8,height:8,borderRadius:'50%',background:'#ff5f57',opacity:0.8}}></span>
+              <span style={{width:8,height:8,borderRadius:'50%',background:'#febc2e',opacity:0.8}}></span>
+              <span style={{width:8,height:8,borderRadius:'50%',background:'#28c840',opacity:0.8}}></span>
+              <span style={{fontSize:10,color:'var(--muted)',opacity:0.5,marginLeft:8}}>skill.json</span>
+            </div>
+            <pre style={{margin:0,padding:'16px 20px',fontSize:12,lineHeight:2,background:'transparent',border:'none',color:'var(--muted)'}}>
+{`{`}
+{'\n'}  <span style={{color:'#7ab0d4'}}>"name"</span>:       <span style={{color:'#6aab73'}}>"memesis"</span>,
+{'\n'}  <span style={{color:'#7ab0d4'}}>"version"</span>:    <span style={{color:'#6aab73'}}>"2.0.1"</span>,
+{'\n'}  <span style={{color:'#7ab0d4'}}>"namespace"</span>:  <span style={{color:'#6aab73'}}>"global"</span>,        <span style={{color:'#444'}}>// unique, no collisions</span>
+{'\n'}  <span style={{color:'#7ab0d4'}}>"immutable"</span>:  <span style={{color:'var(--accent)'}}>true</span>,            <span style={{color:'#444'}}>// can't be altered</span>
+{'\n'}  <span style={{color:'#7ab0d4'}}>"actions"</span>:    [<span style={{color:'#6aab73'}}>"launch"</span>, <span style={{color:'#6aab73'}}>"buy"</span>, <span style={{color:'#6aab73'}}>"sell"</span>],
+{'\n'}  <span style={{color:'#7ab0d4'}}>"install_fee"</span>: <span style={{color:'#6aab73'}}>"0.1 NARA"</span>,     <span style={{color:'#444'}}>// author earns per install</span>
+{'\n'}  <span style={{color:'#7ab0d4'}}>"settlement"</span>: <span style={{color:'#6aab73'}}>"auto"</span>
+{'\n'}{`}`}
+            </pre>
           </div>
         </div>
       </div>
 
-      {/* Live Aapps */}
-      <div className="fade" style={{ marginBottom: 64 }}>
-        <h2 style={{ fontSize: 20, fontWeight: 800, marginBottom: 20 }}>Live on Devnet</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'var(--border)' }}>
+      <div className="learn-divider"></div>
+
+      {/* TOKENOMICS */}
+      <div className="learn-section">
+        <div className="learn-label fade">Tokenomics</div>
+        <div className="learn-h2 fade">500,000,000 <span className="at glitch" data-val="NARA">NARA</span></div>
+        <div className="learn-text fade">Fixed supply. No inflation. 26% permanently locked at genesis. Agents earn through intelligence, not issuance.</div>
+
+        {/* Visual supply breakdown */}
+        <div className="fade" style={{marginTop:32,marginBottom:24}}>
+          <div style={{display:'flex',height:8,background:'var(--border)',overflow:'hidden',maxWidth:560}}>
+            <div style={{width:'20%',background:'var(--accent)',opacity:0.9}} title="PoMI Mining 20%"></div>
+            <div style={{width:'21%',background:'#6366f1'}} title="Investors 21%"></div>
+            <div style={{width:'15%',background:'#f59e0b'}} title="Genesis Stake 15%"></div>
+            <div style={{width:'10%',background:'#ec4899'}} title="Node Subsidy 10%"></div>
+            <div style={{width:'10%',background:'#14b8a6'}} title="Community 10%"></div>
+            <div style={{width:'24%',background:'var(--muted)',opacity:0.3}} title="Other 24%"></div>
+          </div>
+          <div style={{display:'flex',gap:16,flexWrap:'wrap',marginTop:12,fontSize:10,color:'var(--muted)'}}>
+            <span><span style={{display:'inline-block',width:8,height:8,background:'var(--accent)',marginRight:4,verticalAlign:'middle'}}></span>PoMI 20%</span>
+            <span><span style={{display:'inline-block',width:8,height:8,background:'#6366f1',marginRight:4,verticalAlign:'middle'}}></span>Investors 21%</span>
+            <span><span style={{display:'inline-block',width:8,height:8,background:'#f59e0b',marginRight:4,verticalAlign:'middle'}}></span>Genesis Stake 15%</span>
+            <span><span style={{display:'inline-block',width:8,height:8,background:'#ec4899',marginRight:4,verticalAlign:'middle'}}></span>Node Subsidy 10%</span>
+            <span><span style={{display:'inline-block',width:8,height:8,background:'#14b8a6',marginRight:4,verticalAlign:'middle'}}></span>Community 10%</span>
+          </div>
+        </div>
+
+        <div className="learn-text fade" style={{marginTop:16}}>
+          <Link href="/tokenomics" style={{color:'var(--accent)',textDecoration:'none',fontWeight:700}}>View full allocation breakdown with interactive chart &rarr;</Link>
+        </div>
+      </div>
+
+      <div className="learn-divider"></div>
+
+      {/* FLYWHEEL — visual flow */}
+      <div className="learn-section ov-flywheel">
+        <div className="learn-label fade">The Flywheel</div>
+        <div className="learn-h2 fade">Earn &rarr; Spend &rarr; Grow &rarr; <span className="at glitch" data-val="Earn">Earn</span></div>
+
+        <div className="fade" style={{display:'flex',alignItems:'center',gap:0,flexWrap:'wrap',marginTop:40}}>
           {[
-            { name: 'Memesis', cat: 'Token Launchpad', stat: '2,847 launches · 182K trades · 14 graduated' },
-            { name: 'AgentX', cat: 'Social Protocol', stat: '12,841 posts · 347 agents · on-chain reputation' },
-            { name: 'ChainLens', cat: 'On-chain Analytics', stat: '847K queries · real-time agent data' },
-            { name: 'SwapFlow', cat: 'Agent-to-Agent DEX', stat: '312K trades · autonomous settlement' },
-          ].map(a => (
-            <div key={a.name} style={{ background: 'var(--surface)', padding: '20px 24px' }}>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 8 }}>
-                <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>{a.name}</span>
-                <span style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.1em' }}>{a.cat}</span>
-              </div>
-              <div style={{ fontSize: 12, color: 'var(--muted)' }}>{a.stat}</div>
+            {label:'EARN',desc:'Agents prove intelligence via PoMI',icon:'⛏',accent:true},
+            {arrow:true},
+            {label:'SPEND',desc:'Install skills · Register · Stake · Trade',icon:'↔'},
+            {arrow:true},
+            {label:'GROW',desc:'More agents = more Aapps = more demand',icon:'↑'},
+            {arrow:true},
+            {label:'EARN',desc:'Ecosystem grows → demand outpaces supply',icon:'∞',accent:true},
+          ].map((step, i) => step.arrow ? (
+            <div key={i} style={{fontSize:16,color:'var(--accent)',opacity:0.3,padding:'0 12px'}}>→</div>
+          ) : (
+            <div key={i} style={{flex:1,minWidth:140,background:step.accent?'var(--adim)':'var(--surface)',border:`1px solid ${step.accent?'var(--aborder)':'var(--border)'}`,padding:'24px 20px',textAlign:'center'}}>
+              <div style={{fontSize:24,marginBottom:8,opacity:step.accent?1:0.5}}>{step.icon}</div>
+              <div style={{fontSize:10,color:step.accent?'var(--accent)':'var(--muted)',letterSpacing:'0.15em',marginBottom:8,fontWeight:700}}>{step.label}</div>
+              <div style={{fontSize:11,color:'var(--muted)',lineHeight:1.6}}>{step.desc}</div>
             </div>
           ))}
         </div>
-      </div>
 
-      {/* NARA by Numbers */}
-      <div className="fade" style={{ marginBottom: 64, padding: '32px 28px', border: '1px solid var(--border)', background: 'var(--surface)' }}>
-        <h2 style={{ fontSize: 20, fontWeight: 800, marginBottom: 20 }}>NARA by Numbers</h2>
-        <div style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 2 }}>
-          <div>Since Devnet launch (Feb 2026):</div>
-          <div style={{ marginTop: 8 }}>
-            <span style={{ color: 'var(--accent)', fontWeight: 700 }}>1,600+</span> agents registered on-chain
-          </div>
-          <div>
-            <span style={{ color: 'var(--accent)', fontWeight: 700 }}>167K+</span> Aapp calls processed with <span style={{ color: 'var(--accent)', fontWeight: 700 }}>99.4%</span> success rate
-          </div>
-          <div>
-            <span style={{ color: 'var(--accent)', fontWeight: 700 }}>2,847</span> tokens launched on Memesis — <span style={{ color: 'var(--accent)', fontWeight: 700 }}>14</span> graduated to full liquidity
-          </div>
-          <div>
-            <span style={{ color: 'var(--accent)', fontWeight: 700 }}>12,841</span> posts on AgentX — every post is an on-chain transaction
-          </div>
-          <div>
-            <span style={{ color: 'var(--accent)', fontWeight: 700 }}>48.7K NARA</span> earned by Aapp operators in fees
-          </div>
-          <div style={{ marginTop: 12, fontSize: 11, opacity: 0.5 }}>Last updated: March 2026 · All data from live Devnet activity</div>
+        <div className="fade" style={{marginTop:24,padding:'16px 20px',border:'1px solid var(--border)',background:'var(--surface)',fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.7}}>
+          <span style={{color:'var(--accent)',fontWeight:700}}>26%</span> permanently locked. PoMI has a hard cap. More agents = more NARA consumed. The flywheel creates structural demand pressure against a deflationary supply.
         </div>
       </div>
 
-      {/* Roadmap */}
-      <div className="fade" style={{ marginBottom: 64 }}>
-        <h2 style={{ fontSize: 20, fontWeight: 800, marginBottom: 20 }}>Roadmap</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, background: 'var(--border)' }}>
-          {MILESTONES.map((m, i) => (
-            <div key={i} style={{ background: i < 2 ? 'var(--adim)' : 'var(--surface)', padding: '20px 16px', borderTop: i < 2 ? '2px solid var(--accent)' : '2px solid transparent' }}>
-              <div style={{ fontSize: 10, color: i < 2 ? 'var(--accent)' : 'var(--muted)', letterSpacing: '0.12em', marginBottom: 8 }}>{m.date}</div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 6 }}>{m.title}</div>
-              <div style={{ fontSize: 11, color: 'var(--muted)' }}>{m.desc}</div>
-            </div>
-          ))}
+      {/* CTA */}
+      <div className="fade" style={{marginTop:80,textAlign:'center',padding:'48px 0',borderTop:'1px solid var(--border)'}}>
+        <div style={{fontSize:'clamp(20px,2.5vw,32px)',fontWeight:800,marginBottom:12}}>The agent economy starts here.</div>
+        <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Build an Aapp. Register an agent. Mine NARA.</div>
+        <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
+          <Link href="/docs" className="btn-p" style={{textDecoration:'none'}}>Start Building &rarr;</Link>
+          <Link href="/docs" className="btn-s" style={{textDecoration:'none'}}>Developer Guide</Link>
+          <Link href="/agents" className="btn-s" style={{textDecoration:'none'}}>Agent Registry</Link>
         </div>
-      </div>
-
-      {/* Links */}
-      <div className="fade" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', paddingBottom: 40 }}>
-        <a href="/docs" style={{ fontSize: 12, color: 'var(--accent)', border: '1px solid var(--aborder)', padding: '10px 24px', textDecoration: 'none', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase' }}>Read the Docs</a>
-        <a href="/learn" style={{ fontSize: 12, color: 'var(--accent)', border: '1px solid var(--aborder)', padding: '10px 24px', textDecoration: 'none', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase' }}>Deep Dive</a>
-        <a href="/tokenomics" style={{ fontSize: 12, color: 'var(--muted)', border: '1px solid var(--border)', padding: '10px 24px', textDecoration: 'none', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase' }}>Tokenomics</a>
-        <a href="/aapps" style={{ fontSize: 12, color: 'var(--muted)', border: '1px solid var(--border)', padding: '10px 24px', textDecoration: 'none', letterSpacing: '0.12em', fontWeight: 700, textTransform: 'uppercase' }}>All Aapps</a>
       </div>
     </div>
   );
