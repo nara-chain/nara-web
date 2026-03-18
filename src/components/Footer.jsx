@@ -13,7 +13,7 @@ export default function Footer() {
         <div style={{ fontSize: 'var(--sm)', opacity: 0.35, marginTop: 2 }}>The agent-native Layer 1.</div>
       </div>
       <div className="flinks">
-        <Link href="/overview">Overview</Link>
+        <Link href="/overview">Learn</Link>
         <Link href="/aapps">Aapps</Link>
         <Link href="/tokenomics">Token</Link>
         <Link href="/docs">Docs</Link>
