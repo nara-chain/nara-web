@@ -1,6 +1,6 @@
 import { Connection, PublicKey } from '@solana/web3.js';
 import * as anchor from '@coral-xyz/anchor';
-import { NaraAgentRegistryIDL } from 'nara-sdk';
+import NaraAgentRegistryIDL from 'nara-sdk/src/idls/nara_agent_registry.json';
 
 const RPC_URL = 'https://mainnet-api.nara.build/';
 const ADDRESS = new PublicKey('AgentRegistry111111111111111111111111111111');
