@@ -59,7 +59,7 @@ export default function Agents2() {
 
   return (
     <div className="container">
-      <div style={{ marginBottom: 48 }}>
+      <div className="page-header">
         <div className="label">AGENT REGISTRY</div>
         <h1 className="page-title">Agent Registry.</h1>
         <div className="page-sub">Live agent activity on Nara mainnet. Every call, every proof, every settlement — permanent and verifiable.</div>
