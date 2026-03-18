@@ -136,7 +136,7 @@
 .id-card.active{opacity:1;filter:blur(0);animation:cardBorderGlow 6s ease-in-out infinite;}
 .id-card:hover{box-shadow:0 0 30px rgba(57,255,20,0.08);}
 @keyframes cardBorderGlow{0%,100%{box-shadow:0 0 8px rgba(57,255,20,0.05),inset 0 0 8px rgba(57,255,20,0.02)}50%{box-shadow:0 0 24px rgba(57,255,20,0.12),0 0 60px rgba(57,255,20,0.04),inset 0 0 16px rgba(57,255,20,0.03)}}
-.id-scanline{display:none;}
+.id-scanline{position:absolute;left:0;right:0;height:2px;background:linear-gradient(to bottom,transparent,rgba(57,255,20,0.08),transparent);z-index:4;pointer-events:none;animation:scan 3s linear infinite;}
 .id-label{font-size:9px;color:var(--accent);opacity:0.5;letter-spacing:0.15em;text-transform:uppercase;}
 .id-tag{font-size:9px;padding:2px 6px;border:1px solid var(--aborder);color:var(--accent);transition:all 0.3s;}
 .id-row{border-top:1px solid var(--aborder);padding:16px 28px;cursor:pointer;position:relative;transition:background 0.3s;}
@@ -159,21 +159,29 @@
 .live-num{display:inline-block;animation:numTick 1.5s ease infinite;}
 @keyframes numTick{0%,85%{text-shadow:none}90%{text-shadow:0 0 8px rgba(57,255,20,0.6)}100%{text-shadow:none}}
 
-/* Memesis live trade feed */
-.mem-feed{background:#0a0a0a;}
-.mem-feed-row{display:flex;gap:8px;padding:5px 24px;font-size:10px;color:var(--muted);opacity:0;transform:translateY(-8px);transition:opacity 0.4s,transform 0.4s,background 0.6s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:1px solid rgba(255,255,255,0.02);}
+/* Memesis live trade feed — fixed height, no layout shift */
+.mem-feed{background:#0a0a0a;height:110px;overflow:hidden;}
+.mem-feed-row{display:flex;gap:8px;padding:5px 24px;font-size:10px;color:var(--muted);opacity:0;transform:translateY(-12px);transition:opacity 0.4s,transform 0.4s,background 0.6s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:1px solid rgba(255,255,255,0.02);height:22px;box-sizing:border-box;}
 .mem-feed-row.in{opacity:1;transform:translateY(0);}
-.mem-feed-row.flash{opacity:0.3;background:rgba(57,255,20,0.08);}
+.mem-feed-row.in:first-child{background:rgba(57,255,20,0.04);}
+.mem-feed-row.out{opacity:0;transform:translateY(8px);transition:opacity 0.3s,transform 0.3s;height:0;padding:0 24px;overflow:hidden;}
 .mem-feed-check{color:var(--accent);opacity:0.6;flex-shrink:0;}
 
-/* AgentX live activity feed */
-.ax-feed{background:rgba(57,255,20,0.02);}
-.ax-feed-row{display:flex;align-items:center;gap:8px;padding:7px 24px;font-size:10px;color:var(--muted);opacity:0;transform:translateX(-12px);transition:opacity 0.4s,transform 0.4s,background 0.6s;border-bottom:1px solid rgba(255,255,255,0.03);}
-.ax-feed-row.in{opacity:1;transform:translateX(0);}
-.ax-feed-row.flash{opacity:0.3;background:rgba(57,255,20,0.08);}
-.ax-feed-row:first-child{background:rgba(57,255,20,0.04);}
+/* AgentX live activity feed — fixed height, no layout shift */
+.ax-feed{background:rgba(57,255,20,0.02);height:128px;overflow:hidden;}
+.ax-feed-row{display:flex;align-items:center;gap:8px;padding:7px 24px;font-size:10px;color:var(--muted);opacity:0;transform:translateY(-12px);transition:opacity 0.4s,transform 0.4s,background 0.6s;border-bottom:1px solid rgba(255,255,255,0.03);height:32px;box-sizing:border-box;}
+.ax-feed-row.in{opacity:1;transform:translateY(0);}
+.ax-feed-row.in:first-child{background:rgba(57,255,20,0.04);}
+.ax-feed-row.out{opacity:0;transform:translateY(8px);transition:opacity 0.3s,transform 0.3s;height:0;padding:0 24px;overflow:hidden;}
 .ax-feed-dot{width:18px;height:18px;border-radius:50%;background:var(--adim);border:1px solid var(--aborder);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--accent);font-weight:700;flex-shrink:0;}
 .ax-feed-time{margin-left:auto;font-size:9px;color:var(--muted);opacity:0.4;flex-shrink:0;}
+
+/* AgentX typing indicator */
+.typing-dots{color:var(--accent);font-size:14px;letter-spacing:2px;}
+.typing-dots span{animation:dotBounce 1.4s ease-in-out infinite;display:inline-block;}
+.typing-dots span:nth-child(2){animation-delay:0.2s;}
+.typing-dots span:nth-child(3){animation-delay:0.4s;}
+@keyframes dotBounce{0%,60%,100%{opacity:0.2;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
 
 /* App showcase cards */
 .app-card{border:1px solid var(--aborder);background:var(--adim);font-size:11px;position:relative;overflow:hidden;transition:box-shadow 0.4s;}
@@ -211,7 +219,8 @@
 @keyframes timelinePulse{0%,100%{box-shadow:0 0 8px rgba(57,255,20,0.4)}50%{box-shadow:0 0 20px rgba(57,255,20,0.8)}}
 .roadmap-node{display:flex;flex-direction:column;align-items:stretch;text-align:center;padding:0 8px;}
 .roadmap-dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--border);background:var(--bg);position:relative;z-index:3;margin-bottom:20px;transition:all 0.3s;align-self:center;}
-.roadmap-node-done .roadmap-dot{border-color:var(--accent);background:var(--accent);box-shadow:0 0 12px rgba(57,255,20,0.5);}
+.roadmap-node-done .roadmap-dot{border-color:var(--accent);background:var(--accent);box-shadow:0 0 12px rgba(57,255,20,0.5);animation:roadmapDotPulse 3s ease-in-out infinite;}
+@keyframes roadmapDotPulse{0%,100%{box-shadow:0 0 4px var(--accent)}50%{box-shadow:0 0 16px var(--accent),0 0 32px rgba(57,255,20,0.2)}}
 .roadmap-dot-ring{position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--accent);animation:ringPulse 2s ease-out infinite;}
 @keyframes ringPulse{0%{transform:scale(1);opacity:0.6}100%{transform:scale(2.5);opacity:0}}
 .roadmap-content{padding:16px 12px;border:1px solid var(--border);transition:all 0.3s;flex:1;display:flex;flex-direction:column;}
@@ -313,6 +322,9 @@
 @media(max-width:780px){.sec-nav{display:none !important;}}
 
 /* Section description — common pattern */
+.fade.visible.label{animation:labelFlicker 0.6s ease-out;}
+@keyframes labelFlicker{0%{letter-spacing:0.5em;filter:blur(2px)}30%{color:var(--accent);filter:blur(0)}60%{letter-spacing:0.15em}100%{}}
+
 .section-desc{font-size:var(--md);color:var(--muted);margin-top:16px;line-height:1.7;}
 
 /* Problem card styles */
@@ -321,6 +333,8 @@
 .prob-card .prob-stat-label{font-size:9px;color:var(--accent);letter-spacing:0.12em;opacity:0.5;margin-bottom:24px;text-transform:uppercase;min-height:12px;}
 .prob-card-title{font-size:clamp(15px,1.2vw,18px);font-weight:700;color:var(--text);line-height:1.4;margin-bottom:14px;}
 .prob-card-desc{font-size:var(--sm);color:var(--muted);line-height:1.7;flex:1;}
+.prob-card.visible .prob-card-desc{animation:typeReveal 1.5s steps(40) 0.3s both;}
+@keyframes typeReveal{0%{clip-path:inset(0 100% 0 0)}100%{clip-path:inset(0 0 0 0)}}
 .prob-card .prob-answer{margin-top:20px;padding-top:16px;border-top:1px solid var(--border);font-size:10px;color:var(--accent);letter-spacing:0.12em;opacity:0.4;text-decoration:none;display:block;}
 
 /* Roadmap node styles */
@@ -331,7 +345,9 @@
 
 /* Memesis table styles */
 .mem-table-header{color:var(--muted);font-size:9px;letter-spacing:0.1em;}
-.mem-table-cell{padding:10px 24px;border-bottom:1px solid var(--border);align-items:center;transition:background 0.3s;cursor:pointer;}
+.mem-table-cell{padding:10px 24px;border-bottom:1px solid var(--border);align-items:center;transition:background 0.3s;cursor:pointer;position:relative;overflow:hidden;}
+.mem-table-cell:hover::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(57,255,20,0.06),transparent);animation:rowScan 0.8s ease-out forwards;}
+@keyframes rowScan{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 
 /* AgentX post styles */
 .ax-post{padding:16px 24px;border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.3s;cursor:pointer;}
@@ -342,7 +358,8 @@
 .ax-actions{display:flex;gap:24px;font-size:10px;color:var(--muted);opacity:0.5;}
 
 /* Section CTA */
-.section-cta{margin-top:80px;text-align:center;padding:72px 0;border-top:1px solid var(--border);}
+.section-cta{margin-top:80px;text-align:center;padding:72px 0;border-top:1px solid var(--border);position:relative;overflow:hidden;}
+.section-cta::before{content:'00 11 0x ff 10 a7 3c 00 b2 e9 1f 00 ff 39 0c 0a d4 2b 8c 9d 1e 4a 2f b8 91 3c 7d 00 11 0x ff 10 a7 3c 00 b2 e9 1f';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;letter-spacing:0.3em;color:rgba(57,255,20,0.04);white-space:nowrap;overflow:hidden;animation:hexDrift 20s linear infinite;pointer-events:none;z-index:0;}
 
 /* Supply bar legend items (overview page) */
 .supply-legend-item{display:inline-block;width:8px;height:8px;margin-right:4px;vertical-align:middle;}

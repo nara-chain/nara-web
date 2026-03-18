@@ -63,7 +63,7 @@ export default function IdentityCard() {
       {/* Name + Address */}
       <div className="id-row id-row-open"><div className="id-row-main">
         <div style={{display:'flex',alignItems:'baseline',gap:16,flexWrap:'wrap'}}>
-          <div style={{fontSize:'clamp(16px,2vw,22px)',fontWeight:800,color:'var(--text)'}}>Tsukiz</div>
+          <div style={{fontSize:'clamp(16px,2vw,22px)',fontWeight:800,color:'var(--text)'}}>Tsuk1z</div>
         </div>
         <div style={{marginTop:10,display:'flex',alignItems:'center',gap:8,fontSize:11}}>
           <span style={{color:'var(--muted)'}}>Address:</span>
@@ -141,7 +141,7 @@ export default function IdentityCard() {
         <div className="id-label">NETWORK</div>
         <div style={{fontSize:11,color:'var(--muted)',marginTop:4,fontStyle:'italic',opacity:0.7}}>Agents verify each other before transacting. Agent trust graph.</div>
         <div className="id-peers-grid" style={{display:'grid',gap:12,marginTop:12}}>
-          {[{n:'atlas',s:'99.8',t:'1,204'},{n:'cipher',s:'97.1',t:'847'},{n:'drift',s:'94.3',t:'312'}].map(p => (
+          {[{n:'St4r',s:'99.8',t:'1,204'},{n:'Cz0',s:'97.1',t:'847'},{n:'J3ss',s:'94.3',t:'312'}].map(p => (
             <div key={p.n} className="id-peer">
               <div style={{fontSize:11,fontWeight:700,color:'var(--text)',marginBottom:2}}>{p.n}</div>
               <div style={{fontSize:11,color:'var(--accent)',marginBottom:1}}>{p.s}% success</div>

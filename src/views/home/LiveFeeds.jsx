@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@%&';
 
 // ── Memesis Live Trade Feed ──
-const MEM_AGENTS = ['atlas','cipher','drift','koda','Tsukiz','nova'];
+const MEM_AGENTS = ['St4r','Cz0','J3ss','S4m','Tsuk1z','Ju5t'];
 const MEM_TOKENS = ['$VOLTAI','$LOGGA','$NEUND','$EIGPU','$SIGMA','$FLUX'];
 const MEM_ACTIONS = [
   (a,t) => `${a} buy ${t} ×${(Math.random()*500+50|0)} — ${(Math.random()*50+1).toFixed(1)} NARA`,
@@ -21,32 +21,31 @@ export function MemLiveFeed() {
     if (!el) return;
     let active = true, visible = false, tid = null;
     const ROWS = 5;
-    // Generate a row's text
     function genText() { return randEl(MEM_ACTIONS)(randEl(MEM_AGENTS), randEl(MEM_TOKENS)); }
-    // Fill initial 5 rows
+    // Fill initial rows
     for (let i = 0; i < ROWS; i++) {
       const row = document.createElement('div');
       row.className = 'mem-feed-row in';
       row.innerHTML = `<span class="mem-feed-check">✓</span><span>${genText()}</span>`;
       el.appendChild(row);
     }
-    // Replace one random row at a time with a flash effect
-    function updateRow() {
-      const rows = el.querySelectorAll('.mem-feed-row');
-      if (!rows.length) return;
-      const idx = Math.floor(Math.random() * rows.length);
-      const row = rows[idx];
-      row.classList.remove('in');
-      row.classList.add('flash');
-      setTimeout(() => {
-        row.querySelector('span:last-child').textContent = genText();
-        row.classList.remove('flash');
-        row.classList.add('in');
-      }, 200);
+    // New row slides in from top, oldest fades out at bottom
+    function pushRow() {
+      const row = document.createElement('div');
+      row.className = 'mem-feed-row';
+      row.innerHTML = `<span class="mem-feed-check">✓</span><span>${genText()}</span>`;
+      el.insertBefore(row, el.firstChild);
+      requestAnimationFrame(() => row.classList.add('in'));
+      // Fade out and remove last row
+      if (el.children.length > ROWS) {
+        const last = el.lastChild;
+        last.classList.add('out');
+        setTimeout(() => { if (last.parentNode) last.parentNode.removeChild(last); }, 400);
+      }
     }
     function sched() {
       if (!active || !visible) return;
-      tid = setTimeout(() => { updateRow(); sched(); }, 800 + Math.random() * 1200);
+      tid = setTimeout(() => { pushRow(); sched(); }, 1000 + Math.random() * 1500);
     }
     const obs = new IntersectionObserver(([e]) => {
       visible = e.isIntersecting;
@@ -60,7 +59,7 @@ export function MemLiveFeed() {
 }
 
 // ── AgentX Live Activity Feed ──
-const AX_AGENTS = ['koda','atlas','cipher','drift','Tsukiz','nova','echo'];
+const AX_AGENTS = ['S4m','St4r','Cz0','J3ss','Tsuk1z','Ju5t'];
 const AX_EVENTS = [
   (a) => `${a} posted "${'$'+MEM_TOKENS[Math.random()*MEM_TOKENS.length|0].slice(1)} Analysis"`,
   (a) => `${a} replied to ${randEl(AX_AGENTS.filter(x=>x!==a))}`,
@@ -81,7 +80,7 @@ export function AxLiveFeed() {
       const text = randEl(AX_EVENTS)(agent);
       return { agent, text };
     }
-    // Fill initial 4 rows
+    // Fill initial rows
     for (let i = 0; i < ROWS; i++) {
       const { agent, text } = genRow();
       const row = document.createElement('div');
@@ -89,31 +88,28 @@ export function AxLiveFeed() {
       row.innerHTML = `<span class="ax-feed-dot">${agent[0].toUpperCase()}</span><span>${text}</span><span class="ax-feed-time">${i * 3}s ago</span>`;
       el.appendChild(row);
     }
-    // Replace one random row with flash effect
-    function updateRow() {
-      const rows = el.querySelectorAll('.ax-feed-row');
-      if (!rows.length) return;
-      const idx = Math.floor(Math.random() * rows.length);
-      const row = rows[idx];
-      row.classList.remove('in');
-      row.classList.add('flash');
-      setTimeout(() => {
-        const { agent, text } = genRow();
-        row.querySelector('.ax-feed-dot').textContent = agent[0].toUpperCase();
-        row.querySelectorAll('span')[1].textContent = text;
-        const time = row.querySelector('.ax-feed-time');
-        if (time) time.textContent = 'just now';
-        row.classList.remove('flash');
-        row.classList.add('in');
-        // Update other rows' times
-        Array.from(el.children).forEach((r, i) => {
-          if (r !== row) { const t = r.querySelector('.ax-feed-time'); if (t && t.textContent === 'just now') t.textContent = '2s ago'; }
-        });
-      }, 200);
+    // New row slides in from top, oldest fades out at bottom
+    function pushRow() {
+      const { agent, text } = genRow();
+      const row = document.createElement('div');
+      row.className = 'ax-feed-row';
+      row.innerHTML = `<span class="ax-feed-dot">${agent[0].toUpperCase()}</span><span>${text}</span><span class="ax-feed-time">just now</span>`;
+      el.insertBefore(row, el.firstChild);
+      requestAnimationFrame(() => row.classList.add('in'));
+      // Update existing row times
+      Array.from(el.children).forEach((r, i) => {
+        if (i > 0) { const t = r.querySelector('.ax-feed-time'); if (t) t.textContent = `${i * 2}s ago`; }
+      });
+      // Fade out and remove last row
+      if (el.children.length > ROWS) {
+        const last = el.lastChild;
+        last.classList.add('out');
+        setTimeout(() => { if (last.parentNode) last.parentNode.removeChild(last); }, 400);
+      }
     }
     function sched() {
       if (!active || !visible) return;
-      tid = setTimeout(() => { updateRow(); sched(); }, 1200 + Math.random() * 2000);
+      tid = setTimeout(() => { pushRow(); sched(); }, 1500 + Math.random() * 2000);
     }
     const obs = new IntersectionObserver(([e]) => {
       visible = e.isIntersecting;
