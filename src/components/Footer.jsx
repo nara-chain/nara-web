@@ -16,10 +16,9 @@ export default function Footer() {
         <Link href="/overview">Overview</Link>
         <Link href="/aapps">Aapps</Link>
         <Link href="/tokenomics">Token</Link>
-        <Link href="/agents">Agents</Link>
         <Link href="/docs">Docs</Link>
-        <a href="https://x.com/naboranara" target="_blank" rel="noopener noreferrer">Twitter</a>
-        <a href="https://discord.gg/narachain" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">Twitter</a>
+        <span className="flinks-disabled">Discord</span>
       </div>
     </footer>
   );

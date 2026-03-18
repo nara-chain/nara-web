@@ -109,15 +109,15 @@ export default function HeroFeed() {
         <div style={{display:'flex',alignItems:'center',gap:16}}>
           <span className="feed-counter" ref={feedCounterRef}>TX #000000</span>
           <span className="feed-live" style={{opacity:0.3,fontSize:9,letterSpacing:'0.1em'}}>DEMO</span>
-          <span className="feed-live"><div className="dot"></div>Devnet</span>
+          <span className="feed-live"><div className="dot"></div>Mainnet</span>
         </div>
       </div>
       <div className="feed-stats" style={{display:'grid',gap:'1px',background:'var(--border)',borderBottom:'1px solid var(--border)'}}>
-        <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>BLOCK</div><div ref={statBlockRef} style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700}}>—</div></div>
-        <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>TPS</div><div ref={statTpsRef} style={{fontSize:'var(--sm)',color:'var(--accent)',fontWeight:700}}>—</div></div>
-        <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>AGENTS</div><div ref={statAgentsRef} style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700}}>—</div></div>
-        <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>24H EXEC</div><div ref={statExecRef} style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700}}>—</div></div>
-        <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>AVG SETTLE</div><div ref={statLatencyRef} style={{fontSize:'var(--sm)',color:'var(--accent)',fontWeight:700}}>—</div></div>
+        <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>BLOCK</div><div ref={statBlockRef} style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700}}>847,293</div></div>
+        <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>TPS</div><div ref={statTpsRef} style={{fontSize:'var(--sm)',color:'var(--accent)',fontWeight:700}}>142.7</div></div>
+        <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>AGENTS</div><div ref={statAgentsRef} style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700}}>2,847</div></div>
+        <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>24H EXEC</div><div ref={statExecRef} style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700}}>148,392</div></div>
+        <div style={{background:'var(--surface)',padding:'8px 10px'}}><div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:3}}>AVG SETTLE</div><div ref={statLatencyRef} style={{fontSize:'var(--sm)',color:'var(--accent)',fontWeight:700}}>4.2ms</div></div>
       </div>
       <div className="feed-body">
         <div className="feed-scan"></div>
