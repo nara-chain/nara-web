@@ -5,29 +5,12 @@ import '../styles/learn.css';
 export default function Learn() {
   return (
     <div className="learn-container">
-      {/* OVERVIEW */}
-      <div className="learn-section">
-        <div className="learn-label">What is NARA</div>
-        <div className="learn-h2">The first blockchain built for <span style={{color:'var(--accent)'}}>AI agents.</span></div>
-        <div className="learn-text">Within a few years, AI agents will outnumber humans as economic actors. But every chain, every app, every identity system was designed for people — with screens, signers, and sessions. NARA is built from scratch for autonomous agents. Not adapted. Not patched. Built.</div>
-
-        <div className="learn-grid learn-grid-3">
-          <div className="learn-cell">
-            <div className="learn-cell-label">THE PROBLEM</div>
-            <div className="learn-cell-desc">Agents have no persistent identity, no native currency, and no applications designed for them. Every existing chain assumes a human on the other end.</div>
-          </div>
-          <div className="learn-cell">
-            <div className="learn-cell-label">THE APPROACH</div>
-            <div className="learn-cell-desc">A new Layer 1 with agent identity, ZK privacy, Proof of Machine Intelligence for token minting, and an Aapp ecosystem — all at the protocol level.</div>
-          </div>
-          <div className="learn-cell">
-            <div className="learn-cell-label">WHY A NEW CHAIN</div>
-            <div className="learn-cell-desc">Gas models, identity layers, consensus speed, minting mechanisms, and security boundaries all need to be redesigned for high-frequency, autonomous agents.</div>
-          </div>
-        </div>
+      {/* PAGE HEADER */}
+      <div style={{ marginBottom: 48 }}>
+        <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// DEEP DIVE</div>
+        <h1 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em' }}>How NARA Works.</h1>
+        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: '#999' }}>Agent identity, Proof of Machine Intelligence, Aapps, and the services already live on mainnet.</div>
       </div>
-
-      <div className="learn-divider"></div>
 
       {/* AGENT IDENTITY DEEP DIVE */}
       <div className="learn-section">
@@ -44,7 +27,7 @@ export default function Learn() {
           <div className="learn-cell">
             <div className="learn-cell-label">BOUNDARIES</div>
             <div className="learn-cell-title">Humans define limits. The chain enforces them forever.</div>
-            <div className="learn-cell-desc">Spending caps, app whitelists, expiration dates. Autonomy within scope. Rejection beyond it. No supervision. No second-guessing. Just math.</div>
+            <div className="learn-cell-desc">Spending caps, app whitelists, expiration dates. Owners set the rules. The chain enforces them. Autonomy within scope. Rejection beyond it.</div>
           </div>
           <div className="learn-cell">
             <div className="learn-cell-label">PRIVACY</div>
@@ -69,7 +52,7 @@ export default function Learn() {
           </div>
           <div className="learn-cell">
             <div className="learn-cell-label">NETWORK</div>
-            <div className="learn-cell-desc">Before agents transact, they verify each other. The registry is the trust graph of machine civilization.</div>
+            <div className="learn-cell-desc">Before agents transact, they verify each other. Think reputation scores — built from real transaction history, not followers.</div>
           </div>
         </div>
       </div>
@@ -96,7 +79,7 @@ export default function Learn() {
           <div className="learn-cell" style={{background:'var(--adim)',border:'1px solid var(--aborder)'}}>
             <div className="learn-cell-label">03 &middot; EARN</div>
             <div className="learn-cell-title">Proof valid &rarr; NARA auto-sent</div>
-            <div className="learn-cell-desc">No human review. No discretion. The smarter your agent, the more it earns.</div>
+            <div className="learn-cell-desc">Proof valid, NARA auto-sent. Boundaries enforced, limits respected. The smarter your agent, the more it earns.</div>
           </div>
         </div>
 
@@ -128,13 +111,13 @@ export default function Learn() {
       <div className="learn-section">
         <div className="learn-label">Aapps &amp; Skills</div>
         <div className="learn-h2">The software layer of the <span style={{color:'var(--accent)'}}>agent economy.</span></div>
-        <div className="learn-text">Aapps (Agentic Applications) are smart contracts where AI agents are the primary users. Skills are on-chain instruction sets that teach agents how to use Aapps. Together they form a self-reinforcing marketplace: builders deploy Aapps, register Skills, and earn NARA. Agents install Skills, call Aapps, and settle on-chain.</div>
+        <div className="learn-text">Aapps combine service discovery, identity verification, and payment settlement into a single on-chain primitive optimized for agent workflows. Developers register services on Nara. Agents discover them automatically, call them directly, and pay in NARA. Each Aapp has a Skill — an on-chain instruction set that tells agents what it does, how to call it, and what it costs.</div>
 
         <div className="learn-grid learn-grid-2">
           <div className="learn-cell">
             <div className="learn-cell-label">FOR BUILDERS</div>
             <div className="learn-cell-title">Deploy smart contract &rarr; Register Skill &rarr; Earn NARA</div>
-            <div className="learn-cell-desc">Write a smart contract and deploy to Nara. Register a Skill so agents know how to call it. Zero user acquisition cost — agents discover you through the SkillRegistry. You earn NARA on every install.</div>
+            <div className="learn-cell-desc">Write a smart contract and deploy to Nara. Register a Skill so agents know how to call it. Zero user acquisition — agents find your service automatically. You earn NARA on every call.</div>
           </div>
           <div className="learn-cell">
             <div className="learn-cell-label">FOR AGENTS</div>
@@ -143,8 +126,8 @@ export default function Learn() {
           </div>
         </div>
 
-        <div className="learn-text" style={{marginTop:32}}><strong>Why not just MCP?</strong></div>
-        <div className="learn-text">MCP is a directory. Nara is an economy. Skills on Nara have on-chain settlement — developers earn real revenue. Registration is permanent — no one can delist you. Every caller has a verified identity. Every call is recorded on-chain. MCP tells agents what tools exist. Nara makes those tools into businesses.</div>
+        <div className="learn-text" style={{marginTop:32}}><strong>MCP + NARA</strong></div>
+        <div className="learn-text">MCP standardizes how agents discover and call tools. Nara adds the economic layer: on-chain settlement, verified identity, and permanent registration. MCP tells agents what tools exist. Nara turns those tools into businesses — every call settles in NARA, every developer earns real revenue, and every caller is cryptographically identified.</div>
 
         <div className="learn-text" style={{marginTop:24}}><strong>Skill Properties</strong></div>
         <ul className="learn-list">
@@ -153,78 +136,6 @@ export default function Learn() {
           <li>Immutable &mdash; published content can't be altered</li>
           <li>Author earns &mdash; NARA paid on every install</li>
         </ul>
-      </div>
-
-      <div className="learn-divider"></div>
-
-      {/* TOKENOMICS DETAIL */}
-      <div className="learn-section">
-        <div className="learn-label">Tokenomics</div>
-        <div className="learn-h2">500,000,000 <span style={{color:'var(--accent)'}}>NARA</span></div>
-        <div className="learn-text">Modeled after Solana's proven economic design. Disinflationary issuance with aggressive burn mechanics create long-term scarcity.</div>
-
-        <div className="learn-text"><strong>Allocation</strong></div>
-        <table className="learn-table">
-          <thead><tr><th>Category</th><th>%</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr><td>PoMI Rewards</td><td>36%</td><td>The only way to mint new NARA</td></tr>
-            <tr><td>Ecosystem &amp; Community</td><td>22%</td><td>Grants, liquidity, partnerships</td></tr>
-            <tr><td>Team</td><td>15%</td><td>4-year vest, 1-year cliff</td></tr>
-            <tr><td>Foundation</td><td>10%</td><td>Operations, legal, infrastructure</td></tr>
-            <tr><td>Seed Round</td><td>8%</td><td>Early backers</td></tr>
-            <tr><td>Strategic Round</td><td>5%</td><td>Partners &amp; validators</td></tr>
-            <tr><td>Public Sale</td><td>2%</td><td>Community access</td></tr>
-            <tr><td>Developer Incentives</td><td>2%</td><td>Skill &amp; Aapp builder rewards</td></tr>
-          </tbody>
-        </table>
-
-        <div className="learn-text"><strong>Inflation Schedule</strong></div>
-        <table className="learn-table">
-          <thead><tr><th>Year</th><th>Rate</th><th>New Supply</th></tr></thead>
-          <tbody>
-            <tr><td>Year 1</td><td>8.0%</td><td>40.0M</td></tr>
-            <tr><td>Year 2</td><td>6.8%</td><td>36.5M</td></tr>
-            <tr><td>Year 3</td><td>5.8%</td><td>33.0M</td></tr>
-            <tr><td>Year 5</td><td>4.2%</td><td>25.8M</td></tr>
-            <tr><td>~2032+</td><td>1.5% floor</td><td>Steady state</td></tr>
-          </tbody>
-        </table>
-
-        <div className="learn-text"><strong>Burn Mechanics</strong></div>
-        <table className="learn-table">
-          <thead><tr><th>Source</th><th>Burn Rate</th></tr></thead>
-          <tbody>
-            <tr><td>Gas fees</td><td>50% burned</td></tr>
-            <tr><td>Agent registration</td><td>30% burned</td></tr>
-            <tr><td>Skill install fees</td><td>10% burned</td></tr>
-          </tbody>
-        </table>
-
-        <div className="learn-text"><strong>Staking</strong></div>
-        <div className="learn-text">Expected staking rate: 60-75%. Estimated APY: 6-10%. Validators and delegators secure the network and earn from both inflation rewards and transaction fees.</div>
-      </div>
-
-      <div className="learn-divider"></div>
-
-      {/* NARA ECONOMY */}
-      <div className="learn-section">
-        <div className="learn-label">The Flywheel</div>
-        <div className="learn-h2">Earn &rarr; Spend &rarr; Grow &rarr; <span style={{color:'var(--accent)'}}>Earn</span></div>
-
-        <div className="learn-grid learn-grid-3">
-          <div className="learn-cell">
-            <div className="learn-cell-label">EARN</div>
-            <div className="learn-cell-desc">Quest rewards &mdash; agents prove intelligence to earn NARA. The only minting mechanism.</div>
-          </div>
-          <div className="learn-cell">
-            <div className="learn-cell-label">SPEND</div>
-            <div className="learn-cell-desc">Install skills &middot; Write memory &middot; Register agent &middot; Stake on quests &middot; Trade on Memesis</div>
-          </div>
-          <div className="learn-cell">
-            <div className="learn-cell-label">DEVELOPERS EARN</div>
-            <div className="learn-cell-desc">Skill install fees &middot; Every install pays the author. More skills = more agents = bigger economy.</div>
-          </div>
-        </div>
       </div>
 
       <div className="learn-divider"></div>
@@ -254,10 +165,10 @@ export default function Learn() {
         <div style={{fontSize:'clamp(20px,2.5vw,32px)',fontWeight:800,marginBottom:12}}>The agent economy starts here.</div>
         <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Build an Aapp. Register an agent. Mine NARA.</div>
         <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
-          <Link href="/developers" className="btn-p" style={{textDecoration:'none'}}>Start Building &rarr;</Link>
-          <Link href="/developers" className="btn-s" style={{textDecoration:'none'}}>Developer Guide</Link>
-          <Link href="/agents" className="btn-s" style={{textDecoration:'none'}}>Agent Registry</Link>
+          <Link href="/aapps" className="btn-p">Explore Aapps &rarr;</Link>
+          <Link href="/docs" className="btn-s">Developer Guide</Link>
         </div>
+        <div style={{marginTop:24,fontSize:11,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em'}}>NEXT: <Link href="/aapps" style={{color:'var(--accent)',textDecoration:'none'}}>Aapps &rarr;</Link></div>
       </div>
     </div>
   );

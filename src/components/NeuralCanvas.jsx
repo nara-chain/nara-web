@@ -42,13 +42,13 @@ export default function NeuralCanvas() {
       return res;
     }
 
-    const FPS = IS_MOBILE ? 18 : 24;
+    const FPS = IS_MOBILE ? 18 : 20;
     const INTERVAL = 1000/FPS;
     let lastFrame = 0;
+    let rafId = 0;
     function draw(ts) {
       if (!active) return;
-      if (document.hidden) { requestAnimationFrame(draw); return; }
-      if (ts - lastFrame < INTERVAL) { requestAnimationFrame(draw); return; }
+      if (ts - lastFrame < INTERVAL) { rafId = requestAnimationFrame(draw); return; }
       lastFrame = ts;
       cx.clearRect(0,0,W,H);
       cx.save();
@@ -68,11 +68,18 @@ export default function NeuralCanvas() {
         });
       });
       cx.restore();
-      requestAnimationFrame(draw);
+      rafId = requestAnimationFrame(draw);
     }
-    requestAnimationFrame(draw);
-    return () => { active = false; window.removeEventListener('resize', rsz); window.removeEventListener('scroll', onScroll); };
+    function startLoop() { rafId = requestAnimationFrame(draw); }
+    function stopLoop() { cancelAnimationFrame(rafId); rafId = 0; }
+    function onVisChange() {
+      if (!active) return;
+      if (document.hidden) stopLoop(); else startLoop();
+    }
+    document.addEventListener('visibilitychange', onVisChange);
+    startLoop();
+    return () => { active = false; stopLoop(); document.removeEventListener('visibilitychange', onVisChange); window.removeEventListener('resize', rsz); window.removeEventListener('scroll', onScroll); };
   }, []);
 
-  return <canvas id="neural" ref={ref}></canvas>;
+  return <canvas id="neural" ref={ref} style={{willChange:'transform'}}></canvas>;
 }

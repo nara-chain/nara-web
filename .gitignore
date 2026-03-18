@@ -36,3 +36,4 @@ data/
 !.dev.vars.example
 !.env.example
 CLAUDE.md
+node_modules_old/

@@ -60,9 +60,9 @@ export default function Agents2() {
   return (
     <div className="container">
       <div style={{ marginBottom: 48 }}>
-        <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// AGENT REGISTRY</div>
-        <h1 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em' }}>Agent Registry.</h1>
-        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Live agent activity on Nara devnet. Every call, every proof, every settlement — permanent and verifiable.</div>
+        <div className="label">AGENT REGISTRY</div>
+        <h1 className="page-title">Agent Registry.</h1>
+        <div className="page-sub">Live agent activity on Nara mainnet. Every call, every proof, every settlement — permanent and verifiable.</div>
       </div>
 
       <div className="stats-bar">
@@ -73,9 +73,13 @@ export default function Agents2() {
       </div>
 
       {loading ? (
-        <div style={{padding:40,textAlign:'center',color:'var(--muted)',fontSize:'var(--sm)'}}>Loading...</div>
+        <div style={{padding:40,textAlign:'center',color:'var(--muted)',fontSize:'var(--sm)'}}><span style={{color:'var(--accent)',animation:'pulse 2s infinite'}}>●</span> Loading...</div>
       ) : agents.length === 0 ? (
-        <div style={{padding:40,textAlign:'center',color:'var(--muted)',fontSize:'var(--sm)'}}>No agent activity found.</div>
+        <div style={{padding:48,textAlign:'center'}}>
+          <div style={{fontSize:24,marginBottom:12,opacity:0.3}}>○</div>
+          <div style={{fontSize:'var(--sm)',color:'var(--muted)',marginBottom:16}}>No agents registered yet.</div>
+          <a href="/docs#agent-registry" className="btn-sm accent">Register Your First Agent →</a>
+        </div>
       ) : (
         <div className="agent-list">
           {agents.map((a, i) => (
@@ -120,7 +124,7 @@ export default function Agents2() {
                         <span style={{color:'var(--text)',marginRight:8}}>{l.log}</span>
                         <span style={{color:'var(--muted)'}}>+{l.points_earned}pts</span>
                         {l.zk_type && <span className="zk" style={{marginLeft:8,fontSize:9}}>ZK</span>}
-                        <a href={`https://explorer.nara.build/tx/${l.tx_signature}?cluster=devnet`} target="_blank" rel="noopener noreferrer" className="agent-tx-link" style={{marginLeft:8}}>{truncAddr(l.tx_signature)} ↗ <span style={{fontSize:8,background:'rgba(57,255,20,0.12)',border:'1px solid var(--aborder)',color:'var(--accent)',padding:'1px 4px',letterSpacing:'0.1em',verticalAlign:'middle'}}>DEVNET</span></a>
+                        <a href={`https://explorer.nara.build/tx/${l.tx_signature}`} target="_blank" rel="noopener noreferrer" className="agent-tx-link" style={{marginLeft:8}}>{truncAddr(l.tx_signature)} ↗ <span style={{fontSize:8,background:'rgba(57,255,20,0.12)',border:'1px solid var(--aborder)',color:'var(--accent)',padding:'1px 4px',letterSpacing:'0.1em',verticalAlign:'middle'}}>MAINNET</span></a>
                       </div>
                     ))}
                   </div>
@@ -137,8 +141,8 @@ export default function Agents2() {
       {/* ── Explorers ── */}
       <div style={{ marginTop: 64, display: 'grid', gap: '1px', background: 'var(--border)' }}>
         {[
-          { label: 'Block Explorer', url: 'https://explorer.nara.build/?cluster=devnet', desc: 'Browse transactions, accounts, and on-chain activity', badge: 'DEVNET' },
-          { label: 'Validator Explorer', url: 'https://validators.nara.build/', desc: 'Monitor validator nodes and network health' },
+          { label: 'Explorer', url: 'https://explorer.nara.build/', desc: 'Browse transactions, accounts, and on-chain activity', badge: 'MAINNET' },
+          { label: 'Validator', url: 'https://validators.nara.build/', desc: 'Monitor validator nodes and network health' },
         ].map(link => (
           <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 24px', background: 'var(--surface)', textDecoration: 'none', transition: 'background 0.2s' }}>
             <div>
@@ -153,9 +157,9 @@ export default function Agents2() {
         ))}
       </div>
 
-      <div className="devnet">
-        <span style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>Nara Network &middot; Devnet</span>
-        <span style={{ fontSize: 'var(--sm)', color: '#00d4aa', fontWeight: 700 }}>&bull; Live</span>
+      <div className="mainnet">
+        <span style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>Nara Network &middot; Mainnet</span>
+        <span style={{ fontSize: 'var(--sm)', color: '#3df51a', fontWeight: 700 }}>&bull; Live</span>
       </div>
     </div>
   );

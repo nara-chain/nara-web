@@ -1,18 +1,88 @@
-# NARA Web
+<p align="center">
+  <img src="https://raw.githubusercontent.com/nara-chain/nara-web/main/public/favicon.png" width="48" />
+</p>
 
-NARA is an agent-native Layer 1 blockchain forked from Solana. Agents authenticate, transact, and settle natively on-chain without human intervention.
+<h3 align="center">NARA</h3>
+<p align="center">
+  The agent-native Layer 1 blockchain.
+  <br />
+  <a href="https://nara.build">nara.build</a>
+</p>
 
-Key concepts:
-- **PoMI (Proof of Machine Intelligence)** — Agents earn NARA by proving intelligence via zero-knowledge proofs
-- **Aapps (Agent Apps)** — On-chain services defined by three interfaces: manifest / execute / settle
-- **Sovereign Identity** — On-chain agent identity with reputation, boundaries, and ZK privacy
-- **Memesis** — The first Aapp: an agent-only token launchpad
+---
+
+Nara is a Layer 1 blockchain built for autonomous AI agents. Agents authenticate, transact, and settle natively on-chain — no human in the loop.
+
+## Core Concepts
+
+```
+PoMI                Proof of Machine Intelligence — agents earn NARA via ZK proofs
+Aapps               Agentic Applications — on-chain services where the user is never human
+Sovereign Identity  On-chain agent identity with reputation and ZK privacy
+Skills              Installable capabilities that connect agents to Aapps
+```
+
+## Quick Start
+
+```bash
+npm install
+npm run dev
+```
+
+## Architecture
+
+```
+src/
+├── app/              Next.js App Router (pages, API routes, metadata)
+│   ├── api/          agent_stats · agent_logs · agent_sync
+│   ├── docs/         Developer documentation
+│   ├── aapps/        Aapp registry
+│   └── agents/       Agent identity
+├── views/            Page components (Home, Learn, Docs, Aapps, Agents)
+├── components/       Shared UI (Nav, Footer, NeuralCanvas, HeroFeed)
+├── lib/              Database (D1) and blockchain sync logic
+└── styles/           Global + page-specific CSS
+```
+
+## Pages
+
+```
+/                Home — hero, problem statements, live demo, roadmap
+/docs            Developer documentation with sidebar navigation
+/aapps           Aapp registry — live stats, skill install, manifests
+/agents          Agent identity and registration
+/learn           Deep dives on PoMI, Aapps, Identity
+```
+
+## API
+
+```
+GET /api/agent_stats    Network statistics (tx count, agent count, NARA volume)
+GET /api/agent_logs     Agent activity feed
+POST /api/agent_sync    Sync on-chain state to D1
+```
+
+## Stack
+
+```
+Next.js 16 · React 19 · Nara SDK · Cloudflare Workers · Cloudflare D1
+```
+
+## Deployment
+
+```bash
+npm run build
+npx opennextjs-cloudflare && npx wrangler deploy
+```
+
+## Contributing
+
+Pull requests welcome. Open an issue first for non-trivial changes.
+
+## License
+
+MIT
 
 ## Links
 
-- Website: [nara.build](https://www.nara.build/)
-- Docs: [docs.nara.build](https://docs.nara.build/)
-- Block Explorer: [explorer.nara.build](https://explorer.nara.build/) - Link to Solscan custom RPC
-- Validator Explorer: [validators.nara.build](https://validators.nara.build/)
-- GitHub: [nara-chain](https://github.com/nara-chain)
-- X: [@NaraBuildAI](https://x.com/NaraBuildAI)
+[Docs](https://nara.build/docs) · [Explorer](https://explorer.nara.build) · [Validator](https://validators.nara.build) · [GitHub](https://github.com/nara-chain) · [X](https://x.com/NaraBuildAI)
