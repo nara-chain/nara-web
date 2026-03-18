@@ -126,10 +126,6 @@ export default function Developers() {
 
 console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58());`} />
 
-          <h3>Get Testnet NARA</h3>
-          <DocCodeBlock id="qs-3" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">$</span> nara airdrop --amount 10`} />
-          <p className="doc-note">Testnet faucet — max 10 NARA per request, 100 NARA per day per wallet.</p>
         </section>
 
         {/* Network */}
