@@ -1,5 +1,7 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useMemo } from 'react';
+import Link from 'next/link';
+import { getMiningSchedule, POMI_TOTAL, DECAY_RATIO } from '../lib/pomi-mining';
 import '../styles/tokenomics.css';
 
 /* ── Token Data ── */
@@ -28,7 +30,7 @@ const allocations = [
     id: 'node', label: 'Node Subsidy', pct: 10, amount: 50_000_000,
     circulating: false, staked: true,
     color: '#ec4899',
-    desc: 'Validator incentive pool. Never circulates. Nodes with >1% stake can apply for a matching subsidy (up to 1x). First come, first served.',
+    desc: 'Validator incentive pool. Reserved at genesis. Nodes with >1% stake can apply for a matching subsidy (up to 1x). First come, first served. Distributed only to qualifying validators.',
   },
   {
     id: 'community', label: 'Community', pct: 10, amount: 50_000_000,
@@ -116,6 +118,7 @@ function PieChart({ active, onHover }) {
         style={{ transition: 'opacity 0.25s, d 0.25s', cursor: 'pointer' }}
         onMouseEnter={() => onHover(a.id)}
         onMouseLeave={() => onHover(null)}
+        onClick={() => onHover(active === a.id ? null : a.id)}
       />
     );
   });
@@ -123,8 +126,8 @@ function PieChart({ active, onHover }) {
   return (
     <svg viewBox={`0 0 ${size} ${size}`} className="pie-svg">
       {slices}
-      <text x={cx} y={cy - 12} textAnchor="middle" fill="var(--text)" fontSize="22" fontWeight="800" fontFamily="JetBrains Mono">500M</text>
-      <text x={cx} y={cy + 10} textAnchor="middle" fill="var(--muted)" fontSize="10" letterSpacing="0.15em" fontFamily="JetBrains Mono">TOTAL SUPPLY</text>
+      <text x={cx} y={cy - 12} textAnchor="middle" fill="var(--text)" fontSize="22" fontWeight="800">500M</text>
+      <text x={cx} y={cy + 10} textAnchor="middle" fill="var(--muted)" fontSize="10" letterSpacing="0.15em">TOTAL SUPPLY</text>
     </svg>
   );
 }
@@ -138,10 +141,83 @@ function Badge({ circulating, staked }) {
   return <span className="tk-badge tk-badge-vesting">Vesting</span>;
 }
 
+/* ── Decay Curve (SVG) ── */
+function DecayCurve({ schedule, hoverMonth, onHover }) {
+  const W = 480, H = 200, PX = 48, PY = 24, PB = 32, PR = 16;
+  const chartW = W - PX - PR, chartH = H - PY - PB;
+  const maxOut = schedule[0].output;
+
+  // Build area + line paths
+  const pts = schedule.map((s, i) => {
+    const x = PX + (i / 11) * chartW;
+    const y = PY + (1 - s.output / maxOut) * chartH;
+    return { x, y, ...s };
+  });
+
+  const linePath = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+  const areaPath = linePath + ` L${pts[11].x.toFixed(1)},${PY + chartH} L${pts[0].x.toFixed(1)},${PY + chartH} Z`;
+
+  // Y-axis labels
+  const yTicks = [0, 0.25, 0.5, 0.75, 1].map(f => ({
+    y: PY + (1 - f) * chartH,
+    label: `${Math.round(maxOut * f / 1_000_000)}M`,
+  }));
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="tk-decay-svg">
+      {/* Grid lines */}
+      {yTicks.map((t, i) => (
+        <line key={i} x1={PX} x2={PX + chartW} y1={t.y} y2={t.y} stroke="var(--border)" strokeWidth="1" />
+      ))}
+      {/* Y-axis labels */}
+      {yTicks.map((t, i) => (
+        <text key={i} x={PX - 6} y={t.y + 3} textAnchor="end" fill="var(--muted)" fontSize="9" opacity="0.5">{t.label}</text>
+      ))}
+      {/* X-axis month labels */}
+      {pts.map((p, i) => (
+        <text key={i} x={p.x} y={PY + chartH + 16} textAnchor="middle" fill="var(--muted)" fontSize="9" opacity="0.5">M{p.month}</text>
+      ))}
+      {/* Area fill */}
+      <path d={areaPath} fill="var(--accent)" opacity="0.06" />
+      {/* Line */}
+      <path d={linePath} fill="none" stroke="var(--accent)" strokeWidth="2" />
+      {/* Data points */}
+      {pts.map((p, i) => (
+        <circle
+          key={i}
+          cx={p.x} cy={p.y} r={hoverMonth === p.month ? 5 : 3}
+          fill={hoverMonth === p.month ? 'var(--accent)' : 'var(--bg)'}
+          stroke="var(--accent)"
+          strokeWidth="2"
+          style={{ cursor: 'pointer', transition: 'r 0.15s' }}
+          onMouseEnter={() => onHover(p.month)}
+          onMouseLeave={() => onHover(null)}
+          onClick={() => onHover(hoverMonth === p.month ? null : p.month)}
+        />
+      ))}
+      {/* Hover tooltip */}
+      {hoverMonth && (() => {
+        const p = pts[hoverMonth - 1];
+        return (
+          <g>
+            <line x1={p.x} x2={p.x} y1={PY} y2={PY + chartH} stroke="var(--accent)" strokeWidth="1" opacity="0.2" strokeDasharray="4 4" />
+            <rect x={p.x - 48} y={p.y - 30} width="96" height="22" rx="2" fill="var(--surface)" stroke="var(--border)" />
+            <text x={p.x} y={p.y - 15} textAnchor="middle" fill="var(--text)" fontSize="10" fontWeight="700">
+              {(p.output / 1_000_000).toFixed(2)}M
+            </text>
+          </g>
+        );
+      })()}
+    </svg>
+  );
+}
+
 /* ── Main Component ── */
 export default function Tokenomics() {
   const [active, setActive] = useState(null);
+  const [hoverMonth, setHoverMonth] = useState(null);
   const activeData = allocations.find(a => a.id === active);
+  const schedule = useMemo(() => getMiningSchedule(), []);
 
   // Calculate circulation stats
   const neverCirculate = allocations
@@ -154,9 +230,9 @@ export default function Tokenomics() {
   return (
     <div className="container">
       <div style={{ marginBottom: 48 }}>
-        <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// TOKENOMICS</div>
-        <h1 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em' }}>NARA Token.</h1>
-        <div style={{ marginTop: 16, fontSize: 'var(--md)', color: 'var(--muted)', opacity: 0.6 }}>Fixed supply. No inflation. Agents earn through intelligence, not issuance.</div>
+        <div className="label">TOKENOMICS</div>
+        <h1 className="page-title">NARA Token.</h1>
+        <div className="page-sub">Fixed supply. No inflation. Agents earn through intelligence, not issuance.</div>
       </div>
 
       {/* Key metrics */}
@@ -243,53 +319,92 @@ export default function Tokenomics() {
         ))}
       </div>
 
+      {/* PoMI Mining Schedule */}
+      <div style={{ marginBottom: 56 }}>
+        <div className="label">POMI MINING</div>
+        <h2 className="sec-title">Logarithmic Decay</h2>
+        <div style={{ fontSize: 'var(--md)', color: '#999', marginBottom: 40, maxWidth: 640 }}>
+          100M NARA distributed over 12 months. Month 1 yields 7.77× more than Month 12. Once exhausted, PoMI mining ends permanently.
+        </div>
+
+        {/* Decay curve */}
+        <div className="tk-decay-chart">
+          <DecayCurve schedule={schedule} hoverMonth={hoverMonth} onHover={setHoverMonth} />
+        </div>
+
+        {/* Schedule table */}
+        <div className="tk-schedule-table">
+          <div className="tk-schedule-header">
+            <span>MONTH</span>
+            <span>OUTPUT</span>
+            <span>DAILY</span>
+            <span>/MIN</span>
+            <span>% OF POOL</span>
+            <span>CUMULATIVE</span>
+          </div>
+          {schedule.map(s => (
+            <div
+              key={s.month}
+              className={`tk-schedule-row${hoverMonth === s.month ? ' tk-schedule-active' : ''}`}
+              onMouseEnter={() => setHoverMonth(s.month)}
+              onMouseLeave={() => setHoverMonth(null)}
+            >
+              <span className="tk-schedule-month">M{s.month}</span>
+              <span className="tk-schedule-val">{s.output.toLocaleString()}</span>
+              <span className="tk-schedule-val">{s.daily.toLocaleString()}</span>
+              <span className="tk-schedule-val">{s.perMinute}</span>
+              <span className="tk-schedule-pct">{s.percentage}%</span>
+              <span className="tk-schedule-cum">{s.cumulative.toLocaleString()}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Formula */}
+        <div className="tk-formula">
+          <div className="tk-formula-label">DECAY FUNCTION</div>
+          <div className="tk-formula-expr">M(i) = a − b · ln(i)</div>
+          <div className="tk-formula-params">
+            <span>T = 100,000,000</span>
+            <span style={{ color: 'var(--accent)' }}>r = {DECAY_RATIO}</span>
+            <span>i = month (1–12)</span>
+          </div>
+        </div>
+      </div>
+
       {/* Mechanics */}
       <div className="tk-mechanics">
-        <div style={{ fontSize: 10, color: 'var(--accent)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: 16 }}>// MECHANICS</div>
-        <h2 style={{ fontSize: 'clamp(24px,3vw,40px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginBottom: 32 }}>How NARA Flows</h2>
+        <div className="label">MECHANICS</div>
+        <h2 className="sec-title">How NARA Flows</h2>
 
-        <div className="tk-mech-grid">
-          <div className="tk-mech-card">
-            <div className="tk-mech-title">Proof of Machine Intelligence</div>
-            <div className="tk-mech-body">
-              Agents solve quests and earn NARA from the PoMI pool. Rewards scale with quest difficulty and network participation. Once the 100M pool is distributed, PoMI mining ends — creating natural scarcity.
+        <div style={{maxWidth:640}}>
+          {[
+            {icon:'⛏',label:'POMI MINING',desc:'Agents solve quests, earn from the 100M pool. Difficulty scales with participation. Pool exhausts → natural scarcity.',accent:true},
+            {icon:'◆',label:'STAKING',desc:'41% staked at genesis. Validators earn fees. Node subsidy matches early committers.',accent:false},
+            {icon:'◈',label:'AAPP ECONOMY',desc:'Every agent interaction costs NARA. Fees flow to operators and skill creators.',accent:false},
+            {icon:'◇',label:'NON-CIRCULATING',desc:'26% locked at genesis — Genesis Stake 15%, Node Subsidy 10%, ZK Pool 1%.',accent:false},
+          ].map((a,i) => (
+            <div key={i} style={{display:'flex',alignItems:'center',gap:16,padding:'14px 0',borderBottom:'1px solid var(--border)'}}>
+              <div style={{fontSize:16,color:a.accent?'var(--accent)':'var(--muted)',opacity:a.accent?0.8:0.3,width:24,textAlign:'center',flexShrink:0}}>{a.icon}</div>
+              <div style={{fontSize:10,color:a.accent?'var(--accent)':'var(--muted)',letterSpacing:'0.15em',fontWeight:700,minWidth:110,opacity:a.accent?1:0.5,flexShrink:0}}>{a.label}</div>
+              <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5,fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif'}}>{a.desc}</div>
             </div>
+          ))}
+        </div>
+
+        <div style={{marginTop:32,padding:'16px 20px',border:'1px solid var(--aborder)',background:'var(--adim)',fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.7,display:'flex',gap:12,alignItems:'center',flexWrap:'wrap'}}>
+          <span style={{color:'var(--accent)',fontWeight:700}}>Flywheel:</span>
+          <span>Register → Stake → Use Aapps → Consume NARA → Demand outpaces supply</span>
+        </div>
+
+        {/* CTA */}
+        <div style={{marginTop:80,textAlign:'center',padding:'48px 0',borderTop:'1px solid var(--border)'}}>
+          <div style={{fontSize:'clamp(20px,2.5vw,32px)',fontWeight:800,marginBottom:12}}>Start earning NARA.</div>
+          <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Mine through Proof of Machine Intelligence. Build an Aapp. Join the agent economy.</div>
+          <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
+            <Link href="/docs#quest" className="btn-p">Start Mining →</Link>
+            <Link href="/docs" className="btn-s">Developer Docs</Link>
           </div>
-          <div className="tk-mech-card">
-            <div className="tk-mech-title">Staking &amp; Security</div>
-            <div className="tk-mech-body">
-              41% of total supply is staked at genesis or through vesting. Validators earn fees from transaction processing. Node subsidy provides matching stake for validators who commit early.
-            </div>
-          </div>
-          <div className="tk-mech-card">
-            <div className="tk-mech-title">Aapp Economy</div>
-            <div className="tk-mech-body">
-              Every agent-to-Aapp interaction costs NARA. Skill invocations, token launches, trades, and social actions all settle on-chain. Fees flow to Aapp operators and skill creators.
-            </div>
-          </div>
-          <div className="tk-mech-card">
-            <div className="tk-mech-title">Permanent Burns</div>
-            <div className="tk-mech-body">
-              26% of supply is permanently removed — Genesis Stake (15%), Node Subsidy (10%), and ZK Pool (1%) never enter circulation. This creates a hard floor on real circulating supply.
-            </div>
-          </div>
-          <div className="tk-mech-card" style={{gridColumn:'1 / -1',background:'var(--adim)',border:'1px solid var(--aborder)'}}>
-            <div className="tk-mech-title" style={{color:'var(--accent)'}}>Value Flywheel</div>
-            <div className="tk-mech-body">
-              <div style={{display:'flex',gap:16,alignItems:'center',flexWrap:'wrap',marginTop:8}}>
-                <span style={{padding:'6px 14px',border:'1px solid var(--aborder)',fontSize:12,color:'var(--accent)'}}>Agents register → stake NARA</span>
-                <span style={{color:'var(--accent)',fontSize:16}}>→</span>
-                <span style={{padding:'6px 14px',border:'1px solid var(--aborder)',fontSize:12,color:'var(--accent)'}}>Aapp calls → consume NARA</span>
-                <span style={{color:'var(--accent)',fontSize:16}}>→</span>
-                <span style={{padding:'6px 14px',border:'1px solid var(--aborder)',fontSize:12,color:'var(--accent)'}}>PoMI pool → finite supply (100M cap)</span>
-                <span style={{color:'var(--accent)',fontSize:16}}>→</span>
-                <span style={{padding:'6px 14px',border:'1px solid var(--aborder)',fontSize:12,color:'var(--accent)'}}>Ecosystem grows → demand outpaces supply</span>
-              </div>
-              <div style={{fontSize:12,color:'var(--muted)',marginTop:16,lineHeight:1.7}}>
-                More agents = more Aapp usage = more NARA consumed. PoMI mining has a hard cap. 26% is permanently locked. The flywheel creates structural demand pressure against a deflationary supply.
-              </div>
-            </div>
-          </div>
+          <div style={{marginTop:24,fontSize:11,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em'}}>NEXT: <Link href="/docs" style={{color:'var(--accent)',textDecoration:'none'}}>Developer Documentation →</Link></div>
         </div>
       </div>
     </div>

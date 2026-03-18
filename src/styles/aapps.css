@@ -5,6 +5,8 @@
 .aapp-card{background:var(--surface);cursor:pointer;transition:background 0.2s;position:relative;}
 .aapp-card:hover{background:var(--surface2);}
 .aapp-card:hover::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);}
+.aapp-card.coming-soon{opacity:0.5;pointer-events:auto;}
+.aapp-card.coming-soon:hover{opacity:0.7;}
 
 /* Row 1: Top bar — name + status, full width */
 .aapp-topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;border-bottom:1px solid var(--border);}
@@ -46,7 +48,7 @@
 .skill-terminal:hover{background:#0c0c0c;}
 
 .skill-terminal-bar{display:flex;align-items:center;gap:5px;padding:7px 12px;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);}
-.terminal-dot{width:7px;height:7px;border-radius:50%;opacity:0.5;}
+.terminal-dot{width:8px;height:8px;border-radius:50%;opacity:0.6;}
 .terminal-dot.red{background:#ff5f56;}
 .terminal-dot.yellow{background:#ffbd2e;}
 .terminal-dot.green{background:#27c93f;}
@@ -86,7 +88,7 @@
 .rev-val{font-size:10px;color:var(--text);font-weight:700;width:48px;text-align:right;font-variant-numeric:tabular-nums;}
 
 /* ── Core Setup Block ── */
-.core-setup{display:flex;align-items:stretch;margin-bottom:48px;border:1px solid var(--aborder);background:var(--surface);overflow:hidden;}
+.core-setup{display:flex;align-items:stretch;margin-bottom:96px;border:1px solid var(--aborder);background:var(--surface);overflow:hidden;}
 .core-setup-left{flex:1;padding:24px 28px;display:flex;flex-direction:column;justify-content:center;}
 .core-setup-label{font-size:9px;color:var(--accent);letter-spacing:0.15em;margin-bottom:10px;text-transform:uppercase;}
 .core-setup-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:8px;letter-spacing:0.01em;}

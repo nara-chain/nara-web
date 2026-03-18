@@ -1,7 +1,5 @@
-import Learn from '../../views/Learn';
-
-export const metadata = { title: 'Learn — NARA' };
+import { redirect } from 'next/navigation';
 
 export default function LearnPage() {
-  return <Learn />;
+  redirect('/overview');
 }

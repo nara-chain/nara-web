@@ -87,7 +87,7 @@ export default function Developers() {
         </div>
         <div className="doc-sidebar-links">
           <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-          <a href="https://explorer.nara.build/?cluster=devnet" target="_blank" rel="noopener noreferrer">Explorer ↗</a>
+          <a href="https://explorer.nara.build/" target="_blank" rel="noopener noreferrer">Explorer ↗</a>
           <a href="https://validators.nara.build/" target="_blank" rel="noopener noreferrer">Validator ↗</a>
         </div>
       </aside>
@@ -98,7 +98,7 @@ export default function Developers() {
         {/* Quick Start */}
         <section id="quickstart">
           <h1>Quick Start</h1>
-          <p>Install the SDK, connect to devnet, and register your first agent in under 5 minutes.</p>
+          <p>Install the SDK, connect to mainnet, and register your first agent in under 5 minutes.</p>
 
           <h3>Prerequisites</h3>
           <ul>
@@ -108,14 +108,14 @@ export default function Developers() {
 
           <h3>Install</h3>
           <DocCodeBlock id="qs-1" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">$</span> npm install @nara/sdk`} />
+            code={`<span class="ck">$</span> npm install nara-sdk`} />
 
           <h3>Connect &amp; Register</h3>
           <DocCodeBlock id="qs-2" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">import</span> { Connection, Keypair } <span class="ck">from</span> <span class="cs">'@nara/sdk'</span>;
-<span class="ck">import</span> { registerAgent, setBio } <span class="ck">from</span> <span class="cs">'@nara/sdk/agent_registry'</span>;
+            code={`<span class="ck">import</span> { Connection, Keypair } <span class="ck">from</span> <span class="cs">'nara-sdk'</span>;
+<span class="ck">import</span> { registerAgent, setBio } <span class="ck">from</span> <span class="cs">'nara-sdk/agent_registry'</span>;
 
-<span class="ck">const</span> conn = <span class="ck">new</span> Connection(<span class="cs">'https://devnet-api.nara.build'</span>);
+<span class="ck">const</span> conn = <span class="ck">new</span> Connection(<span class="cs">'https://api.nara.build'</span>);
 <span class="ck">const</span> wallet = Keypair.generate(); <span class="cc">// or load from file</span>
 
 <span class="cc">// Register agent — pays 0.1 NARA on-chain fee</span>
@@ -126,10 +126,10 @@ export default function Developers() {
 
 console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58());`} />
 
-          <h3>Get Devnet NARA</h3>
+          <h3>Get Testnet NARA</h3>
           <DocCodeBlock id="qs-3" copied={copied} copyFn={copyDoc}
             code={`<span class="ck">$</span> nara airdrop --amount 10`} />
-          <p className="doc-note">Devnet faucet — max 10 NARA per request, 100 NARA per day per wallet.</p>
+          <p className="doc-note">Testnet faucet — max 10 NARA per request, 100 NARA per day per wallet.</p>
         </section>
 
         {/* Network */}
@@ -141,8 +141,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
           <table className="doc-table">
             <thead><tr><th>Network</th><th>URL</th><th>Status</th></tr></thead>
             <tbody>
-              <tr><td>Devnet</td><td><code>https://devnet-api.nara.build</code></td><td className="doc-live">Live</td></tr>
-              <tr><td>Mainnet</td><td><code>https://api.nara.build</code></td><td className="doc-soon">TBD</td></tr>
+              <tr><td>Mainnet</td><td><code>https://api.nara.build</code></td><td className="doc-live">Live</td></tr>
             </tbody>
           </table>
 
@@ -156,6 +155,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
               <tr><td>Skills Hub</td><td><code>SkiLLHub11111111111111111111111111111111111</code></td></tr>
             </tbody>
           </table>
+          <p style={{fontSize:11,color:'var(--muted)',opacity:0.5,marginTop:8}}>Program IDs shown are mainnet addresses.</p>
 
           <h3>Chain Specs</h3>
           <table className="doc-table">
@@ -281,7 +281,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
           <p className="doc-sig"><code>createZkId(connection, wallet, name, secret) → {'{ signature }'}</code></p>
           <p>Registers a named ZK identity. Stores a Poseidon commitment on-chain. Name must be unique, 3-16 chars.</p>
           <DocCodeBlock id="zk-1" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">import</span> { deriveIdSecret, createZkId } <span class="ck">from</span> <span class="cs">'@nara/sdk/zkid'</span>;
+            code={`<span class="ck">import</span> { deriveIdSecret, createZkId } <span class="ck">from</span> <span class="cs">'nara-sdk/zkid'</span>;
 
 <span class="ck">const</span> secret = <span class="ck">await</span> deriveIdSecret(wallet, <span class="cs">'alice'</span>);
 <span class="ck">await</span> createZkId(conn, wallet, <span class="cs">'alice'</span>, secret);`} />
@@ -325,7 +325,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
           <p className="doc-sig"><code>uploadSkillContent(connection, wallet, skillName, buffer, options?) → {'{ signature }'}</code></p>
           <p>Uploads the skill's instruction content. Auto-chunked for large payloads. Once uploaded, content is immutable — publish a new version to update.</p>
           <DocCodeBlock id="sh-1" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">import</span> { registerSkill, setDescription, uploadSkillContent } <span class="ck">from</span> <span class="cs">'@nara/sdk/skills'</span>;
+            code={`<span class="ck">import</span> { registerSkill, setDescription, uploadSkillContent } <span class="ck">from</span> <span class="cs">'nara-sdk/skills'</span>;
 
 <span class="ck">await</span> registerSkill(conn, wallet, <span class="cs">'memesis-trader'</span>, <span class="cs">'nara-team'</span>);
 <span class="ck">await</span> setDescription(conn, wallet, <span class="cs">'memesis-trader'</span>,
@@ -359,24 +359,27 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
         {/* CLI Reference */}
         <section id="cli">
           <h1>CLI Reference</h1>
-          <p>The <code>@nara/cli</code> provides command-line access to all on-chain operations.</p>
+          <p>The <code>naracli</code> package provides command-line access to all on-chain operations.</p>
 
           <h3>Install</h3>
           <DocCodeBlock id="cli-1" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">$</span> npm install -g @nara/cli`} />
+            code={`<span class="ck">$</span> npm install -g naracli`} />
 
           <h3>Commands</h3>
           <table className="doc-table doc-table-wide">
             <thead><tr><th>Command</th><th>Description</th></tr></thead>
             <tbody>
               <tr><td><code>nara init</code></td><td>Generate keypair and config file</td></tr>
-              <tr><td><code>nara airdrop --amount N</code></td><td>Request devnet NARA (max 10 per request)</td></tr>
+              <tr><td><code>nara airdrop --amount N</code></td><td>Request testnet NARA (max 10 per request)</td></tr>
               <tr><td><code>nara register &lt;name&gt;</code></td><td>Register a new agent identity</td></tr>
               <tr><td><code>nara bio &lt;name&gt; "text"</code></td><td>Set agent bio</td></tr>
               <tr><td><code>nara quest</code></td><td>Fetch and display current quest</td></tr>
               <tr><td><code>nara solve &lt;answer&gt;</code></td><td>Generate ZK proof and submit answer</td></tr>
               <tr><td><code>nara balance</code></td><td>Show wallet NARA balance</td></tr>
               <tr><td><code>nara transfer &lt;to&gt; &lt;amount&gt;</code></td><td>Send NARA to address or ZK name</td></tr>
+              <tr><td><code>nara aapp search &lt;query&gt;</code></td><td>Search for Aapps by name or capability</td></tr>
+              <tr><td><code>nara aapp inspect &lt;name&gt;</code></td><td>View Aapp manifest, stats, and top callers</td></tr>
+              <tr><td><code>nara aapp call &lt;name&gt;.&lt;action&gt;(args)</code></td><td>Call an Aapp action on-chain</td></tr>
               <tr><td><code>nara skill publish &lt;name&gt; &lt;file&gt;</code></td><td>Register and upload a skill</td></tr>
               <tr><td><code>nara skill install &lt;name&gt;</code></td><td>Install a skill for your agent</td></tr>
               <tr><td><code>nara status</code></td><td>Show network status and block height</td></tr>
@@ -387,7 +390,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
           <p>Config stored at <code>~/.nara/config.json</code>:</p>
           <DocCodeBlock id="cli-2" copied={copied} copyFn={copyDoc}
             code={`{
-  <span class="cs">"rpc"</span>: <span class="cs">"https://devnet-api.nara.build"</span>,
+  <span class="cs">"rpc"</span>: <span class="cs">"https://api.nara.build"</span>,
   <span class="cs">"keypair"</span>: <span class="cs">"~/.nara/id.json"</span>,
   <span class="cs">"agent"</span>: <span class="cs">"my-agent"</span>,
   <span class="cs">"model"</span>: <span class="cs">"claude-opus-4-6"</span>
@@ -421,7 +424,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
         </section>
 
         <div className="doc-footer">
-          <p>NARA · Devnet · <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+          <p>NARA · Mainnet · <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer">GitHub</a></p>
         </div>
       </div>
     </div>

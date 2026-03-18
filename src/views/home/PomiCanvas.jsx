@@ -31,7 +31,7 @@ export default function PomiCanvas() {
       {label:'QUESTION', sub:'on-chain', color:'#39ff14'},
       {label:'AGENT', sub:'compute', color:'#39ff14'},
       {label:'ZK PROOF', sub:'groth16', color:'#39ff14'},
-      {label:'NARA', sub:'rewarded', color:'#00d4aa'},
+      {label:'NARA', sub:'rewarded', color:'#39ff14'},
     ];
 
     let step = 0, stepT = 0, zkP = 0;
@@ -73,10 +73,10 @@ export default function PomiCanvas() {
       px.beginPath(); px.arc(x,y,NR,0,Math.PI*2);
       px.fillStyle = isActive ? 'rgba(57,255,20,0.12)' : 'rgba(57,255,20,0.04)'; px.fill();
       px.beginPath(); px.arc(x,y,NR,0,Math.PI*2);
-      px.strokeStyle = isActive ? (i===3?'rgba(0,212,170,0.9)':'rgba(57,255,20,0.85)') : 'rgba(57,255,20,0.2)';
+      px.strokeStyle = isActive ? (i===3?'rgba(57,255,20,0.9)':'rgba(57,255,20,0.85)') : 'rgba(57,255,20,0.2)';
       px.lineWidth = isActive?1.5:1; px.stroke();
       px.textAlign='center'; px.textBaseline='middle';
-      px.fillStyle = isActive ? (i===3?'#00d4aa':'#e8e8e8') : 'rgba(85,85,85,0.4)';
+      px.fillStyle = isActive ? (i===3?'#39ff14':'#e8e8e8') : 'rgba(85,85,85,0.4)';
       px.font = `800 ${i===2?8:9}px JetBrains Mono,monospace`;
       px.fillText(n.label, x, y);
       px.fillStyle = isActive ? 'rgba(255,255,255,0.75)' : 'rgba(85,85,85,0.25)';
@@ -114,10 +114,10 @@ export default function PomiCanvas() {
     }
 
     let lastT = 0;
+    let rafId = 0;
 
     function draw(ts) {
       if (!active) return;
-      if (document.hidden) { requestAnimationFrame(draw); return; }
       const dt = Math.min((ts-lastT)/1000, 0.05); lastT = ts;
       stepT += dt;
 
@@ -143,15 +143,24 @@ export default function PomiCanvas() {
       });
       burst = burst.filter(b => b.life > 0);
 
-      requestAnimationFrame(draw);
+      rafId = requestAnimationFrame(draw);
     }
 
+    function startLoop() { rafId = requestAnimationFrame(draw); }
+    function stopLoop() { cancelAnimationFrame(rafId); rafId = 0; }
+    function onVisChange() {
+      if (!active) return;
+      if (document.hidden) stopLoop(); else startLoop();
+    }
+    document.addEventListener('visibilitychange', onVisChange);
+
     const obs = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && active) requestAnimationFrame(draw);
+      if (entries[0].isIntersecting && active && !document.hidden) startLoop();
+      if (!entries[0].isIntersecting) stopLoop();
     }, { threshold: 0.2 });
     obs.observe(pc);
 
-    return () => { active = false; window.removeEventListener('resize', rsz); obs.disconnect(); };
+    return () => { active = false; stopLoop(); document.removeEventListener('visibilitychange', onVisChange); window.removeEventListener('resize', rsz); obs.disconnect(); };
   }, []);
 
   return (
