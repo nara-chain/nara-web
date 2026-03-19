@@ -236,4 +236,5 @@ pre{background:#080808;color:#ccc;border:1px solid var(--border);padding:24px 28
   .mobile-cta-bar a{flex:1;text-align:center;padding:10px 12px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;font-family:'JetBrains Mono',monospace;}
   .mobile-cta-bar .mcta-earn{background:transparent;color:var(--accent);border:1px solid var(--aborder);}
   .mobile-cta-bar .mcta-docs{background:transparent;color:var(--text);border:1px solid var(--border);}
+  main{padding-bottom:72px;}
 }
