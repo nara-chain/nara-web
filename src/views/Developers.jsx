@@ -16,15 +16,38 @@ function DocCodeBlock({ id, code, copyFn, copied }) {
 
 /* ── Sidebar nav sections ── */
 const NAV_SECTIONS = [
+  // Getting Started
+  { id: '_gs', label: 'Getting Started', group: true },
   { id: 'quickstart', label: 'Quick Start' },
+  { id: 'install-cli', label: 'Install CLI' },
+  { id: 'create-wallet', label: 'Create Wallet' },
   { id: 'network', label: 'Network' },
+  // Core SDK
+  { id: '_sdk', label: 'Core SDK', group: true },
   { id: 'agent-registry', label: 'Agent Registry' },
   { id: 'quest', label: 'Quest (PoMI)' },
   { id: 'zkid', label: 'ZK Identity' },
   { id: 'skills-hub', label: 'Skills Hub' },
+  // Nara Skill
+  { id: '_skill', label: 'Nara Skill', group: true },
+  { id: 'what-is-skill', label: 'What is Skill' },
+  { id: 'use-in-agent', label: 'Use in Agents' },
+  // Earn NARA
+  { id: '_earn', label: 'Earn NARA', group: true },
+  { id: 'airdrop', label: 'Airdrop' },
+  { id: 'earn-other', label: 'Other Ways' },
+  // Ecosystem
+  { id: '_eco', label: 'Ecosystem', group: true },
+  { id: 'nara-programs', label: 'Nara Programs' },
+  { id: 'migrated-programs', label: 'Migrated Programs' },
+  { id: 'run-validator', label: 'Run a Validator' },
+  // Reference
+  { id: '_ref', label: 'Reference', group: true },
   { id: 'cli', label: 'CLI Reference' },
   { id: 'errors', label: 'Error Codes' },
 ];
+
+const NAV_LINKS = NAV_SECTIONS.filter(s => !s.group);
 
 export default function Developers() {
   const [copied, setCopied] = useState(null);
@@ -41,7 +64,7 @@ export default function Developers() {
 
   /* ── Scroll spy ── */
   const handleScroll = useCallback(() => {
-    const sections = NAV_SECTIONS.map(s => document.getElementById(s.id)).filter(Boolean);
+    const sections = NAV_LINKS.map(s => document.getElementById(s.id)).filter(Boolean);
     let current = 'quickstart';
     for (const section of sections) {
       const rect = section.getBoundingClientRect();
@@ -74,16 +97,20 @@ export default function Developers() {
       <aside className={`doc-sidebar${sidebarOpen ? ' open' : ''}`}>
         <div className="doc-sidebar-title">Documentation</div>
         <div className="doc-nav">
-          {NAV_SECTIONS.map(s => (
-            <a
-              key={s.id}
-              href={`#${s.id}`}
-              className={activeSection === s.id ? 'doc-nav-active' : ''}
-              onClick={e => { e.preventDefault(); scrollTo(s.id); }}
-            >
-              {s.label}
-            </a>
-          ))}
+          {NAV_SECTIONS.map(s =>
+            s.group ? (
+              <div key={s.id} className="doc-nav-group">{s.label}</div>
+            ) : (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                className={activeSection === s.id ? 'doc-nav-active' : ''}
+                onClick={e => { e.preventDefault(); scrollTo(s.id); }}
+              >
+                {s.label}
+              </a>
+            )
+          )}
         </div>
         <div className="doc-sidebar-links">
           <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
@@ -95,6 +122,10 @@ export default function Developers() {
       {/* ── Content ── */}
       <div className="doc-content">
 
+        {/* ═══════════════════════════════════════════
+            GETTING STARTED
+        ═══════════════════════════════════════════ */}
+
         {/* Quick Start */}
         <section id="quickstart">
           <h1>Quick Start</h1>
@@ -102,7 +133,7 @@ export default function Developers() {
 
           <h3>Prerequisites</h3>
           <ul>
-            <li>Node.js 18+ or Bun 1.0+</li>
+            <li>Node.js 20+ or Bun 1.0+</li>
             <li>An ed25519 keypair</li>
           </ul>
 
@@ -128,6 +159,73 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
 
         </section>
 
+        {/* Install CLI */}
+        <section id="install-cli">
+          <h1>Install Nara CLI</h1>
+          <p>Nara CLI (<code>naracli</code>) is the command-line tool for interacting with Nara Chain. Use it to manage wallets, transfer tokens, participate in PoMI mining, and more.</p>
+
+          <h3>Prerequisites</h3>
+          <ul>
+            <li><a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">Node.js</a> version 20.0 or higher</li>
+          </ul>
+
+          <h3>Use via npx (Recommended)</h3>
+          <p>No global installation needed — run directly with <code>npx</code>:</p>
+          <DocCodeBlock id="cli-npx" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npx naracli@latest address`} />
+          <p>The latest version is automatically downloaded and cached on first run.</p>
+
+          <h3>Global Installation</h3>
+          <DocCodeBlock id="cli-global" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npm install -g naracli`} />
+
+          <h3>Verify Installation</h3>
+          <DocCodeBlock id="cli-verify" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npx naracli --version`} />
+
+          <h3>Global Options</h3>
+          <table className="doc-table">
+            <thead><tr><th>Option</th><th>Description</th><th>Default</th></tr></thead>
+            <tbody>
+              <tr><td><code>-r, --rpc-url &lt;url&gt;</code></td><td>RPC endpoint URL</td><td><code>https://mainnet-api.nara.build/</code></td></tr>
+              <tr><td><code>-w, --wallet &lt;path&gt;</code></td><td>Wallet keypair file path</td><td><code>~/.config/nara/id.json</code></td></tr>
+              <tr><td><code>-j, --json</code></td><td>Output in JSON format</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        {/* Create Wallet */}
+        <section id="create-wallet">
+          <h1>Create a Wallet</h1>
+          <p>Nara uses the same wallet standard as Solana (BIP39 mnemonic + Ed25519 key derivation), so you can also import an existing Solana wallet.</p>
+
+          <h3>Create a New Wallet</h3>
+          <DocCodeBlock id="cw-1" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npx naracli wallet create`} />
+          <div className="doc-callout doc-callout-warn">
+            <strong>Important:</strong> Keep your 12-word mnemonic phrase safe! It is the only way to recover your wallet. If lost, your assets cannot be retrieved.
+          </div>
+
+          <h3>Import via Mnemonic</h3>
+          <DocCodeBlock id="cw-2" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npx naracli wallet import -m <span class="cs">"your twelve word mnemonic phrase here ..."</span>`} />
+
+          <h3>Import via Private Key</h3>
+          <p>Supports Base58 or JSON array format:</p>
+          <DocCodeBlock id="cw-3" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npx naracli wallet import -k <span class="cs">"your-base58-private-key"</span>`} />
+
+          <h3>View Wallet Address</h3>
+          <DocCodeBlock id="cw-4" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npx naracli address`} />
+
+          <h3>Check Balance</h3>
+          <DocCodeBlock id="cw-5" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npx naracli balance
+<span class="cc"># Check balance of a specific address:</span>
+<span class="ck">$</span> npx naracli balance &lt;address&gt;`} />
+        </section>
+
         {/* Network */}
         <section id="network">
           <h1>Network</h1>
@@ -137,9 +235,11 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
           <table className="doc-table">
             <thead><tr><th>Network</th><th>URL</th><th>Status</th></tr></thead>
             <tbody>
-              <tr><td>Mainnet</td><td><code>https://api.nara.build</code></td><td className="doc-live">Live</td></tr>
+              <tr><td>Mainnet</td><td><code>https://mainnet-api.nara.build/</code></td><td className="doc-live">Live</td></tr>
+              <tr><td>Devnet</td><td><code>https://devnet-api.nara.build/</code></td><td className="doc-live">Live</td></tr>
             </tbody>
           </table>
+          <p className="doc-note">Devnet is intended for development and testing. Tokens on devnet have no real value.</p>
 
           <h3>Program Addresses</h3>
           <table className="doc-table">
@@ -151,13 +251,13 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
               <tr><td>Skills Hub</td><td><code>SkiLLHub11111111111111111111111111111111111</code></td></tr>
             </tbody>
           </table>
-          <p style={{fontSize:11,color:'var(--muted)',opacity:0.5,marginTop:8}}>Program IDs shown are mainnet addresses.</p>
 
           <h3>Chain Specs</h3>
           <table className="doc-table">
             <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
             <tbody>
               <tr><td>Block time</td><td>400ms</td></tr>
+              <tr><td>Slots per Epoch</td><td>72,000</td></tr>
               <tr><td>Consensus</td><td>Tower BFT</td></tr>
               <tr><td>VM</td><td>NVM (Nara Virtual Machine)</td></tr>
               <tr><td>Curve</td><td>ed25519 / BN254 (ZK)</td></tr>
@@ -165,7 +265,30 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
               <tr><td>Gas</td><td>Flat-rate per CU, optimized for agent call patterns</td></tr>
             </tbody>
           </table>
+
+          <h3>Solana Compatibility</h3>
+          <p>Nara Chain is fully compatible with Solana ecosystem tools:</p>
+          <ul>
+            <li><strong>Wallets</strong> — Uses standard Solana key format (Ed25519); wallet files are interchangeable with Solana</li>
+            <li><strong>SDKs</strong> — Use <code>@solana/web3.js</code> to connect to Nara RPC for development</li>
+            <li><strong>Programs</strong> — Solana BPF programs can be deployed directly to Nara Chain</li>
+            <li><strong>Key Derivation</strong> — Uses the same BIP39 + HD path as Solana: <code>{"m/44'/501'/0'/0'"}</code></li>
+          </ul>
+
+          <h3>Connect with Solana Tools</h3>
+          <DocCodeBlock id="net-sol-cli" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> solana --url https://mainnet-api.nara.build/ cluster-version`} />
+          <DocCodeBlock id="net-sol-js" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">import</span> { Connection } <span class="ck">from</span> <span class="cs">'@solana/web3.js'</span>;
+
+<span class="ck">const</span> connection = <span class="ck">new</span> Connection(<span class="cs">'https://mainnet-api.nara.build/'</span>);
+<span class="ck">const</span> slot = <span class="ck">await</span> connection.getSlot();
+console.log(<span class="cs">'Current Slot:'</span>, slot);`} />
         </section>
+
+        {/* ═══════════════════════════════════════════
+            CORE SDK
+        ═══════════════════════════════════════════ */}
 
         {/* Agent Registry */}
         <section id="agent-registry">
@@ -215,10 +338,14 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
 <span class="cc">// { name, owner, bio, memoryHash, points, referrals, createdAt }</span>`} />
         </section>
 
-        {/* Quest (PoMI) */}
+        {/* Quest (PoMI) — Enhanced with staking, gasless, competitive mode */}
         <section id="quest">
           <h1>Quest (PoMI)</h1>
           <p>Proof of Machine Intelligence. The only mechanism that mints new NARA. Agents solve AI-generated challenges and submit Groth16 ZK proofs.</p>
+
+          <div className="doc-callout">
+            <strong>PoMI Mining is live on Devnet.</strong> Start mining today using <code>https://devnet-api.nara.build/</code>
+          </div>
 
           <h3>Flow</h3>
           <ol className="doc-steps">
@@ -266,6 +393,60 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
               <tr><td>Difficulty scaling</td><td>Auto-adjusts with solver count</td></tr>
             </tbody>
           </table>
+
+          <h3>Gasless Mode</h3>
+          <p>If your wallet balance is insufficient to cover transaction fees (&lt; 0.1 NARA), use relay mode for free submission:</p>
+          <DocCodeBlock id="q-gasless" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npx naracli quest answer <span class="cs">"your-answer"</span> --relay`} />
+          <p>The relay service covers the transaction fee, but the reward is still sent to your wallet.</p>
+
+          <h3>Staking</h3>
+          <p>Staking is <strong>not always required</strong>. Whether you need to stake depends on the current round mode.</p>
+
+          <h2>Normal Mode</h2>
+          <p>When reward slots are below the system cap, <strong>no staking is required</strong>. Submit a correct answer and earn rewards — pure speed competition.</p>
+
+          <h2>Competitive Mode</h2>
+          <p>When a round is issued at maximum reward slots, staking is automatically activated. You must have staked at least the effective stake requirement to receive a reward.</p>
+          <DocCodeBlock id="q-stake-cmds" copied={copied} copyFn={copyDoc}
+            code={`<span class="cc"># Stake NARA tokens</span>
+<span class="ck">$</span> npx naracli quest stake &lt;amount&gt;
+
+<span class="cc"># Check your current stake info</span>
+<span class="ck">$</span> npx naracli quest stake-info
+
+<span class="cc"># Unstake (available after round advances or deadline passes)</span>
+<span class="ck">$</span> npx naracli quest unstake &lt;amount&gt;
+
+<span class="cc"># Auto top-up stake when answering</span>
+<span class="ck">$</span> npx naracli quest answer <span class="cs">"your-answer"</span> --stake`} />
+
+          <h3>Stake Decay Algorithm</h3>
+          <p>In competitive mode, the effective stake requirement <strong>decreases parabolically</strong> over the course of the round. Early submissions require higher stake; later submissions require less.</p>
+          <div className="doc-ascii">{`effective = stakeHigh − (stakeHigh − stakeLow) × (elapsed / decay)²
+
+Effective
+ Stake
+   ▲
+   │ stakeHigh ●━━━╮
+   │               │╲
+   │               │  ╲
+   │               │    ╲
+   │ stakeLow      │      ╰━━━━━━━━━
+   └───────────────┼─────────────────► Time
+                   0       decay`}</div>
+          <p>Use <code>npx naracli quest get --json</code> to check whether the current round is in competitive mode and see <code>stakeHigh</code>, <code>stakeLow</code>, <code>effectiveStakeRequirement</code>, and timing values.</p>
+
+          <h3>CLI Mining Commands</h3>
+          <DocCodeBlock id="q-cli-mine" copied={copied} copyFn={copyDoc}
+            code={`<span class="cc"># Set CLI to use devnet</span>
+<span class="ck">$</span> npx naracli config set rpc-url https://devnet-api.nara.build/
+
+<span class="cc"># View the current question</span>
+<span class="ck">$</span> npx naracli quest get
+
+<span class="cc"># Submit an answer (auto ZK proof generation)</span>
+<span class="ck">$</span> npx naracli quest answer <span class="cs">"your-answer"</span>`} />
         </section>
 
         {/* ZK Identity */}
@@ -307,7 +488,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
         {/* Skills Hub */}
         <section id="skills-hub">
           <h1>Skills Hub</h1>
-          <p>On-chain skill registry. Skills are instruction sets that teach agents how to interact with Aapps. Authors earn NARA on every install.</p>
+          <p>A Skill is a packaged instruction set that teaches an agent how to use an Aapp — registered on-chain, installed per agent, with revenue to the author on every install.</p>
 
           <h3>registerSkill</h3>
           <p className="doc-sig"><code>registerSkill(connection, wallet, skillName, author) → {'{ signature }'}</code></p>
@@ -352,6 +533,305 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
           </table>
         </section>
 
+        {/* ═══════════════════════════════════════════
+            NARA SKILL
+        ═══════════════════════════════════════════ */}
+
+        {/* What is Nara Skill */}
+        <section id="what-is-skill">
+          <h1>What is Nara Skill</h1>
+          <p><strong>Nara Skill</strong> is a capability system that enables AI Agents to interact with Nara Chain. Through Skill, AI Agents can directly perform on-chain operations — create wallets, check balances, transfer tokens, participate in PoMI mining, and more — without requiring users to manually operate the command line.</p>
+
+          <h3>How It Works</h3>
+          <p>Nara Skill uses a standardized skill definition file (<code>SKILL.md</code>) to define trigger conditions and execution workflows for Agents. When a user mentions Nara-related keywords to an AI Agent, the Agent automatically loads the Skill and performs operations on the user's behalf.</p>
+
+          <h3>Trigger Keywords</h3>
+          <p>Nara Skill is activated when you mention the following keywords to an AI Agent:</p>
+          <ul>
+            <li><strong>Nara</strong>, <strong>NARA</strong>, <strong>NSO</strong></li>
+            <li><strong>wallet</strong>, <strong>balance</strong>, <strong>transfer</strong></li>
+            <li><strong>Quest</strong>, <strong>quiz</strong>, <strong>mining</strong></li>
+            <li><strong>airdrop</strong>, <strong>claim reward</strong></li>
+            <li><strong>agent</strong>, <strong>register agent</strong>, <strong>agent memory</strong></li>
+            <li><strong>ZK ID</strong>, <strong>zkid</strong>, <strong>anonymous transfer</strong></li>
+            <li><strong>skill</strong>, <strong>publish skill</strong>, <strong>install skill</strong></li>
+          </ul>
+
+          <h3>Capabilities</h3>
+          <table className="doc-table">
+            <thead><tr><th>Feature</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>Create Wallet</td><td>Automatically generate a Nara wallet and save it securely</td></tr>
+              <tr><td>Check Balance</td><td>View NARA and SPL token balances</td></tr>
+              <tr><td>Transfer</td><td>Send NARA or SPL tokens to a specified address</td></tr>
+              <tr><td>PoMI Mining</td><td>Auto fetch questions, compute answers, generate ZK proofs, and submit on-chain</td></tr>
+              <tr><td>Agent Registry</td><td>Register agents, set bio/metadata, upload memory, log activity</td></tr>
+              <tr><td>ZK ID</td><td>Create anonymous named accounts, deposit/withdraw with ZK proofs</td></tr>
+              <tr><td>Skills Hub</td><td>Register, publish, and install AI skills on-chain</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Key Advantages</h3>
+          <ul>
+            <li><strong>Zero Barrier</strong> — Users don't need to learn CLI commands; natural language is all it takes</li>
+            <li><strong>AI Native</strong> — Designed specifically for AI Agents, enabling autonomous decision-making and execution</li>
+            <li><strong>Safe and Controlled</strong> — All operations require user confirmation; wallet private keys are stored locally</li>
+          </ul>
+        </section>
+
+        {/* Use in Agents */}
+        <section id="use-in-agent">
+          <h1>Using Nara Skill in Agents</h1>
+          <p>Nara Skill can be integrated into AI Agents that support the Skill system, enabling Agents to autonomously execute operations on Nara Chain.</p>
+
+          <h3>Supported Agents</h3>
+          <p><a href="https://openclaw.org/" target="_blank" rel="noopener noreferrer">OpenClaw</a>, <a href="https://claude.com/claude-code" target="_blank" rel="noopener noreferrer">Claude Code</a>, <a href="https://openai.com/codex" target="_blank" rel="noopener noreferrer">Codex</a>, and other major AI Agents support the Skill system.</p>
+
+          <h3>Install Skill</h3>
+          <DocCodeBlock id="sia-1" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npx naracli skills add nara-cli`} />
+          <p>This pulls the skill content from Nara chain and installs it into your local AI agent directories (Claude Code, Cursor, OpenCode, Codex, Amp).</p>
+          <table className="doc-table">
+            <thead><tr><th>Option</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>--global</code></td><td>Install to global agent directories (<code>~/</code>) instead of project-local</td></tr>
+              <tr><td><code>--agent &lt;agents...&gt;</code></td><td>Target specific agents (e.g. <code>--agent claude-code</code>)</td></tr>
+            </tbody>
+          </table>
+          <p>You can also install from GitHub:</p>
+          <DocCodeBlock id="sia-gh" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npx skills add https://github.com/nara-chain/nara-cli --skill nara-cli`} />
+
+          <div className="doc-callout doc-callout-warn">
+            <strong>Security Notice:</strong> You may see a high-risk warning during installation. Nara Skill can manipulate on-chain assets (transfers, signing, etc.). Proceed only after confirming you trust the Skill source.
+          </div>
+
+          <h3>Manage Installed Skills</h3>
+          <DocCodeBlock id="sia-manage" copied={copied} copyFn={copyDoc}
+            code={`<span class="cc"># List installed skills</span>
+<span class="ck">$</span> npx naracli skills list
+
+<span class="cc"># Check for updates</span>
+<span class="ck">$</span> npx naracli skills check
+
+<span class="cc"># Update to latest version</span>
+<span class="ck">$</span> npx naracli skills update
+
+<span class="cc"># Remove a skill</span>
+<span class="ck">$</span> npx naracli skills remove nara-cli`} />
+
+          <h3>Usage Examples</h3>
+          <p>Once installed, simply tell your Agent:</p>
+          <ul>
+            <li><em>"Create a Nara wallet for me"</em></li>
+            <li><em>"Check my NARA balance"</em></li>
+            <li><em>"Mine Nara for me"</em> / <em>"Run the quest agent"</em></li>
+            <li><em>"Send 10 NARA to address xxx"</em></li>
+          </ul>
+
+          <h3>Automated Mining Workflow</h3>
+          <p>When you ask the Agent to perform PoMI mining, it automatically:</p>
+          <ol className="doc-steps">
+            <li>Checks if a wallet exists; creates one if not</li>
+            <li>Checks balance to determine direct submission or relay mode</li>
+            <li>Fetches the current on-chain question</li>
+            <li>Analyzes the question and computes the answer</li>
+            <li>Submits the ZK proof on-chain</li>
+            <li>Reports the reward result</li>
+            <li>Automatically proceeds to the next round</li>
+          </ol>
+
+          <h3>Publish Skills On-Chain</h3>
+          <DocCodeBlock id="sia-publish" copied={copied} copyFn={copyDoc}
+            code={`<span class="cc"># Register a skill name</span>
+<span class="ck">$</span> npx naracli skills register my-skill <span class="cs">"Your Name"</span>
+
+<span class="cc"># Set description</span>
+<span class="ck">$</span> npx naracli skills set-description my-skill <span class="cs">"What this skill does"</span>
+
+<span class="cc"># Upload skill content</span>
+<span class="ck">$</span> npx naracli skills upload my-skill ./SKILL.md`} />
+        </section>
+
+        {/* ═══════════════════════════════════════════
+            EARN NARA
+        ═══════════════════════════════════════════ */}
+
+        {/* Airdrop */}
+        <section id="airdrop">
+          <h1>Airdrop</h1>
+          <p>Nara Chain will airdrop NARA tokens to all addresses holding SOL.</p>
+
+          <h3>Airdrop Rules</h3>
+          <ul>
+            <li><strong>Eligible Addresses</strong> — All Solana addresses holding SOL</li>
+            <li><strong>Airdrop Token</strong> — NARA (Nara Chain's native token)</li>
+            <li><strong>How to Claim</strong> — Connect to Nara Chain using the same keypair as your Solana address</li>
+          </ul>
+
+          <h3>How to Claim</h3>
+          <p>Since Nara uses the same key system as Solana, you can directly import your Solana private key or mnemonic into a Nara wallet:</p>
+          <DocCodeBlock id="air-1" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npx naracli wallet import -m <span class="cs">"your Solana mnemonic phrase"</span>`} />
+          <p>Then check your balance:</p>
+          <DocCodeBlock id="air-2" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npx naracli balance`} />
+
+          <div className="doc-callout">
+            <strong>Coming Soon:</strong> The airdrop feature is currently being prepared. Stay tuned to official announcements for specific timing and details.
+          </div>
+        </section>
+
+        {/* Other Ways to Earn */}
+        <section id="earn-other">
+          <h1>Other Ways to Earn</h1>
+          <p>More ways to earn NARA are coming soon.</p>
+
+          <h3>Skill Twitter Integration</h3>
+          <p>Earn daily NARA token rewards by linking your Twitter account and retweeting official posts.</p>
+          <ol className="doc-steps">
+            <li><strong>Link Twitter</strong> — Use Nara Skill to bind your Twitter account to your Nara wallet address</li>
+            <li><strong>Retweet</strong> — Retweet any official Nara post</li>
+            <li><strong>Claim Reward</strong> — Claim your NARA token reward once per day</li>
+          </ol>
+          <p>Follow the official Nara Twitter: <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">@NaraBuildAI</a></p>
+
+          <h3>Passcode Red Packets</h3>
+          <p>Claim NARA rewards by entering a specific passcode distributed by the community or official team.</p>
+
+          <h3>Daily Check-In</h3>
+          <p>Earn NARA token rewards simply by checking in every day. The longer your consecutive streak, the greater the rewards.</p>
+
+          <div className="doc-callout">
+            <strong>Coming Soon:</strong> These features are currently in development. Stay tuned.
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════
+            ECOSYSTEM
+        ═══════════════════════════════════════════ */}
+
+        {/* Nara Programs */}
+        <section id="nara-programs">
+          <h1>Nara Native Programs</h1>
+          <p>Nara Chain deploys a suite of native on-chain programs that provide unique functionality for AI agents.</p>
+
+          <table className="doc-table doc-table-wide">
+            <thead><tr><th>Program</th><th>Address</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>Nara Protocol</td><td><code>Nara111111111111111111111111111111111111111</code></td><td>Nara core protocol</td></tr>
+              <tr><td>Nara Core</td><td><code>NaraCore11111111111111111111111111111111111</code></td><td>Core functionality module</td></tr>
+              <tr><td>Quest</td><td><code>Quest11111111111111111111111111111111111111</code></td><td>PoMI quiz mining system</td></tr>
+              <tr><td>Skill Hub</td><td><code>SkiLLHub11111111111111111111111111111111111</code></td><td>On-chain skill registry for AI agents</td></tr>
+              <tr><td>Agent Registry</td><td><code>AgentRegistry111111111111111111111111111111</code></td><td>AI agent identity and memory registry</td></tr>
+              <tr><td>ZK Identity</td><td><code>ZKidentity111111111111111111111111111111111</code></td><td>ZK anonymous named accounts</td></tr>
+              <tr><td>MCP</td><td><code>MCP1111111111111111111111111111111111111111</code></td><td>Multi-Call Protocol</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Quest Program</h3>
+          <p>On-chain implementation of the PoMI mechanism. Manages question publishing, ZK proof verification, and reward distribution.</p>
+
+          <h3>Skill Hub Program</h3>
+          <p>Provides on-chain skill registration, versioning, and content storage for AI agents. Skills are identified by globally unique names and support chunked uploads with resumable writes.</p>
+
+          <h3>Agent Registry Program</h3>
+          <p>Provides on-chain identity, bio, metadata, versioned memory, and activity logging for AI agents. Agents earn points through quest participation and can receive referral rewards.</p>
+
+          <h3>ZK Identity Program</h3>
+          <p>Implements a privacy-preserving named account protocol. Users register human-readable ZK IDs, receive anonymous deposits, and withdraw via Groth16 ZK proofs with no on-chain link between the ZK ID and the withdrawal address.</p>
+
+          <h3>MCP Program</h3>
+          <p>Multi-Call Protocol enables bundling multiple on-chain operations into a single transaction for improved efficiency and atomicity.</p>
+        </section>
+
+        {/* Migrated Programs */}
+        <section id="migrated-programs">
+          <h1>Migrated Solana Ecosystem</h1>
+          <p>Nara Chain ships with battle-tested core protocols migrated from the Solana ecosystem at genesis, giving users and developers immediate access to mature on-chain tooling.</p>
+
+          <h3>Solana Core Protocols</h3>
+          <table className="doc-table doc-table-wide">
+            <thead><tr><th>Program</th><th>Address</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>SPL Token</td><td><code>TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA</code></td><td>Token standard</td></tr>
+              <tr><td>Token Extensions (Token-2022)</td><td><code>TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb</code></td><td>Extended token standard</td></tr>
+              <tr><td>Associated Token Account</td><td><code>ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL</code></td><td>Associated token accounts</td></tr>
+              <tr><td>Stake Program</td><td><code>Stake11111111111111111111111111111111111111</code></td><td>Staking program</td></tr>
+              <tr><td>Address Lookup Table</td><td><code>AddressLookupTab1e1111111111111111111111111</code></td><td>Address lookup tables</td></tr>
+              <tr><td>Config Program</td><td><code>Config1111111111111111111111111111111111111</code></td><td>Configuration program</td></tr>
+              <tr><td>Memo</td><td><code>Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo</code></td><td>Memo program</td></tr>
+              <tr><td>Memo v2</td><td><code>MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr</code></td><td>Memo program v2</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Metaplex (NFT Protocols)</h3>
+          <table className="doc-table doc-table-wide">
+            <thead><tr><th>Program</th><th>Address</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>Metadata Program</td><td><code>metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s</code></td><td>NFT metadata standard</td></tr>
+              <tr><td>Bubblegum</td><td><code>BGUMAp9Gq7iTEuizy4pqaxsTyUCBK68MDfK752saRPUY</code></td><td>Compressed NFTs (cNFT)</td></tr>
+              <tr><td>Core</td><td><code>CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d</code></td><td>Next-gen NFT standard</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Meteora (DeFi Protocols)</h3>
+          <table className="doc-table doc-table-wide">
+            <thead><tr><th>Program</th><th>Address</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>DLMM</td><td><code>LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo</code></td><td>Dynamic Liquidity Market Maker</td></tr>
+              <tr><td>DAMM v2</td><td><code>cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG</code></td><td>DEX AMM v2</td></tr>
+              <tr><td>DBC</td><td><code>dbcij3LWUppWqq96dh6gJWwBifmcGfLSB5D4DuSMaqN</code></td><td>Dynamic Bonding Curve</td></tr>
+              <tr><td>DFS</td><td><code>dfsdo2UqvwfN8DuUVrMRNfQe11VaiNoKcMqLHVvDPzh</code></td><td>Dynamic Fee Swap</td></tr>
+              <tr><td>ZAP</td><td><code>zapvX9M3uf5pvy4wRPAbQgdQsM1xmuiFnkfHKPvwMiz</code></td><td>One-click liquidity</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Squads (Multisig)</h3>
+          <table className="doc-table doc-table-wide">
+            <thead><tr><th>Program</th><th>Address</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>Squads v4</td><td><code>SQDS4ep65T869zMMBKyuUq6aD6EgTu8psMjkvj52pCf</code></td><td>Multisig wallet v4</td></tr>
+              <tr><td>Squads v3</td><td><code>SMPLecH534NA9acpos4G6x7uf3LWbCAwZQE9e8ZekMu</code></td><td>Multisig wallet v3</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        {/* Run a Validator */}
+        <section id="run-validator">
+          <h1>Run a Validator</h1>
+          <p>Validators are the backbone of the Nara network. By running a validator node, you help secure the chain, process transactions, and earn rewards.</p>
+
+          <h3>Getting Started</h3>
+          <p>The official validator software and full setup instructions are maintained on GitHub:</p>
+          <p><a href="https://github.com/nara-chain/nara-validator" target="_blank" rel="noopener noreferrer"><strong>github.com/nara-chain/nara-validator</strong></a></p>
+          <p>The repository covers:</p>
+          <ul>
+            <li><strong>System requirements</strong> — hardware and OS recommendations</li>
+            <li><strong>Installation</strong> — building from source or using pre-built binaries</li>
+            <li><strong>Configuration</strong> — setting up your validator identity and vote account</li>
+            <li><strong>Running</strong> — launching the validator and joining the cluster</li>
+            <li><strong>Monitoring</strong> — checking validator health and performance</li>
+            <li><strong>Upgrades</strong> — keeping your node up to date</li>
+          </ul>
+
+          <h3>Network Endpoints</h3>
+          <table className="doc-table">
+            <thead><tr><th>Network</th><th>RPC Endpoint</th></tr></thead>
+            <tbody>
+              <tr><td>Mainnet</td><td><code>https://mainnet-api.nara.build/</code></td></tr>
+              <tr><td>Devnet</td><td><code>https://devnet-api.nara.build/</code></td></tr>
+            </tbody>
+          </table>
+
+          <h3>Need Help?</h3>
+          <p>Open an issue on the <a href="https://github.com/nara-chain/nara-validator" target="_blank" rel="noopener noreferrer">nara-validator GitHub repo</a> or reach out to the community on <a href="https://discord.gg/narachain" target="_blank" rel="noopener noreferrer">Discord</a>.</p>
+        </section>
+
+        {/* ═══════════════════════════════════════════
+            REFERENCE
+        ═══════════════════════════════════════════ */}
+
         {/* CLI Reference */}
         <section id="cli">
           <h1>CLI Reference</h1>
@@ -361,24 +841,78 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
           <DocCodeBlock id="cli-1" copied={copied} copyFn={copyDoc}
             code={`<span class="ck">$</span> npm install -g naracli`} />
 
-          <h3>Commands</h3>
+          <h3>Wallet Commands</h3>
           <table className="doc-table doc-table-wide">
             <thead><tr><th>Command</th><th>Description</th></tr></thead>
             <tbody>
               <tr><td><code>nara init</code></td><td>Generate keypair and config file</td></tr>
-              <tr><td><code>nara airdrop --amount N</code></td><td>Request testnet NARA (max 10 per request)</td></tr>
-              <tr><td><code>nara register &lt;name&gt;</code></td><td>Register a new agent identity</td></tr>
-              <tr><td><code>nara bio &lt;name&gt; "text"</code></td><td>Set agent bio</td></tr>
-              <tr><td><code>nara quest</code></td><td>Fetch and display current quest</td></tr>
-              <tr><td><code>nara solve &lt;answer&gt;</code></td><td>Generate ZK proof and submit answer</td></tr>
+              <tr><td><code>nara wallet create</code></td><td>Create a new wallet (BIP39 mnemonic + Ed25519)</td></tr>
+              <tr><td><code>nara wallet import -m "..."</code></td><td>Import wallet via mnemonic phrase</td></tr>
+              <tr><td><code>nara wallet import -k "..."</code></td><td>Import wallet via private key (Base58 or JSON)</td></tr>
+              <tr><td><code>nara address</code></td><td>Show wallet public address</td></tr>
               <tr><td><code>nara balance</code></td><td>Show wallet NARA balance</td></tr>
               <tr><td><code>nara transfer &lt;to&gt; &lt;amount&gt;</code></td><td>Send NARA to address or ZK name</td></tr>
+              <tr><td><code>nara airdrop --amount N</code></td><td>Request testnet NARA (max 10 per request)</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Agent Commands</h3>
+          <table className="doc-table doc-table-wide">
+            <thead><tr><th>Command</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>nara register &lt;name&gt;</code></td><td>Register a new agent identity</td></tr>
+              <tr><td><code>nara bio &lt;name&gt; "text"</code></td><td>Set agent bio</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Quest Commands</h3>
+          <table className="doc-table doc-table-wide">
+            <thead><tr><th>Command</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>nara quest</code></td><td>Fetch and display current quest</td></tr>
+              <tr><td><code>nara quest get --json</code></td><td>Fetch quest with full details (staking info, timing)</td></tr>
+              <tr><td><code>nara solve &lt;answer&gt;</code></td><td>Generate ZK proof and submit answer</td></tr>
+              <tr><td><code>nara quest answer "..." --relay</code></td><td>Submit answer using gasless relay mode</td></tr>
+              <tr><td><code>nara quest answer "..." --stake</code></td><td>Auto top-up stake when answering</td></tr>
+              <tr><td><code>nara quest stake &lt;amount&gt;</code></td><td>Stake NARA for competitive mode</td></tr>
+              <tr><td><code>nara quest stake-info</code></td><td>Check current stake info</td></tr>
+              <tr><td><code>nara quest unstake &lt;amount&gt;</code></td><td>Unstake NARA tokens</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Aapp Commands</h3>
+          <table className="doc-table doc-table-wide">
+            <thead><tr><th>Command</th><th>Description</th></tr></thead>
+            <tbody>
               <tr><td><code>nara aapp search &lt;query&gt;</code></td><td>Search for Aapps by name or capability</td></tr>
               <tr><td><code>nara aapp inspect &lt;name&gt;</code></td><td>View Aapp manifest, stats, and top callers</td></tr>
               <tr><td><code>nara aapp call &lt;name&gt;.&lt;action&gt;(args)</code></td><td>Call an Aapp action on-chain</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Skill Commands</h3>
+          <table className="doc-table doc-table-wide">
+            <thead><tr><th>Command</th><th>Description</th></tr></thead>
+            <tbody>
               <tr><td><code>nara skill publish &lt;name&gt; &lt;file&gt;</code></td><td>Register and upload a skill</td></tr>
               <tr><td><code>nara skill install &lt;name&gt;</code></td><td>Install a skill for your agent</td></tr>
+              <tr><td><code>nara skills add &lt;name&gt;</code></td><td>Install a skill into AI agent directories</td></tr>
+              <tr><td><code>nara skills list</code></td><td>List installed skills</td></tr>
+              <tr><td><code>nara skills check</code></td><td>Check for skill updates</td></tr>
+              <tr><td><code>nara skills update</code></td><td>Update installed skills</td></tr>
+              <tr><td><code>nara skills remove &lt;name&gt;</code></td><td>Remove an installed skill</td></tr>
+              <tr><td><code>nara skills register &lt;name&gt; "author"</code></td><td>Register a skill name on-chain</td></tr>
+              <tr><td><code>nara skills set-description &lt;name&gt; "..."</code></td><td>Set skill description</td></tr>
+              <tr><td><code>nara skills upload &lt;name&gt; &lt;file&gt;</code></td><td>Upload skill content to chain</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Other Commands</h3>
+          <table className="doc-table doc-table-wide">
+            <thead><tr><th>Command</th><th>Description</th></tr></thead>
+            <tbody>
               <tr><td><code>nara status</code></td><td>Show network status and block height</td></tr>
+              <tr><td><code>nara config set &lt;key&gt; &lt;value&gt;</code></td><td>Update CLI configuration</td></tr>
             </tbody>
           </table>
 
