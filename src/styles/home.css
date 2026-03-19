@@ -247,8 +247,9 @@
 .hero-code-snippet{display:none;}
 @media(min-width:781px){.hero-code-snippet{display:block;}}
 @media(max-width:780px){
+  #hero{min-height:auto;}
   .hero-wrap{grid-template-columns:1fr;}
-  .feed{height:320px;max-height:320px;}
+  .feed{height:280px;max-height:280px;}
   .stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;}
   .roadmap-timeline .timeline-track,.roadmap-timeline .timeline-progress{display:none;}
   .roadmap-timeline > div:last-child{grid-template-columns:1fr 1fr;}
