@@ -248,7 +248,7 @@
 @media(min-width:781px){.hero-code-snippet{display:block;}}
 @media(max-width:780px){
   #hero{min-height:auto !important;justify-content:flex-start !important;}
-  #hero::before{display:none;}
+  #hero::before,#hero::after,#chain::before,#chain::after,#aapp::before,#aapp::after,#quest::before,#quest::after,#live::before,#live::after,#problem::before,#problem::after,#roadmap::before,.section-cta::before{display:none !important;}
   #hero .sec{padding-top:80px !important;}
   .hero-wrap{grid-template-columns:1fr;gap:24px;align-items:start;}
   .hero-sub{margin-bottom:28px;}
