@@ -315,12 +315,60 @@
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* ── Notes ── */
+/* ── Notes / Callouts ── */
 .doc-note {
   font-size: 11px;
   color: var(--muted);
   opacity: 0.6;
   font-style: italic;
+}
+
+.doc-callout {
+  border: 1px solid var(--aborder);
+  background: var(--adim);
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.doc-callout strong { color: var(--accent); }
+
+.doc-callout-warn {
+  border-color: rgba(251,169,76,0.25);
+  background: rgba(251,169,76,0.04);
+}
+
+.doc-callout-warn strong { color: #FBA94C; }
+
+/* ── Nav Group Labels ── */
+.doc-nav-group {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.4;
+  padding: 16px 16px 4px;
+  margin-top: 8px;
+}
+
+.doc-nav-group:first-child { margin-top: 0; }
+
+/* ── ASCII diagram ── */
+.doc-ascii {
+  background: #0a0a0a;
+  border: 1px solid var(--border);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--muted);
+  white-space: pre;
+  overflow-x: auto;
 }
 
 /* ── Footer ── */

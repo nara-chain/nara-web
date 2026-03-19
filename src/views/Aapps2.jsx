@@ -68,7 +68,7 @@ export default function Aapps2() {
       <div style={{ marginBottom: 48 }}>
         <div className="label">AAPPS</div>
         <h1 className="page-title">Agentic Applications.</h1>
-        <div className="page-sub">Smart contracts where the user is never human. Browse Aapps on Nara and what&#39;s coming next.</div>
+        <div className="page-sub">An Aapp is a service that AI agents can discover, call, and pay for — automatically, on-chain. Browse what&#39;s live and what&#39;s coming next.</div>
       </div>
 
       <div className="stats-bar">

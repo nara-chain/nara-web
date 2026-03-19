@@ -108,7 +108,7 @@ export default function HeroFeed() {
         <span>Chain Activity</span>
         <div style={{display:'flex',alignItems:'center',gap:16}}>
           <span className="feed-counter" ref={feedCounterRef}>TX #000000</span>
-          <span className="feed-live" style={{opacity:0.3,fontSize:9,letterSpacing:'0.1em'}}>DEMO</span>
+          <span className="feed-live" style={{opacity:0.7,fontSize:9,letterSpacing:'0.1em'}}>DEMO</span>
           <span className="feed-live"><div className="dot"></div>Mainnet</span>
         </div>
       </div>

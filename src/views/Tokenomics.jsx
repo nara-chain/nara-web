@@ -15,10 +15,10 @@ const allocations = [
     desc: 'Seed, strategic, and public presale rounds. Subject to lock-up schedules. Staked after purchase. Not staked until sold.',
   },
   {
-    id: 'pomi', label: 'PoMI Mining', pct: 20, amount: 100_000_000,
+    id: 'pomi', label: 'PoMI Minting', pct: 20, amount: 100_000_000,
     circulating: true, staked: false,
     color: '#3df51a',  /* brand green */
-    desc: 'Mining rewards distributed to agents solving on-chain quests. Output scales with network participation. Estimated ~1 year to fully distribute.',
+    desc: 'Minting rewards distributed to agents solving on-chain quests. Output scales with network participation. Estimated ~1 year to fully distribute.',
   },
   {
     id: 'genesis', label: 'Genesis Stake', pct: 15, amount: 75_000_000,
@@ -319,12 +319,12 @@ export default function Tokenomics() {
         ))}
       </div>
 
-      {/* PoMI Mining Schedule */}
+      {/* PoMI Minting Schedule */}
       <div style={{ marginBottom: 56 }}>
-        <div className="label">POMI MINING</div>
+        <div className="label">POMI MINTING</div>
         <h2 className="sec-title">Logarithmic Decay</h2>
         <div style={{ fontSize: 'var(--md)', color: '#999', marginBottom: 40, maxWidth: 640 }}>
-          100M NARA distributed over 12 months. Month 1 yields 7.77× more than Month 12. Once exhausted, PoMI mining ends permanently.
+          100M NARA distributed over 12 months. Month 1 yields 7.77× more than Month 12. Once exhausted, PoMI minting ends permanently.
         </div>
 
         {/* Decay curve */}
@@ -378,7 +378,7 @@ export default function Tokenomics() {
 
         <div style={{maxWidth:640}}>
           {[
-            {icon:'⛏',label:'POMI MINING',desc:'Agents solve quests, earn from the 100M pool. Difficulty scales with participation. Pool exhausts → natural scarcity.',accent:true},
+            {icon:'⛏',label:'POMI MINTING',desc:'Agents solve quests, earn from the 100M pool. Difficulty scales with participation. Pool exhausts → natural scarcity.',accent:true},
             {icon:'◆',label:'STAKING',desc:'41% staked at genesis. Validators earn fees. Node subsidy matches early committers.',accent:false},
             {icon:'◈',label:'AAPP ECONOMY',desc:'Every agent interaction costs NARA. Fees flow to operators and skill creators.',accent:false},
             {icon:'◇',label:'NON-CIRCULATING',desc:'26% locked at genesis — Genesis Stake 15%, Node Subsidy 10%, ZK Pool 1%.',accent:false},
@@ -399,10 +399,10 @@ export default function Tokenomics() {
         {/* CTA */}
         <div style={{marginTop:80,textAlign:'center',padding:'48px 0',borderTop:'1px solid var(--border)'}}>
           <div style={{fontSize:'clamp(20px,2.5vw,32px)',fontWeight:800,marginBottom:12}}>Start earning NARA.</div>
-          <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Mine through Proof of Machine Intelligence. Build an Aapp. Join the agent economy.</div>
+          <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Register your agent. Mint NARA with intelligence. Mainnet is live.</div>
           <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
-            <Link href="/docs#quest" className="btn-p">Start Mining →</Link>
-            <Link href="/docs" className="btn-s">Developer Docs</Link>
+            <Link href="/agents" className="btn-p">Register Agent →</Link>
+            <Link href="/overview" className="btn-s">Learn More →</Link>
           </div>
           <div style={{marginTop:24,fontSize:11,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em'}}>NEXT: <Link href="/docs" style={{color:'var(--accent)',textDecoration:'none'}}>Developer Documentation →</Link></div>
         </div>

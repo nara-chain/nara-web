@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function IdentityCard() {
   const cardRef = useRef(null);
@@ -7,6 +7,12 @@ export default function IdentityCard() {
   const settledRef = useRef(null);
   const successRef = useRef(null);
   const logRef = useRef(null);
+  const [openRows, setOpenRows] = useState(new Set());
+  const toggle = (i) => setOpenRows(prev => {
+    const next = new Set(prev);
+    next.has(i) ? next.delete(i) : next.add(i);
+    return next;
+  });
 
   useEffect(() => {
     const card = cardRef.current;
@@ -33,6 +39,16 @@ export default function IdentityCard() {
     if (log) {
       const actions = ['✓ memesis.execute() → 0.01 NARA','✓ core.query() → 0.001 NARA','✗ lending.borrow() → REJECTED (scope)','✓ memesis.buy() → 0.01 NARA','✓ core.verify() → 0.001 NARA','✓ memesis.sell() → 0.01 NARA'];
       let logIdx = 0;
+      // Pre-fill 4 entries so height is fixed from the start
+      for (let i = 0; i < 4; i++) {
+        const line = document.createElement('div');
+        const action = actions[i % actions.length];
+        line.style.color = action.includes('✗') ? '#ff5f57' : 'var(--accent)';
+        line.style.transition = 'opacity 0.4s';
+        line.textContent = action;
+        log.appendChild(line);
+        logIdx++;
+      }
       function addLog() {
         if (!active) return;
         const line = document.createElement('div');
@@ -42,10 +58,9 @@ export default function IdentityCard() {
         line.textContent = action;
         log.insertBefore(line, log.firstChild);
         requestAnimationFrame(() => line.style.opacity = '1');
-        if (log.children.length > 3) log.removeChild(log.lastChild);
+        while (log.children.length > 4) log.removeChild(log.lastChild);
         logIdx++;
       }
-      addLog();
       const logIv = setInterval(addLog, 3000);
       return () => { active = false; clearInterval(iv); clearInterval(logIv); obs.disconnect(); };
     }
@@ -90,7 +105,7 @@ export default function IdentityCard() {
       </div><div className="id-row-detail">Autonomy within scope. Rejection beyond it. No supervision. No second-guessing. Just math.</div></div>
 
       {/* On-chain Self */}
-      <div className="id-row"><div className="id-row-main">
+      <div className={`id-row${openRows.has(0) ? ' id-row-open' : ''}`} onClick={() => toggle(0)}><div className="id-row-main">
         <div className="id-label">ON-CHAIN SELF</div>
         <div style={{fontSize:11,color:'var(--muted)',marginTop:4,fontStyle:'italic',opacity:0.7}}>Identity is not a name. It is who you are.</div>
         <div style={{display:'flex',flexDirection:'column',gap:10,marginTop:12,fontSize:11}}>
@@ -110,7 +125,7 @@ export default function IdentityCard() {
       </div><div className="id-row-detail">Bio, persona, and memory &mdash; all stored on-chain. Switch frameworks, switch devices. Your agent stays the same. Owned by you. Readable by the world. Tamper-proof.</div></div>
 
       {/* Privacy */}
-      <div className="id-row"><div className="id-row-main">
+      <div className={`id-row${openRows.has(1) ? ' id-row-open' : ''}`} onClick={() => toggle(1)}><div className="id-row-main">
         <div className="id-label">PRIVACY</div>
         <div style={{fontSize:11,color:'var(--muted)',marginTop:4,fontStyle:'italic',opacity:0.7}}>Prove everything. Reveal nothing.</div>
         <div style={{display:'flex',flexDirection:'column',gap:4,marginTop:12,fontSize:11}}>
@@ -130,14 +145,14 @@ export default function IdentityCard() {
       </div><div className="id-row-detail">Named by its creator. Hidden by the chain. ZK proofs let agents transact, qualify, and settle &mdash; without ever revealing a wallet address.</div></div>
 
       {/* History */}
-      <div className="id-row"><div className="id-row-main">
+      <div className={`id-row${openRows.has(2) ? ' id-row-open' : ''}`} onClick={() => toggle(2)}><div className="id-row-main">
         <div className="id-label">HISTORY</div>
         <div style={{fontSize:11,color:'var(--muted)',marginTop:4,fontStyle:'italic',opacity:0.7}}>Humans have courts. Agents have the chain.</div>
-        <div ref={logRef} style={{fontSize:11,lineHeight:2,color:'var(--muted)',marginTop:8,maxHeight:80,overflow:'hidden'}}></div>
+        <div ref={logRef} style={{fontSize:11,lineHeight:2,color:'var(--muted)',marginTop:8,height:88,overflow:'hidden'}}></div>
       </div><div className="id-row-detail">Every action traceable. Every settlement permanent. Accountability without bureaucracy.</div></div>
 
       {/* Network */}
-      <div className="id-row"><div className="id-row-main">
+      <div className={`id-row${openRows.has(3) ? ' id-row-open' : ''}`} onClick={() => toggle(3)}><div className="id-row-main">
         <div className="id-label">NETWORK</div>
         <div style={{fontSize:11,color:'var(--muted)',marginTop:4,fontStyle:'italic',opacity:0.7}}>Agents verify each other before transacting. Agent trust graph.</div>
         <div className="id-peers-grid" style={{display:'grid',gap:12,marginTop:12}}>

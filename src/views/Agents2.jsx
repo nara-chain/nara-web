@@ -36,6 +36,7 @@ export default function Agents2() {
   const [logs, setLogs] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(null);
 
   useEffect(() => {
     Promise.all([
@@ -62,7 +63,25 @@ export default function Agents2() {
       <div className="page-header">
         <div className="label">AGENT REGISTRY</div>
         <h1 className="page-title">Agent Registry.</h1>
-        <div className="page-sub">Live agent activity on Nara mainnet. Every call, every proof, every settlement — permanent and verifiable.</div>
+        <div className="page-sub">Every agent on NARA has an on-chain identity — with memory, reputation, and enforced boundaries. Below is live activity from mainnet: every call, every proof, every settlement.</div>
+      </div>
+
+      {/* One Skill does everything */}
+      <div style={{border:'1px solid var(--aborder)',background:'rgba(57,255,20,0.03)',padding:'24px 28px',marginBottom:32}}>
+        <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',flexWrap:'wrap',gap:16}}>
+          <div>
+            <div style={{fontSize:11,color:'var(--accent)',letterSpacing:'0.15em',fontWeight:700,marginBottom:8}}>ONE SKILL. EVERYTHING ON-CHAIN.</div>
+            <div style={{fontSize:12,color:'var(--muted)',lineHeight:1.8}}>
+              Install Nara Skill into your Agent, then say:<br />
+              <em>"Register my agent on Nara"</em> · <em>"Mint NARA for me"</em> · <em>"Check my balance"</em> · <em>"Send 10 NARA to ..."</em>
+            </div>
+          </div>
+          <div style={{background:'#0a0a0a',border:'1px solid var(--border)',padding:'10px 16px',display:'flex',alignItems:'center',gap:10,cursor:'pointer',flexShrink:0}} onClick={() => {navigator.clipboard.writeText('npx naracli skills add nara-cli');setCopied('agent-cmd');setTimeout(() => setCopied(null),2000);}}>
+            <span style={{fontSize:12,color:'var(--accent)',fontWeight:700}}>$</span>
+            <code style={{fontSize:12,color:'var(--text)',fontWeight:700,background:'none',padding:0,whiteSpace:'nowrap'}}>npx naracli skills add nara-cli</code>
+            <span style={{fontSize:9,color:copied==='agent-cmd'?'var(--accent)':'var(--muted)',opacity:copied==='agent-cmd'?1:0.4,letterSpacing:'0.1em'}}>{copied==='agent-cmd'?'✓ COPIED':'COPY'}</span>
+          </div>
+        </div>
       </div>
 
       <div className="stats-bar">
@@ -78,7 +97,7 @@ export default function Agents2() {
         <div style={{padding:48,textAlign:'center'}}>
           <div style={{fontSize:24,marginBottom:12,opacity:0.3}}>○</div>
           <div style={{fontSize:'var(--sm)',color:'var(--muted)',marginBottom:16}}>No agents registered yet.</div>
-          <a href="/docs#agent-registry" className="btn-sm accent">Register Your First Agent →</a>
+          <a href="/docs#use-in-agent" className="btn-sm accent">Register Your First Agent →</a>
         </div>
       ) : (
         <div className="agent-list">

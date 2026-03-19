@@ -61,7 +61,7 @@ export default function OverviewPage() {
         <div className="fade" style={{marginTop:40,marginBottom:40,maxWidth:640}}>
           {[
             {layer:'AAPPS',desc:'Agent applications — discoverable, callable, settled on-chain',icon:'◈',delay:0},
-            {layer:'ECONOMY',desc:'PoMI mining · NARA token · skill marketplace',icon:'◇',delay:0.15},
+            {layer:'ECONOMY',desc:'PoMI minting · NARA token · skill marketplace',icon:'◇',delay:0.15},
             {layer:'IDENTITY',desc:'On-chain self · boundaries · ZK privacy · trust network',icon:'◆',delay:0.3},
             {layer:'PROTOCOL',desc:'Tower BFT · 400ms blocks · flat-rate gas · agent-native VM',icon:'▣',delay:0.45},
           ].map((s,i) => (
@@ -83,7 +83,7 @@ export default function OverviewPage() {
           <div className="learn-cell" style={{textAlign:'center'}}>
             <div style={{fontSize:28,marginBottom:12,opacity:0.3}}>⊘</div>
             <div className="learn-cell-label">THE PROBLEM</div>
-            <div className="learn-cell-desc">No identity. No currency. No apps. Every chain assumes a human.</div>
+            <div className="learn-cell-desc">Fragmented identity. No native currency. No agent-native apps. Every chain assumes a human.</div>
           </div>
           <div className="learn-cell" style={{textAlign:'center'}}>
             <div style={{fontSize:28,marginBottom:12,opacity:0.3}}>⬡</div>
@@ -175,7 +175,7 @@ export default function OverviewPage() {
         {/* Mining decay chart */}
         <div className="fade" style={{marginBottom:32}}>
           <div style={{border:'1px solid var(--border)',background:'var(--surface)',padding:'24px 28px',maxWidth:560}}>
-            <div style={{fontSize:9,color:'var(--accent)',letterSpacing:'0.15em',marginBottom:16,opacity:0.5}}>MINING REWARDS · LOGARITHMIC DECAY</div>
+            <div style={{fontSize:9,color:'var(--accent)',letterSpacing:'0.15em',marginBottom:16,opacity:0.5}}>MINTING REWARDS · LOGARITHMIC DECAY</div>
             <div style={{display:'flex',alignItems:'flex-end',gap:4,height:80,marginBottom:16}}>
               {[20,15.4,12.6,10.6,9.1,7.8,6.8,5.9,5.1,4.4,3.4,2.6].map((v,i) => (
                 <div key={i} style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:4}}>
@@ -188,7 +188,7 @@ export default function OverviewPage() {
               <span>Month 1: <span style={{color:'var(--accent)',fontWeight:700}}>20M</span></span>
               <span>Month 12: <span style={{color:'var(--text)',fontWeight:700}}>2.6M</span></span>
             </div>
-            <div style={{fontSize:10,color:'var(--muted)',marginTop:8,opacity:0.5}}>Early miners earn <span style={{color:'var(--accent)'}}>7.77×</span> more. <Link href="/tokenomics" style={{color:'var(--accent)',textDecoration:'none'}}>Full schedule →</Link></div>
+            <div style={{fontSize:10,color:'var(--muted)',marginTop:8,opacity:0.5}}>Early minters earn <span style={{color:'var(--accent)'}}>7.77×</span> more. <Link href="/tokenomics" style={{color:'var(--accent)',textDecoration:'none'}}>Full schedule →</Link></div>
           </div>
         </div>
 
@@ -215,9 +215,10 @@ export default function OverviewPage() {
       <div className="learn-section">
         <div className="learn-label fade">Aapps &amp; Skills</div>
         <div className="learn-h2 fade">Services built for <span className="at glitch" data-val="machines.">machines.</span></div>
-        <div className="learn-text fade">Developers deploy. Agents discover, call, and pay — all on-chain.</div>
+        <div className="learn-text fade">An Aapp is a service that AI agents can discover, call, and pay for — automatically, on-chain. Developers deploy. Agents consume.</div>
 
         {/* MCP + NARA comparison — keep, good visual */}
+        <div className="learn-text fade" style={{marginBottom:24,fontSize:'var(--sm)',color:'var(--muted)'}}>MCP (Model Context Protocol) is the emerging standard for connecting AI agents to external tools. NARA extends it with on-chain settlement and identity.</div>
         <div className="fade mcp-compare-grid">
           <div style={{background:'var(--surface)',border:'1px solid var(--border)',padding:'24px'}}>
             <div style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.15em',marginBottom:14,opacity:0.5}}>MCP</div>
@@ -245,7 +246,7 @@ export default function OverviewPage() {
           {[
             {icon:'⬡',label:'BUILDERS',desc:'Deploy contract → register Skill → agents find you → earn NARA on every call.',accent:false},
             {icon:'◈',label:'AGENTS',desc:'Install Skill → call Aapp → settle on-chain. No API keys, no accounts.',accent:false},
-            {icon:'◇',label:'SKILLS',desc:'Global namespace · versioned · immutable · author earns per install.',accent:true},
+            {icon:'◇',label:'SKILLS',desc:'Packaged instructions that teach agents how to use Aapps · on-chain · revenue to author.',accent:true},
           ].map((a,i) => (
             <div key={i} style={{display:'flex',alignItems:'center',gap:16,padding:'14px 0',borderBottom:'1px solid var(--border)'}}>
               <div style={{fontSize:16,color:a.accent?'var(--accent)':'var(--muted)',opacity:a.accent?0.8:0.3,width:24,textAlign:'center',flexShrink:0}}>{a.icon}</div>
@@ -337,7 +338,7 @@ export default function OverviewPage() {
 
         <div className="fade" style={{display:'flex',alignItems:'center',gap:0,flexWrap:'wrap',marginTop:32}}>
           {[
-            {label:'EARN',desc:'PoMI mining',icon:'⛏',accent:true},
+            {label:'EARN',desc:'PoMI minting',icon:'⛏',accent:true},
             {arrow:true},
             {label:'SPEND',desc:'Skills · Staking · Trading',icon:'↔'},
             {arrow:true},
@@ -359,10 +360,10 @@ export default function OverviewPage() {
       {/* ── CTA ── */}
       <div className="fade" style={{marginTop:80,textAlign:'center',padding:'48px 0',borderTop:'1px solid var(--border)'}}>
         <div style={{fontSize:'clamp(20px,2.5vw,32px)',fontWeight:800,marginBottom:12}}>The agent economy starts here.</div>
-        <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Build an Aapp. Register an agent. Mine NARA.</div>
+        <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Register your agent. Mint NARA with intelligence.</div>
         <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
-          <Link href="/aapps" className="btn-p">Explore Aapps →</Link>
-          <Link href="/docs" className="btn-s">Developer Guide</Link>
+          <Link href="/agents" className="btn-p">Register Agent →</Link>
+          <Link href="/overview" className="btn-s">Learn More →</Link>
         </div>
         <div style={{marginTop:24,fontSize:11,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em'}}>NEXT: <Link href="/aapps" style={{color:'var(--accent)',textDecoration:'none'}}>Aapps →</Link></div>
       </div>
