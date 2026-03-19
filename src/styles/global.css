@@ -21,7 +21,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 *:focus:not(:focus-visible){outline:none;}
 *:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
 body{font-family:'JetBrains Mono','Cascadia Code','Fira Code','Consolas','Courier New',monospace;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(57,255,20,0.008) 2px,rgba(57,255,20,0.008) 4px);pointer-events:none;z-index:50;opacity:0.5;}
 #neural{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0.35;}

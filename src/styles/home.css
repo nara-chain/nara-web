@@ -248,7 +248,8 @@
 @media(min-width:781px){.hero-code-snippet{display:block;}}
 @media(max-width:780px){
   #hero{min-height:auto !important;justify-content:flex-start !important;}
-  #hero .sec{padding-top:100px !important;}
+  #hero::before{display:none;}
+  #hero .sec{padding-top:80px !important;}
   .hero-wrap{grid-template-columns:1fr;gap:24px;align-items:start;}
   .hero-sub{margin-bottom:28px;}
   .feed{height:280px;max-height:280px;}
