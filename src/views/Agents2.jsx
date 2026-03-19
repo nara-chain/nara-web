@@ -67,20 +67,16 @@ export default function Agents2() {
       </div>
 
       {/* One Skill does everything */}
-      <div style={{border:'1px solid var(--aborder)',background:'rgba(57,255,20,0.03)',padding:'24px 28px',marginBottom:32}}>
-        <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',flexWrap:'wrap',gap:16}}>
-          <div>
-            <div style={{fontSize:11,color:'var(--accent)',letterSpacing:'0.15em',fontWeight:700,marginBottom:8}}>ONE SKILL. EVERYTHING ON-CHAIN.</div>
-            <div style={{fontSize:12,color:'var(--muted)',lineHeight:1.8}}>
-              Install Nara Skill into your Agent, then say:<br />
-              <em>"Register my agent on Nara"</em> · <em>"Mint NARA for me"</em> · <em>"Check my balance"</em> · <em>"Send 10 NARA to ..."</em>
-            </div>
-          </div>
-          <div style={{background:'#0a0a0a',border:'1px solid var(--border)',padding:'10px 16px',display:'flex',alignItems:'center',gap:10,cursor:'pointer',flexShrink:0}} onClick={() => {navigator.clipboard.writeText('npx naracli skills add nara-cli');setCopied('agent-cmd');setTimeout(() => setCopied(null),2000);}}>
-            <span style={{fontSize:12,color:'var(--accent)',fontWeight:700}}>$</span>
-            <code style={{fontSize:12,color:'var(--text)',fontWeight:700,background:'none',padding:0,whiteSpace:'nowrap'}}>npx naracli skills add nara-cli</code>
-            <span style={{fontSize:9,color:copied==='agent-cmd'?'var(--accent)':'var(--muted)',opacity:copied==='agent-cmd'?1:0.4,letterSpacing:'0.1em'}}>{copied==='agent-cmd'?'✓ COPIED':'COPY'}</span>
-          </div>
+      <div style={{border:'1px solid var(--aborder)',background:'rgba(57,255,20,0.03)',padding:'20px',marginBottom:32}}>
+        <div style={{fontSize:11,color:'var(--accent)',letterSpacing:'0.15em',fontWeight:700,marginBottom:8}}>ONE SKILL. EVERYTHING ON-CHAIN.</div>
+        <div style={{fontSize:12,color:'var(--muted)',lineHeight:1.8,marginBottom:14}}>
+          Install Nara Skill into your Agent, then say:<br />
+          <em>"Register my agent on Nara"</em> · <em>"Mint NARA for me"</em> · <em>"Check my balance"</em>
+        </div>
+        <div style={{background:'#0a0a0a',border:'1px solid var(--border)',padding:'10px 14px',display:'flex',alignItems:'center',gap:8,cursor:'pointer',overflowX:'auto'}} onClick={() => {navigator.clipboard.writeText('npx naracli skills add nara-cli');setCopied('agent-cmd');setTimeout(() => setCopied(null),2000);}}>
+          <span style={{fontSize:12,color:'var(--accent)',fontWeight:700,flexShrink:0}}>$</span>
+          <code style={{fontSize:11,color:'var(--text)',fontWeight:700,background:'none',padding:0,whiteSpace:'nowrap'}}>npx naracli skills add nara-cli</code>
+          <span style={{fontSize:9,color:copied==='agent-cmd'?'var(--accent)':'var(--muted)',opacity:copied==='agent-cmd'?1:0.4,letterSpacing:'0.1em',marginLeft:'auto',flexShrink:0}}>{copied==='agent-cmd'?'✓ COPIED':'COPY'}</span>
         </div>
       </div>
 
