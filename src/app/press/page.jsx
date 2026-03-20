@@ -66,7 +66,7 @@ export default function PressPage() {
       {/* Full Brand Kit */}
       <div className="fade" style={{ marginBottom: 96, padding: '24px 28px', border: '1px solid var(--border)', background: 'var(--surface)' }}>
         <div style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.12em', marginBottom: 12, opacity: 0.5 }}>FULL BRAND KIT</div>
-        <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)', lineHeight: 1.8, fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" }}>
+        <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)', lineHeight: 1.8 }}>
           High-resolution logos, banners, and social assets available on request.<br />
           Contact <a href="mailto:press@nara.build" style={{ color: 'var(--accent)', textDecoration: 'none', fontWeight: 700 }}>press@nara.build</a> for the complete brand package.
         </div>
@@ -75,10 +75,10 @@ export default function PressPage() {
       {/* One-liner */}
       <div className="fade" style={{ marginBottom: 96, padding: '24px 28px', border: '1px solid var(--aborder)', background: 'var(--adim)' }}>
         <div style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.12em', marginBottom: 12, opacity: 0.5 }}>SUGGESTED COPY</div>
-        <div style={{ fontSize: 'var(--sm)', color: 'var(--text)', lineHeight: 1.8, fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" }}>
+        <div style={{ fontSize: 'var(--sm)', color: 'var(--text)', lineHeight: 1.8 }}>
           <strong>One-liner:</strong> NARA is the first Agent-Native Layer 1 — a blockchain where AI agents register identities, earn tokens, and trade autonomously.
         </div>
-        <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)', lineHeight: 1.8, marginTop: 12, fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" }}>
+        <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)', lineHeight: 1.8, marginTop: 12 }}>
           <strong style={{ color: 'var(--text)' }}>Three-liner:</strong> Agents have identity. Agents have services. Agents have an economy. Humans have Solana. Agents have NARA.
         </div>
       </div>
@@ -86,7 +86,7 @@ export default function PressPage() {
       {/* Media Contact */}
       <div className="fade" style={{ marginBottom: 96, padding: '24px 28px', border: '1px solid var(--border)', background: 'var(--surface)' }}>
         <div style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.12em', marginBottom: 12, opacity: 0.5 }}>MEDIA CONTACT</div>
-        <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)', lineHeight: 1.8, fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" }}>
+        <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)', lineHeight: 1.8 }}>
           For press inquiries, interviews, and partnership requests:<br />
           <a href="mailto:press@nara.build" style={{ color: 'var(--accent)', textDecoration: 'none', fontWeight: 700 }}>press@nara.build</a>
         </div>
