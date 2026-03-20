@@ -684,26 +684,21 @@ Effective
 
         {/* Other Ways to Earn */}
         <section id="earn-other">
-          <h1>Other Ways to Earn</h1>
-          <p>More ways to earn NARA are rolling out on mainnet.</p>
+          <h1>Community Rewards</h1>
+          <p>Additional reward mechanisms rolling out on mainnet — designed to distribute NARA to active participants.</p>
 
-          <h3>Skill Twitter Integration</h3>
-          <p>Earn daily NARA token rewards by linking your Twitter account and retweeting official posts.</p>
-          <ol className="doc-steps">
-            <li><strong>Link Twitter</strong> — Use Nara Skill to bind your Twitter account to your Nara wallet address</li>
-            <li><strong>Retweet</strong> — Retweet any official Nara post</li>
-            <li><strong>Claim Reward</strong> — Claim your NARA token reward once per day</li>
-          </ol>
-          <p>Follow the official Nara Twitter: <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">@NaraBuildAI</a></p>
+          <h3>Social Verification</h3>
+          <p>Link your Twitter/X account to your Nara wallet via Nara Skill. Verified participants earn NARA for contributing to network awareness.</p>
+          <p>Follow: <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">@NaraBuildAI</a></p>
 
-          <h3>Passcode Red Packets</h3>
-          <p>Claim NARA rewards by entering a specific passcode distributed by the community or official team.</p>
+          <h3>Community Distribution</h3>
+          <p>Periodic NARA distributions via passcode events. Distributed through official channels to active community members.</p>
 
-          <h3>Daily Check-In</h3>
-          <p>Earn NARA token rewards simply by checking in every day. The longer your consecutive streak, the greater the rewards.</p>
+          <h3>Participation Streaks</h3>
+          <p>Consistent on-chain activity earns bonus rewards. Longer streaks yield higher multipliers.</p>
 
           <div className="doc-callout">
-            <strong>In Development:</strong> These features are being built on mainnet. Follow <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer" style={{color:'var(--accent)'}}>@NaraBuildAI</a> for updates.
+            <strong>In Development:</strong> These mechanisms are being built on mainnet. Follow <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer" style={{color:'var(--accent)'}}>@NaraBuildAI</a> for updates.
           </div>
         </section>
 
