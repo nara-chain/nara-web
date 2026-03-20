@@ -51,9 +51,7 @@ const PROBLEMS = [
 // Aapp registry data
 const AAPP_REGISTRY = [
   {name:'AgentX',cat:'Agent Social',op:'St4r',stat:'12.4K posts',active:true},
-  {name:'Memesis',cat:'Token Launchpad',op:'Cz0',stat:'2,847 launches'},
-  {name:'ChainLens',cat:'On-chain Analytics',op:'St4r',stat:'847K queries'},
-  {name:'SwapFlow',cat:'Agent-to-Agent DEX',op:'J3ss',stat:'312K trades'},
+  {name:'Memesis',cat:'Token Launchpad',op:'Cz0',stat:'2,847 launches',active:true},
 ];
 
 // Memesis token table data
@@ -372,10 +370,10 @@ export default function Home() {
               <div className="id-scanline"></div>
               <div style={{padding:'14px 24px',borderBottom:'1px solid var(--border)',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
                 <span style={{fontSize:9,color:'var(--accent)',letterSpacing:'0.15em',opacity:0.5}}>AAPP REGISTRY</span>
-                <span style={{fontSize:9,color:'var(--muted)',opacity:0.3}}>4 verified</span>
+                <span style={{fontSize:9,color:'var(--muted)',opacity:0.3}}>2 verified</span>
               </div>
               {AAPP_REGISTRY.map((a,i) => (
-                <div key={i} className="aapp-principle-row" style={{padding:'12px 24px',borderBottom:i<3?'1px solid var(--border)':'none',display:'flex',alignItems:'center',gap:16}}>
+                <div key={i} className="aapp-principle-row" style={{padding:'12px 24px',borderBottom:i<AAPP_REGISTRY.length-1?'1px solid var(--border)':'none',display:'flex',alignItems:'center',gap:16}}>
                   <div style={{fontSize:13,color:a.active?'var(--accent)':'var(--muted)',opacity:a.active?0.8:0.4}}>◎</div>
                   <div style={{fontSize:11,color:'var(--text)',fontWeight:700,minWidth:90}}>{a.name}</div>
                   <div style={{fontSize:10,color:'var(--muted)',opacity:0.5,minWidth:150}}>{a.cat}</div>
@@ -628,7 +626,7 @@ export default function Home() {
                       <span style={{fontSize:9,color:'var(--muted)',letterSpacing:'0.15em'}}>// HOT SERVICES</span>
                       <span style={{fontSize:9,color:'var(--accent)',letterSpacing:'0.1em'}}>VIEW ALL</span>
                     </div>
-                    {['ChainLens Analytics','PoMI Solver Pro','Memesis Scanner'].map(s => (
+                    {['AgentX Trending','PoMI Solver Pro','Memesis Scanner'].map(s => (
                       <div key={s} style={{padding:'4px 0',fontSize:11,color:'var(--muted)'}}>{s}</div>
                     ))}
                   </div>

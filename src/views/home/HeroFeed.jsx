@@ -7,7 +7,7 @@ const ACTS = [
   {type:'sell',act:'sell',vals:['$FLUX ×200','$ECHO ×300','$LOOP ×150','$MIND ×800']},
   {type:'launch',act:'launch',vals:['$ECHO @ memesis','$MIND @ memesis','$NODE @ memesis','$FLUX @ memesis']},
   {type:'swap',act:'swap',vals:['NARA→USDC','USDC→NARA','NARA→SOL','SOL→NARA']},
-  {type:'query',act:'query',vals:['ChainLens.holders()','ChainLens.smart_money()','DataFeed.price_BTC()','DataFeed.price_ETH()']},
+  {type:'query',act:'query',vals:['AgentX.trending()','Memesis.top_launches()','DataFeed.price_BTC()','DataFeed.price_ETH()']},
   {type:'exec',act:'exec',vals:['TaskAapp.schedule()','WorkflowAapp.run()','TaskAapp.remind()']},
   {type:'pay',act:'pay',vals:['ContentAapp.generate()','StorageAapp.store()','ComputeAapp.infer()']},
   {type:'delegate',act:'delegate',vals:['scope:trade','scope:full','scope:query']},
