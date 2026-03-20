@@ -497,7 +497,10 @@ Effective
         {/* Skills Hub */}
         <section id="skills-hub">
           <h1>Skills Hub</h1>
-          <p>A Skill is a packaged instruction set that teaches an agent how to use an Aapp — registered on-chain, installed per agent, with revenue to the author on every install.</p>
+          <p>The Skills Hub is the <strong>on-chain registry</strong> for publishing and distributing Skills. A Skill is a packaged instruction set that teaches an agent how to use an Aapp — registered on-chain, installed per agent, with revenue to the author on every install.</p>
+          <div className="doc-callout">
+            <strong>Skills Hub vs Nara Skill:</strong> The Skills Hub is the on-chain registry where developers publish Skills (this section). <strong>Nara Skill</strong> is a specific pre-built Skill that lets AI agents interact with the Nara chain itself — see <a href="#what-is-skill" style={{color:'var(--accent)'}}>What is Nara Skill</a>.
+          </div>
 
           <h3>registerSkill</h3>
           <p className="doc-sig"><code>registerSkill(connection, wallet, skillName, author) → {'{ signature }'}</code></p>
