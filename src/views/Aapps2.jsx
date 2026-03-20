@@ -209,6 +209,8 @@ export default function Aapps2() {
           </div>
         </div>
       </div>
+
+      <div style={{marginTop:24,fontSize:11,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em',textAlign:'center'}}>NEXT: <Link href="/tokenomics" style={{color:'var(--accent)',textDecoration:'none'}}>Tokenomics →</Link></div>
     </div>
   );
 }
