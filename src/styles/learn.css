@@ -4,7 +4,7 @@
 .learn-section:last-child{margin-bottom:0;}
 .learn-label{font-size:10px;color:var(--accent);opacity:0.5;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:16px;}
 .learn-label::before{content:'// ';}
-.learn-h2{font-size:clamp(24px,3vw,40px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin-bottom:32px;}
+.learn-h2{font-size:clamp(28px,3.4vw,48px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin-bottom:32px;}
 .learn-text{font-size:var(--md);color:#999;line-height:1.8;margin-bottom:20px;max-width:640px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;}
 .learn-text strong{color:var(--text);}
 .learn-grid{display:grid;gap:1px;background:var(--border);margin-bottom:24px;}
