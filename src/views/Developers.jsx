@@ -140,6 +140,9 @@ export default function Developers() {
           <h3>Install</h3>
           <DocCodeBlock id="qs-1" copied={copied} copyFn={copyDoc}
             code={`<span class="ck">$</span> npm install nara-sdk`} />
+          <div className="doc-callout">
+            <strong>nara-sdk vs @solana/web3.js:</strong> <code>nara-sdk</code> re-exports Solana's <code>Connection</code>, <code>Keypair</code>, and other base classes, plus adds NARA-specific modules (agent_registry, zkid, skills, quest). You can also use <code>@solana/web3.js</code> directly for basic operations — the RPC is fully compatible. Use <code>nara-sdk</code> when you need NARA-specific features.
+          </div>
 
           <h3>Connect &amp; Register</h3>
           <DocCodeBlock id="qs-2" copied={copied} copyFn={copyDoc}
