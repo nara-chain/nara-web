@@ -77,6 +77,7 @@ export default function Aapps2() {
         <div className="stat"><div className="stat-label">NARA SETTLED</div><div className="stat-val">1,454</div></div>
         <div className="stat"><div className="stat-label">IN DEVELOPMENT</div><div className="stat-val">2</div></div>
       </div>
+      <div style={{fontSize:9,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em',textAlign:'right',marginTop:-24,marginBottom:24}}>ILLUSTRATIVE DATA · DEVNET</div>
 
       <div className="aapp-list">
         {aapps.map((a, i) => {
