@@ -130,8 +130,8 @@ export default function Aapps2() {
                 </div>
               </div>
               <div className={`detail-panel${openDetail === i ? ' open' : ''}`}>
-                {/* Manifest */}
-                {a.manifest && (
+                {/* Manifest — only show for live Aapps */}
+                {a.manifest && a.status === 'live' && (
                   <div className="detail-section">
                     <div className="detail-label">MANIFEST</div>
                     <div className="manifest-block">
@@ -143,6 +143,13 @@ export default function Aapps2() {
                       <div>&nbsp;&nbsp;<span className="key">&quot;settlement&quot;</span>: <span className="val">&quot;{a.manifest.settlement}&quot;</span></div>
                       <div><span className="co">{'}'}</span></div>
                     </div>
+                  </div>
+                )}
+                {/* In Development notice for pending Aapps */}
+                {a.status === 'pending' && (
+                  <div className="detail-section" style={{textAlign:'center',padding:'24px 28px'}}>
+                    <div style={{fontSize:10,color:'var(--accent)',letterSpacing:'0.15em',opacity:0.5,marginBottom:8}}>IN DEVELOPMENT</div>
+                    <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.7}}>This Aapp is being built. Actions: {a.interfaces.join(', ')}</div>
                   </div>
                 )}
                 {/* Top callers */}
