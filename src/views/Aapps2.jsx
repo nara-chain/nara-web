@@ -96,6 +96,7 @@ export default function Aapps2() {
                   <span className={`aapp-status${statusClass}`}>
                     {isLive ? 'Live' : a.status === 'pending' ? 'Coming Soon' : 'Build'}
                   </span>
+                  <span style={{fontSize:12,color:'var(--muted)',opacity:0.4,transform:openDetail===i?'rotate(180deg)':'rotate(0)',transition:'transform 0.3s',marginLeft:8}}>▼</span>
                 </div>
                 {/* Row 2: Body — left info + right terminal */}
                 <div className="aapp-body">
