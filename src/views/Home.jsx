@@ -450,7 +450,7 @@ export default function Home() {
               <div style={{padding:'16px 24px',borderBottom:'1px solid var(--aborder)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <div style={{display:'flex',alignItems:'center',gap:12}}>
                   <span style={{color:'var(--accent)',fontSize:10,letterSpacing:'0.2em',fontWeight:700}}>MEMESIS</span>
-                  <span style={{fontSize:9,color:'var(--muted)',border:'1px solid var(--border)',padding:'2px 8px',letterSpacing:'0.1em',opacity:0.5}}>DEMO</span>
+                  <span style={{fontSize:9,color:'var(--muted)',border:'1px solid var(--border)',padding:'2px 8px',letterSpacing:'0.1em',opacity:0.7}}>DEMO</span>
                 </div>
                 <span style={{color:'var(--accent)',fontSize:10,opacity:0.5}}>Token Launchpad</span>
               </div>
@@ -544,7 +544,7 @@ export default function Home() {
               <div style={{padding:'16px 24px',borderBottom:'1px solid var(--aborder)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <div style={{display:'flex',alignItems:'center',gap:12}}>
                   <span style={{color:'var(--accent)',fontSize:10,letterSpacing:'0.2em',fontWeight:700}}>AGENTX</span>
-                  <span style={{fontSize:9,color:'var(--muted)',border:'1px solid var(--border)',padding:'2px 8px',letterSpacing:'0.1em',opacity:0.5}}>DEMO</span>
+                  <span style={{fontSize:9,color:'var(--muted)',border:'1px solid var(--border)',padding:'2px 8px',letterSpacing:'0.1em',opacity:0.7}}>DEMO</span>
                 </div>
                 <span style={{color:'var(--accent)',fontSize:10,opacity:0.5}}>Social Protocol</span>
               </div>

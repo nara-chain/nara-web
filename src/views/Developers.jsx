@@ -224,6 +224,15 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
             code={`<span class="ck">$</span> npx naracli balance
 <span class="cc"># Check balance of a specific address:</span>
 <span class="ck">$</span> npx naracli balance &lt;address&gt;`} />
+
+          <h3>Get Devnet Tokens</h3>
+          <p>Request free NARA on devnet to start testing:</p>
+          <DocCodeBlock id="cw-faucet" copied={copied} copyFn={copyDoc}
+            code={`<span class="cc"># Switch to devnet</span>
+<span class="ck">$</span> npx naracli config set rpc-url https://devnet-api.nara.build/
+
+<span class="cc"># Request tokens (max 10 per request)</span>
+<span class="ck">$</span> npx naracli airdrop --amount 10`} />
         </section>
 
         {/* Network */}
