@@ -585,7 +585,7 @@ Effective
           <p>Nara Skill can be integrated into AI Agents that support the Skill system, enabling Agents to autonomously execute operations on Nara Chain.</p>
 
           <h3>Supported Agents</h3>
-          <p><a href="https://openclaw.org/" target="_blank" rel="noopener noreferrer">OpenClaw</a>, <a href="https://claude.com/claude-code" target="_blank" rel="noopener noreferrer">Claude Code</a>, <a href="https://openai.com/codex" target="_blank" rel="noopener noreferrer">Codex</a>, and other major AI Agents support the Skill system.</p>
+          <p>AI coding agents like <a href="https://claude.com/claude-code" target="_blank" rel="noopener noreferrer">Claude Code</a>, <a href="https://openai.com/codex" target="_blank" rel="noopener noreferrer">Codex</a>, <a href="https://openclaw.org/" target="_blank" rel="noopener noreferrer">OpenClaw</a>, and others support the Skill system.</p>
 
           <h3>Install Skill</h3>
           <DocCodeBlock id="sia-1" copied={copied} copyFn={copyDoc}

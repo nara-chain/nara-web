@@ -323,7 +323,7 @@ export default function Tokenomics() {
       <div style={{ marginBottom: 56 }}>
         <div className="label">POMI MINING</div>
         <h2 className="sec-title">Logarithmic Decay</h2>
-        <div style={{ fontSize: 'var(--md)', color: '#999', marginBottom: 40, maxWidth: 640 }}>
+        <div style={{ fontSize: 'var(--md)', color: 'var(--muted)', marginBottom: 40, maxWidth: 640 }}>
           100M NARA distributed over 12 months. Month 1 yields 7.77× more than Month 12. Once exhausted, PoMI mining ends permanently.
         </div>
 
@@ -386,7 +386,7 @@ export default function Tokenomics() {
             <div key={i} style={{display:'flex',alignItems:'center',gap:16,padding:'14px 0',borderBottom:'1px solid var(--border)'}}>
               <div style={{fontSize:16,color:a.accent?'var(--accent)':'var(--muted)',opacity:a.accent?0.8:0.3,width:24,textAlign:'center',flexShrink:0}}>{a.icon}</div>
               <div style={{fontSize:10,color:a.accent?'var(--accent)':'var(--muted)',letterSpacing:'0.15em',fontWeight:700,minWidth:110,opacity:a.accent?1:0.5,flexShrink:0}}>{a.label}</div>
-              <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5,fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif'}}>{a.desc}</div>
+              <div style={{fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.5}}>{a.desc}</div>
             </div>
           ))}
         </div>
