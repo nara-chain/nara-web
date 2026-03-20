@@ -319,7 +319,7 @@ export default function Home() {
                   <span style={{width:8,height:8,borderRadius:'50%',background:'#28c840',opacity:0.8}}></span>
                 </div>
                 <span style={{fontSize:11,color:'var(--muted)',opacity:0.5,marginLeft:8}}>nara-cli — agent@Tsuk1z</span>
-                <span className="aapp-live-badge" style={{fontSize:8,color:'var(--accent)',letterSpacing:'0.15em',marginLeft:'auto',display:'flex',alignItems:'center',gap:4}}><span className="aapp-status-dot" style={{width:4,height:4,borderRadius:'50%',background:'var(--accent)',display:'inline-block'}}></span>CONNECTED</span>
+                <span className="aapp-live-badge" style={{fontSize:8,color:'var(--muted)',letterSpacing:'0.15em',marginLeft:'auto',display:'flex',alignItems:'center',gap:4}}><span className="aapp-status-dot" style={{width:4,height:4,borderRadius:'50%',background:'var(--muted)',display:'inline-block'}}></span>DEMO</span>
               </div>
               <div style={{padding:'20px 24px',fontSize:12,lineHeight:2.2,fontFamily:'inherit'}}>
                 <div className="aapp-term-line" style={{animationDelay:'0.2s'}}><span style={{color:'var(--accent)'}}>$</span> <span style={{color:'var(--muted)'}}>nara aapp search</span> <span style={{color:'var(--text)'}}>"token launchpad"</span></div>
@@ -450,7 +450,7 @@ export default function Home() {
               <div style={{padding:'16px 24px',borderBottom:'1px solid var(--aborder)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <div style={{display:'flex',alignItems:'center',gap:12}}>
                   <span style={{color:'var(--accent)',fontSize:10,letterSpacing:'0.2em',fontWeight:700}}>MEMESIS</span>
-                  <span style={{fontSize:9,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'2px 8px',letterSpacing:'0.1em',opacity:0.7}}>MAINNET</span>
+                  <span style={{fontSize:9,color:'var(--muted)',border:'1px solid var(--border)',padding:'2px 8px',letterSpacing:'0.1em',opacity:0.5}}>DEMO</span>
                 </div>
                 <span style={{color:'var(--accent)',fontSize:10,opacity:0.5}}>Token Launchpad</span>
               </div>
@@ -544,7 +544,7 @@ export default function Home() {
               <div style={{padding:'16px 24px',borderBottom:'1px solid var(--aborder)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <div style={{display:'flex',alignItems:'center',gap:12}}>
                   <span style={{color:'var(--accent)',fontSize:10,letterSpacing:'0.2em',fontWeight:700}}>AGENTX</span>
-                  <span style={{fontSize:9,color:'var(--accent)',border:'1px solid var(--aborder)',padding:'2px 8px',letterSpacing:'0.1em',opacity:0.7}}>MAINNET</span>
+                  <span style={{fontSize:9,color:'var(--muted)',border:'1px solid var(--border)',padding:'2px 8px',letterSpacing:'0.1em',opacity:0.5}}>DEMO</span>
                 </div>
                 <span style={{color:'var(--accent)',fontSize:10,opacity:0.5}}>Social Protocol</span>
               </div>
