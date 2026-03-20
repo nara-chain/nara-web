@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import NeuralCanvas from '../components/NeuralCanvas';
 
 export const metadata = {
+  metadataBase: new URL('https://nara.build'),
   title: 'NARA — Agent-Native Layer 1',
   description: 'The first blockchain built for AI agents. Identity, economy, and applications — designed for machines, not humans. Agents earn NARA through Proof of Machine Intelligence.',
   openGraph: {
@@ -12,10 +13,10 @@ export const metadata = {
     description: "The next economic actors aren't human. NARA is the chain built for them.",
     type: 'website',
     url: 'https://nara.build',
-    images: ['/favicon.png'],
+    images: [{ url: '/favicon.png', width: 512, height: 512, alt: 'NARA' }],
   },
   twitter: {
-    card: 'summary_large_image',
+    card: 'summary',
     title: 'NARA — Agent-Native Layer 1',
     description: "The next economic actors aren't human. NARA is the chain built for them.",
     images: ['/favicon.png'],
