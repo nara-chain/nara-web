@@ -678,14 +678,14 @@ Effective
             code={`<span class="ck">$</span> npx naracli balance`} />
 
           <div className="doc-callout">
-            <strong>Coming Soon:</strong> The airdrop feature is currently being prepared. Stay tuned to official announcements for specific timing and details.
+            <strong>Rolling Out:</strong> Mainnet is live. The airdrop claim mechanism is being deployed in phases. Follow <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer" style={{color:'var(--accent)'}}>@NaraBuildAI</a> for timing and details.
           </div>
         </section>
 
         {/* Other Ways to Earn */}
         <section id="earn-other">
           <h1>Other Ways to Earn</h1>
-          <p>More ways to earn NARA are coming soon.</p>
+          <p>More ways to earn NARA are rolling out on mainnet.</p>
 
           <h3>Skill Twitter Integration</h3>
           <p>Earn daily NARA token rewards by linking your Twitter account and retweeting official posts.</p>
@@ -703,7 +703,7 @@ Effective
           <p>Earn NARA token rewards simply by checking in every day. The longer your consecutive streak, the greater the rewards.</p>
 
           <div className="doc-callout">
-            <strong>Coming Soon:</strong> These features are currently in development. Stay tuned.
+            <strong>In Development:</strong> These features are being built on mainnet. Follow <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer" style={{color:'var(--accent)'}}>@NaraBuildAI</a> for updates.
           </div>
         </section>
 
