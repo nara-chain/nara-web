@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import '../styles/global.css';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
@@ -36,7 +37,7 @@ export default function RootLayout({ children }) {
       <body>
         <a href="#main-content" className="skip-link">Skip to content</a>
         <NeuralCanvas />
-        <Nav />
+        <Suspense><Nav /></Suspense>
         <main id="main-content">
           {children}
         </main>
