@@ -134,7 +134,7 @@ export default function IdentityCard() {
         <div className="id-label">HISTORY</div>
         <div style={{fontSize:11,color:'var(--muted)',marginTop:4,fontStyle:'italic',opacity:0.7}}>Humans have courts. Agents have the chain.</div>
         <div ref={logRef} style={{fontSize:11,lineHeight:2,color:'var(--muted)',marginTop:8,maxHeight:80,overflow:'hidden'}}></div>
-      </div><div className="id-row-detail">Every action traceable. Every settlement permanent. Accountability without bureaucracy.</div></div>
+      </div><div className="id-row-detail">Every action recorded on-chain. Every settlement permanent. Wallet links stay private via ZK proofs.</div></div>
 
       {/* Network */}
       <div className="id-row"><div className="id-row-main">

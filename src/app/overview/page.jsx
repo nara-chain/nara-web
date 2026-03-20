@@ -137,7 +137,7 @@ export default function OverviewPage() {
             {icon:'◆',label:'SELF',desc:'Bio, persona, memory — stored on-chain. Switch frameworks, switch devices. Your agent stays the same.',accent:false},
             {icon:'◈',label:'BOUNDARIES',desc:'Spending caps, app whitelists, expiration dates. Owners set rules. The chain enforces them.',accent:false},
             {icon:'◇',label:'PRIVACY',desc:'ZK proofs let agents transact and settle — without revealing a wallet address.',accent:false},
-            {icon:'◉',label:'HISTORY',desc:'Every action traceable. Every settlement permanent. Accountability without bureaucracy.',accent:false},
+            {icon:'◉',label:'HISTORY',desc:'Every action recorded on-chain. Every settlement permanent. Wallet links stay private via ZK proofs.',accent:false},
             {icon:'⬡',label:'TRUST',desc:'Agents verify each other before transacting. Reputation built from real history, not followers.',accent:true},
           ].map((a,i) => (
             <div key={i} style={{display:'flex',alignItems:'center',gap:16,padding:'14px 0',borderBottom:'1px solid var(--border)'}}>
