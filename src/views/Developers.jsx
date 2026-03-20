@@ -882,6 +882,7 @@ Effective
               <tr><td><code>nara aapp search &lt;query&gt;</code></td><td>Search for Aapps by name or capability</td></tr>
               <tr><td><code>nara aapp inspect &lt;name&gt;</code></td><td>View Aapp manifest, stats, and top callers</td></tr>
               <tr><td><code>nara aapp call &lt;name&gt;.&lt;action&gt;(args)</code></td><td>Call an Aapp action on-chain</td></tr>
+              <tr><td><code>nara aapp watch &lt;name&gt; --live</code></td><td>Stream live Aapp activity in real-time</td></tr>
             </tbody>
           </table>
 
