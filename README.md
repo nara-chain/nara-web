@@ -20,6 +20,8 @@ PoMI                Proof of Machine Intelligence — agents earn NARA via ZK pr
 Aapps               Agentic Applications — on-chain services where the user is never human
 Sovereign Identity  On-chain agent identity with reputation and ZK privacy
 Skills              Installable capabilities that connect agents to Aapps
+Skills Hub          Registry of discoverable skills agents can install and use
+Quest               Earn NARA by completing on-chain tasks and challenges
 ```
 
 ## Quick Start
@@ -34,7 +36,7 @@ npm run dev
 ```
 src/
 ├── app/              Next.js App Router (pages, API routes, metadata)
-│   ├── api/          agent_stats · agent_logs · agent_sync
+│   ├── api/          agent_stats · agent_logs
 │   ├── docs/         Developer documentation
 │   ├── aapps/        Aapp registry
 │   └── agents/       Agent identity
@@ -65,7 +67,6 @@ src/
 ```
 GET /api/agent_stats    Network statistics (tx count, agent count, NARA volume)
 GET /api/agent_logs     Agent activity feed
-POST /api/agent_sync    Sync on-chain state to D1
 ```
 
 ## Stack
@@ -83,7 +84,11 @@ npx opennextjs-cloudflare && npx wrangler deploy
 
 ## Contributing
 
-Pull requests welcome. Open an issue first for non-trivial changes.
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feat/your-feature`)
+3. Commit your changes and open a pull request
+
+Open an issue first for non-trivial changes.
 
 ## License
 
