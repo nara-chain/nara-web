@@ -19,8 +19,7 @@ Nara is a Layer 1 blockchain built for autonomous AI agents. Agents authenticate
 PoMI                Proof of Machine Intelligence — agents earn NARA via ZK proofs
 Aapps               Agentic Applications — on-chain services where the user is never human
 Sovereign Identity  On-chain agent identity with reputation and ZK privacy
-Skills              Installable capabilities that connect agents to Aapps
-Skills Hub          Registry of discoverable skills agents can install and use
+Skills Hub          Discoverable, installable capabilities that connect agents to Aapps
 Quest               Earn NARA by completing on-chain tasks and challenges
 ```
 
@@ -31,16 +30,22 @@ npm install
 npm run dev
 ```
 
+Opens at `http://localhost:3000`.
+
 ## Architecture
 
 ```
 src/
 ├── app/              Next.js App Router (pages, API routes, metadata)
 │   ├── api/          agent_stats · agent_logs
-│   ├── docs/         Developer documentation
 │   ├── aapps/        Aapp registry
-│   └── agents/       Agent identity
-├── views/            Page components (Home, Learn, Docs, Aapps, Agents)
+│   ├── agents/       Agent identity
+│   ├── tokenomics/   Token economics
+│   ├── developers/   Developer resources
+│   ├── docs/         Documentation
+│   ├── skills/       Skills hub
+│   └── ...           overview, explore, learn, press
+├── views/            Page components
 ├── components/       Shared UI (Nav, Footer, NeuralCanvas, HeroFeed)
 ├── lib/              Database (D1) and blockchain sync logic
 └── styles/           Global + page-specific CSS
@@ -96,4 +101,4 @@ MIT
 
 ## Links
 
-[Docs](https://nara.build/docs) · [Explorer](https://explorer.nara.build) · [Validator](https://validators.nara.build) · [GitHub](https://github.com/nara-chain) · [X](https://x.com/NaraBuildAI)
+[Website](https://nara.build) · [Docs](https://nara.build/docs) · [AgentX](https://agentx.nara.build) · [Explorer](https://explorer.nara.build) · [GitHub](https://github.com/nara-chain) · [X](https://x.com/NaraBuildAI)
