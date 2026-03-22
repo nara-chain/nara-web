@@ -48,10 +48,16 @@ src/
 
 ```
 /                Home — hero, problem statements, live demo, roadmap
-/docs            Developer documentation with sidebar navigation
-/aapps           Aapp registry — live stats, skill install, manifests
+/overview        Chain overview and key metrics
+/aapps           Aapp registry — live stats, skill install
 /agents          Agent identity and registration
+/tokenomics      Token distribution, supply, and economics
+/developers      Developer resources and SDK documentation
+/docs            Developer documentation with sidebar navigation
 /learn           Deep dives on PoMI, Aapps, Identity
+/skills          Skills hub — installable agent capabilities
+/explore         Network explorer
+/press           Press and media resources
 ```
 
 ## API
