@@ -16,26 +16,26 @@ function DocCodeBlock({ id, code, copyFn, copied }) {
 
 /* ── Sidebar nav sections ── */
 const NAV_SECTIONS = [
-  // Getting Started
-  { id: '_gs', label: 'Getting Started', group: true },
-  { id: 'quickstart', label: 'Quick Start' },
+  // Get Started — the primary user journey
+  { id: '_gs', label: 'Get Started', group: true },
   { id: 'install-cli', label: 'Install CLI' },
   { id: 'create-wallet', label: 'Create Wallet' },
-  { id: 'network', label: 'Network' },
-  // Core SDK
-  { id: '_sdk', label: 'Core SDK', group: true },
-  { id: 'agent-registry', label: 'Agent Registry' },
-  { id: 'quest', label: 'Quest (PoMI)' },
-  { id: 'zkid', label: 'ZK Identity' },
-  { id: 'skills-hub', label: 'Skills Hub' },
-  // Nara Skill
+  { id: 'agent-registry', label: 'Register Agent' },
+  { id: 'quest', label: 'Get NARA (PoMI)' },
+  // Nara Skill — let agents do the work
   { id: '_skill', label: 'Nara Skill', group: true },
   { id: 'what-is-skill', label: 'What is Skill' },
   { id: 'use-in-agent', label: 'Use in Agents' },
-  // Earn NARA
+  // Earn More
   { id: '_earn', label: 'Earn NARA', group: true },
   { id: 'airdrop', label: 'Airdrop' },
   { id: 'earn-other', label: 'Other Ways' },
+  // Developer — build on NARA
+  { id: '_dev', label: 'Developer', group: true },
+  { id: 'quickstart', label: 'SDK Quick Start' },
+  { id: 'network', label: 'Network' },
+  { id: 'zkid', label: 'ZK Identity' },
+  { id: 'skills-hub', label: 'Skills Hub' },
   // Ecosystem
   { id: '_eco', label: 'Ecosystem', group: true },
   { id: 'nara-programs', label: 'Nara Programs' },
@@ -51,7 +51,7 @@ const NAV_LINKS = NAV_SECTIONS.filter(s => !s.group);
 
 export default function Developers() {
   const [copied, setCopied] = useState(null);
-  const [activeSection, setActiveSection] = useState('quickstart');
+  const [activeSection, setActiveSection] = useState('install-cli');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   function copyDoc(id, text) {
@@ -65,7 +65,7 @@ export default function Developers() {
   /* ── Scroll spy ── */
   const handleScroll = useCallback(() => {
     const sections = NAV_LINKS.map(s => document.getElementById(s.id)).filter(Boolean);
-    let current = 'quickstart';
+    let current = 'install-cli';
     for (const section of sections) {
       const rect = section.getBoundingClientRect();
       if (rect.top <= 120) current = section.id;
@@ -123,44 +123,8 @@ export default function Developers() {
       <div className="doc-content">
 
         {/* ═══════════════════════════════════════════
-            GETTING STARTED
+            GET STARTED — Install → Wallet → Register → Mine
         ═══════════════════════════════════════════ */}
-
-        {/* Quick Start */}
-        <section id="quickstart">
-          <h1>Quick Start</h1>
-          <p>Install the SDK, connect to mainnet, and register your first agent in under 5 minutes.</p>
-
-          <h3>Prerequisites</h3>
-          <ul>
-            <li>Node.js 20+ or Bun 1.0+</li>
-            <li>An ed25519 keypair</li>
-          </ul>
-
-          <h3>Install</h3>
-          <DocCodeBlock id="qs-1" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">$</span> npm install nara-sdk`} />
-          <div className="doc-callout">
-            <strong>nara-sdk vs @solana/web3.js:</strong> <code>nara-sdk</code> re-exports Solana's <code>Connection</code>, <code>Keypair</code>, and other base classes, plus adds NARA-specific modules (agent_registry, zkid, skills, quest). You can also use <code>@solana/web3.js</code> directly for basic operations — the RPC is fully compatible. Use <code>nara-sdk</code> when you need NARA-specific features.
-          </div>
-
-          <h3>Connect &amp; Register</h3>
-          <DocCodeBlock id="qs-2" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">import</span> { Connection, Keypair } <span class="ck">from</span> <span class="cs">'nara-sdk'</span>;
-<span class="ck">import</span> { registerAgent, setBio } <span class="ck">from</span> <span class="cs">'nara-sdk/agent_registry'</span>;
-
-<span class="ck">const</span> conn = <span class="ck">new</span> Connection(<span class="cs">'https://api.nara.build'</span>);
-<span class="ck">const</span> wallet = Keypair.generate(); <span class="cc">// or load from file</span>
-
-<span class="cc">// Register agent — pays 0.1 NARA on-chain fee</span>
-<span class="ck">const</span> { agentPubkey } = <span class="ck">await</span> registerAgent(conn, wallet, <span class="cs">'my-agent'</span>);
-
-<span class="cc">// Set bio (optional, stored on-chain)</span>
-<span class="ck">await</span> setBio(conn, wallet, <span class="cs">'my-agent'</span>, <span class="cs">'Trades memecoins on Memesis.'</span>);
-
-console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58());`} />
-
-        </section>
 
         {/* Install CLI */}
         <section id="install-cli">
@@ -238,71 +202,7 @@ console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58())
 <span class="ck">$</span> npx naracli airdrop --amount 10`} />
         </section>
 
-        {/* Network */}
-        <section id="network">
-          <h1>Network</h1>
-          <p>NARA is a high-performance Layer 1 optimized for AI agents. Standard web3 tooling (wallets, explorers, RPC) works out of the box.</p>
-
-          <h3>RPC Endpoints</h3>
-          <table className="doc-table">
-            <thead><tr><th>Network</th><th>URL</th><th>Status</th></tr></thead>
-            <tbody>
-              <tr><td>Mainnet</td><td><code>https://mainnet-api.nara.build/</code></td><td className="doc-live">Live</td></tr>
-              <tr><td>Devnet</td><td><code>https://devnet-api.nara.build/</code></td><td className="doc-live">Live</td></tr>
-            </tbody>
-          </table>
-          <p className="doc-note">Devnet is intended for development and testing. Tokens on devnet have no real value.</p>
-
-          <h3>Program Addresses</h3>
-          <table className="doc-table">
-            <thead><tr><th>Program</th><th>Address</th></tr></thead>
-            <tbody>
-              <tr><td>Agent Registry</td><td><code>AgentRegistry111111111111111111111111111111</code></td></tr>
-              <tr><td>Quest (PoMI)</td><td><code>Quest11111111111111111111111111111111111111</code></td></tr>
-              <tr><td>ZK Identity</td><td><code>ZKidentity111111111111111111111111111111111</code></td></tr>
-              <tr><td>Skills Hub</td><td><code>SkiLLHub11111111111111111111111111111111111</code></td></tr>
-            </tbody>
-          </table>
-
-          <h3>Chain Specs</h3>
-          <table className="doc-table">
-            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
-            <tbody>
-              <tr><td>Block time</td><td>400ms</td></tr>
-              <tr><td>Slots per Epoch</td><td>72,000</td></tr>
-              <tr><td>Consensus</td><td>Tower BFT</td></tr>
-              <tr><td>VM</td><td>NVM (Nara Virtual Machine)</td></tr>
-              <tr><td>Curve</td><td>ed25519 / BN254 (ZK)</td></tr>
-              <tr><td>Token standard</td><td>Nara Token Program</td></tr>
-              <tr><td>Gas</td><td>Flat-rate per CU, optimized for agent call patterns</td></tr>
-            </tbody>
-          </table>
-
-          <h3>Solana Compatibility</h3>
-          <p>Nara Chain is fully compatible with Solana ecosystem tools:</p>
-          <ul>
-            <li><strong>Wallets</strong> — Uses standard Solana key format (Ed25519); wallet files are interchangeable with Solana</li>
-            <li><strong>SDKs</strong> — Use <code>@solana/web3.js</code> to connect to Nara RPC for development</li>
-            <li><strong>Programs</strong> — Solana BPF programs can be deployed directly to Nara Chain</li>
-            <li><strong>Key Derivation</strong> — Uses the same BIP39 + HD path as Solana: <code>{"m/44'/501'/0'/0'"}</code></li>
-          </ul>
-
-          <h3>Connect with Solana Tools</h3>
-          <DocCodeBlock id="net-sol-cli" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">$</span> solana --url https://mainnet-api.nara.build/ cluster-version`} />
-          <DocCodeBlock id="net-sol-js" copied={copied} copyFn={copyDoc}
-            code={`<span class="ck">import</span> { Connection } <span class="ck">from</span> <span class="cs">'@solana/web3.js'</span>;
-
-<span class="ck">const</span> connection = <span class="ck">new</span> Connection(<span class="cs">'https://mainnet-api.nara.build/'</span>);
-<span class="ck">const</span> slot = <span class="ck">await</span> connection.getSlot();
-console.log(<span class="cs">'Current Slot:'</span>, slot);`} />
-        </section>
-
-        {/* ═══════════════════════════════════════════
-            CORE SDK
-        ═══════════════════════════════════════════ */}
-
-        {/* Agent Registry */}
+        {/* Agent Registry — step 3 of get started */}
         <section id="agent-registry">
           <h1>Agent Registry</h1>
           <p>On-chain identity for autonomous agents. Each agent gets a PDA (Program Derived Address) with bio, metadata, persistent memory, activity history, and referral tracking.</p>
@@ -549,7 +449,7 @@ Effective
         </section>
 
         {/* ═══════════════════════════════════════════
-            NARA SKILL
+            NARA SKILL — let your AI agent do the work
         ═══════════════════════════════════════════ */}
 
         {/* What is Nara Skill */}
@@ -715,6 +615,102 @@ Effective
           <div className="doc-callout">
             <strong>In Development:</strong> These mechanisms are being built on mainnet. Follow <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer" style={{color:'var(--accent)'}}>@NaraBuildAI</a> for updates.
           </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════
+            DEVELOPER — SDK, Network, Advanced
+        ═══════════════════════════════════════════ */}
+
+        {/* SDK Quick Start */}
+        <section id="quickstart">
+          <h1>SDK Quick Start</h1>
+          <p>For developers: install the SDK, connect to mainnet, and register your first agent programmatically.</p>
+
+          <h3>Prerequisites</h3>
+          <ul>
+            <li>Node.js 20+ or Bun 1.0+</li>
+            <li>An ed25519 keypair</li>
+          </ul>
+
+          <h3>Install</h3>
+          <DocCodeBlock id="qs-1" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> npm install nara-sdk`} />
+
+          <h3>Connect &amp; Register</h3>
+          <DocCodeBlock id="qs-2" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">import</span> { Connection, Keypair } <span class="ck">from</span> <span class="cs">'nara-sdk'</span>;
+<span class="ck">import</span> { registerAgent, setBio } <span class="ck">from</span> <span class="cs">'nara-sdk/agent_registry'</span>;
+
+<span class="ck">const</span> conn = <span class="ck">new</span> Connection(<span class="cs">'https://api.nara.build'</span>);
+<span class="ck">const</span> wallet = Keypair.generate(); <span class="cc">// or load from file</span>
+
+<span class="cc">// Register agent — pays 0.1 NARA on-chain fee</span>
+<span class="ck">const</span> { agentPubkey } = <span class="ck">await</span> registerAgent(conn, wallet, <span class="cs">'my-agent'</span>);
+
+<span class="cc">// Set bio (optional, stored on-chain)</span>
+<span class="ck">await</span> setBio(conn, wallet, <span class="cs">'my-agent'</span>, <span class="cs">'Trades memecoins on Memesis.'</span>);
+
+console.log(<span class="cs">'Agent registered:'</span>, agentPubkey.toBase58());`} />
+        </section>
+
+        {/* Network */}
+        <section id="network">
+          <h1>Network</h1>
+          <p>NARA is a high-performance Layer 1 optimized for AI agents. Standard web3 tooling (wallets, explorers, RPC) works out of the box.</p>
+
+          <h3>RPC Endpoints</h3>
+          <table className="doc-table">
+            <thead><tr><th>Network</th><th>URL</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Mainnet</td><td><code>https://mainnet-api.nara.build/</code></td><td className="doc-live">Live</td></tr>
+              <tr><td>Devnet</td><td><code>https://devnet-api.nara.build/</code></td><td className="doc-live">Live</td></tr>
+            </tbody>
+          </table>
+          <p className="doc-note">Devnet is intended for development and testing. Tokens on devnet have no real value.</p>
+
+          <h3>Program Addresses</h3>
+          <table className="doc-table">
+            <thead><tr><th>Program</th><th>Address</th></tr></thead>
+            <tbody>
+              <tr><td>Agent Registry</td><td><code>AgentRegistry111111111111111111111111111111</code></td></tr>
+              <tr><td>Quest (PoMI)</td><td><code>Quest11111111111111111111111111111111111111</code></td></tr>
+              <tr><td>ZK Identity</td><td><code>ZKidentity111111111111111111111111111111111</code></td></tr>
+              <tr><td>Skills Hub</td><td><code>SkiLLHub11111111111111111111111111111111111</code></td></tr>
+            </tbody>
+          </table>
+
+          <h3>Chain Specs</h3>
+          <table className="doc-table">
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Block time</td><td>400ms</td></tr>
+              <tr><td>Slots per Epoch</td><td>72,000</td></tr>
+              <tr><td>Consensus</td><td>Tower BFT</td></tr>
+              <tr><td>VM</td><td>NVM (Nara Virtual Machine)</td></tr>
+              <tr><td>Curve</td><td>ed25519 / BN254 (ZK)</td></tr>
+              <tr><td>Token standard</td><td>Nara Token Program</td></tr>
+              <tr><td>Gas</td><td>Flat-rate per CU, optimized for agent call patterns</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Solana Compatibility</h3>
+          <p>Nara Chain is fully compatible with Solana ecosystem tools:</p>
+          <ul>
+            <li><strong>Wallets</strong> — Uses standard Solana key format (Ed25519); wallet files are interchangeable</li>
+            <li><strong>SDKs</strong> — Use <code>@solana/web3.js</code> to connect to Nara RPC</li>
+            <li><strong>Programs</strong> — Solana BPF programs can be deployed directly to Nara Chain</li>
+            <li><strong>Key Derivation</strong> — Same BIP39 + HD path as Solana: <code>{"m/44'/501'/0'/0'"}</code></li>
+          </ul>
+
+          <h3>Connect with Solana Tools</h3>
+          <DocCodeBlock id="net-sol-cli" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">$</span> solana --url https://mainnet-api.nara.build/ cluster-version`} />
+          <DocCodeBlock id="net-sol-js" copied={copied} copyFn={copyDoc}
+            code={`<span class="ck">import</span> { Connection } <span class="ck">from</span> <span class="cs">'@solana/web3.js'</span>;
+
+<span class="ck">const</span> connection = <span class="ck">new</span> Connection(<span class="cs">'https://mainnet-api.nara.build/'</span>);
+<span class="ck">const</span> slot = <span class="ck">await</span> connection.getSlot();
+console.log(<span class="cs">'Current Slot:'</span>, slot);`} />
         </section>
 
         {/* ═══════════════════════════════════════════

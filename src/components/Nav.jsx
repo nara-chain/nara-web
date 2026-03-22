@@ -39,10 +39,11 @@ export default function Nav() {
             aria-expanded={dropOpen}
             aria-haspopup="true"
             onClick={() => setDropOpen(!dropOpen)}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setDropOpen(!dropOpen); } }}
           >Network <span className="nav-arrow"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" style={{opacity:0.4}}><path d="M2 3.5L5 6.5L8 3.5" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg></span></button>
-          <ul className="nav-dropdown-menu">
-            <li><a href="https://explorer.nara.build/" target="_blank" rel="noopener noreferrer" onClick={() => { setMenuOpen(false); setDropOpen(false); }}>Explorer</a></li>
-            <li><a href="https://validators.nara.build/" target="_blank" rel="noopener noreferrer" onClick={() => { setMenuOpen(false); setDropOpen(false); }}>Validator</a></li>
+          <ul className="nav-dropdown-menu" role="menu">
+            <li role="none"><a role="menuitem" href="https://explorer.nara.build/" target="_blank" rel="noopener noreferrer" onClick={() => { setMenuOpen(false); setDropOpen(false); }}>Explorer</a></li>
+            <li role="none"><a role="menuitem" href="https://validators.nara.build/" target="_blank" rel="noopener noreferrer" onClick={() => { setMenuOpen(false); setDropOpen(false); }}>Validator</a></li>
           </ul>
         </li>
       </ul>

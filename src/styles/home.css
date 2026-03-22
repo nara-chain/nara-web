@@ -3,6 +3,22 @@
 #hero::before{content:'';position:absolute;top:50%;left:30%;width:700px;height:700px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(57,255,20,0.18) 0%,rgba(57,255,20,0.08) 30%,rgba(57,255,20,0.02) 60%,transparent 80%);border-radius:50%;pointer-events:none;z-index:0;animation:heroOrb 8s ease-in-out infinite;filter:blur(40px);}
 @keyframes heroOrb{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1}50%{transform:translate(-50%,-50%) scale(1.15);opacity:0.7}}
 #hero::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(57,255,20,0.012) 2px,rgba(57,255,20,0.012) 4px);pointer-events:none;z-index:2;}
+
+/* Section orbs */
+#chain{position:relative;}
+#chain::before{content:'';position:absolute;top:40%;right:15%;width:500px;height:500px;background:radial-gradient(circle,rgba(57,255,20,0.10) 0%,rgba(57,255,20,0.04) 35%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;filter:blur(50px);animation:orbDrift 10s ease-in-out infinite;}
+#aapp{position:relative;}
+#aapp::before{content:'';position:absolute;top:30%;left:10%;width:600px;height:600px;background:radial-gradient(circle,rgba(57,255,20,0.08) 0%,rgba(57,255,20,0.03) 35%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;filter:blur(60px);animation:orbDrift 12s ease-in-out infinite reverse;}
+#quest{position:relative;}
+#quest::before{content:'';position:absolute;bottom:30%;right:20%;width:450px;height:450px;background:radial-gradient(circle,rgba(57,255,20,0.12) 0%,rgba(57,255,20,0.05) 35%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;filter:blur(45px);animation:orbDrift 9s ease-in-out infinite;}
+#live{position:relative;overflow:visible;}
+#live::before{content:'';position:absolute;top:20%;right:15%;width:500px;height:500px;background:radial-gradient(circle,rgba(57,255,20,0.09) 0%,rgba(57,255,20,0.03) 35%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;filter:blur(55px);animation:orbDrift 11s ease-in-out infinite;}
+#live::after{content:'';position:absolute;bottom:20%;left:10%;width:450px;height:450px;background:radial-gradient(circle,rgba(57,255,20,0.08) 0%,rgba(57,255,20,0.03) 35%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;filter:blur(50px);animation:orbDrift 13s ease-in-out infinite reverse;}
+#problem{position:relative;}
+#problem::before{content:'';position:absolute;top:35%;left:20%;width:500px;height:500px;background:radial-gradient(circle,rgba(57,255,20,0.09) 0%,rgba(57,255,20,0.04) 35%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;filter:blur(50px);animation:orbDrift 11s ease-in-out infinite;}
+#roadmap{position:relative;}
+#roadmap::before{content:'';position:absolute;top:45%;right:10%;width:500px;height:500px;background:radial-gradient(circle,rgba(57,255,20,0.10) 0%,rgba(57,255,20,0.04) 35%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;filter:blur(50px);animation:orbDrift 10s ease-in-out infinite reverse;}
+@keyframes orbDrift{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.1);opacity:0.6}}
 .hero-wrap{display:grid;grid-template-columns:1fr 440px;gap:56px;align-items:stretch;}
 .hero-wrap > div:first-child{display:flex;flex-direction:column;justify-content:flex-start;}
 .hero-sub{font-size:var(--md);color:#999;margin-bottom:56px;line-height:1.9;min-height:2em;}
@@ -231,8 +247,12 @@
 .hero-code-snippet{display:none;}
 @media(min-width:781px){.hero-code-snippet{display:block;}}
 @media(max-width:780px){
-  .hero-wrap{grid-template-columns:1fr;}
-  .feed{height:320px;max-height:320px;}
+  #hero{min-height:auto !important;justify-content:flex-start !important;}
+  #hero::before,#hero::after,#chain::before,#chain::after,#aapp::before,#aapp::after,#quest::before,#quest::after,#live::before,#live::after,#problem::before,#problem::after,#roadmap::before,.section-cta::before{display:none !important;}
+  #hero .sec{padding-top:80px !important;}
+  .hero-wrap{grid-template-columns:1fr;gap:24px;align-items:start;}
+  .hero-sub{margin-bottom:28px;}
+  .feed{height:280px;max-height:280px;}
   .stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;}
   .roadmap-timeline .timeline-track,.roadmap-timeline .timeline-progress{display:none;}
   .roadmap-timeline > div:last-child{grid-template-columns:1fr 1fr;}
@@ -329,9 +349,9 @@
 
 /* Problem card styles */
 .prob-card-inner{background:var(--surface);padding:36px 28px;display:flex;flex-direction:column;}
-.prob-card .prob-stat{font-size:clamp(24px,2.5vw,36px);font-weight:800;color:var(--accent);margin-bottom:8px;}
-.prob-card .prob-stat-label{font-size:9px;color:var(--accent);letter-spacing:0.12em;opacity:0.5;margin-bottom:24px;text-transform:uppercase;min-height:12px;}
-.prob-card-title{font-size:clamp(15px,1.2vw,18px);font-weight:700;color:var(--text);line-height:1.4;margin-bottom:14px;}
+.prob-card-title{font-size:clamp(20px,2vw,28px);font-weight:800;color:var(--text);line-height:1.3;margin-bottom:12px;}
+.prob-card .prob-stat{font-size:clamp(14px,1.2vw,18px);font-weight:700;color:var(--accent);margin-bottom:4px;}
+.prob-card .prob-stat-label{font-size:9px;color:var(--accent);letter-spacing:0.12em;opacity:0.5;margin-bottom:20px;text-transform:uppercase;min-height:12px;}
 .prob-card-desc{font-size:var(--sm);color:var(--muted);line-height:1.7;flex:1;}
 .prob-card.visible .prob-card-desc{animation:typeReveal 1.5s steps(40) 0.3s both;}
 @keyframes typeReveal{0%{clip-path:inset(0 100% 0 0)}100%{clip-path:inset(0 0 0 0)}}
@@ -363,6 +383,7 @@
 
 /* Supply bar legend items (overview page) */
 .supply-legend-item{display:inline-block;width:8px;height:8px;margin-right:4px;vertical-align:middle;}
+
 
 /* Flywheel step cards (overview page) */
 .flywheel-step{flex:1;min-width:140px;background:var(--surface);border:1px solid var(--border);padding:24px 20px;text-align:center;}

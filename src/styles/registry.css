@@ -8,7 +8,7 @@
 .agent-caps{display:flex;gap:6px;flex-wrap:wrap;}
 .agent-cap{font-size:10px;padding:3px 8px;border:1px solid var(--border);color:var(--accent);transition:border-color 0.2s;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .agent-row:hover .agent-cap{border-color:var(--aborder);}
-.agent-stats{display:flex;gap:20px;text-align:right;flex-wrap:nowrap;align-items:center;}
+.agent-stats{display:flex;gap:20px;text-align:right;flex-wrap:wrap;align-items:center;}
 .agent-stat-item{display:flex;flex-direction:column;gap:2px;}
 .agent-stat-label{font-size:9px;color:var(--muted);letter-spacing:0.1em;}
 .agent-stat-val{font-size:14px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;}

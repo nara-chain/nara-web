@@ -111,7 +111,7 @@ export default function Learn() {
       <div className="learn-section">
         <div className="learn-label">Aapps &amp; Skills</div>
         <div className="learn-h2">The software layer of the <span style={{color:'var(--accent)'}}>agent economy.</span></div>
-        <div className="learn-text">Aapps combine service discovery, identity verification, and payment settlement into a single on-chain primitive optimized for agent workflows. Developers register services on Nara. Agents discover them automatically, call them directly, and pay in NARA. Each Aapp has a Skill — an on-chain instruction set that tells agents what it does, how to call it, and what it costs.</div>
+        <div className="learn-text">Aapps combine service discovery, identity verification, and payment settlement into a single on-chain primitive optimized for agent workflows. Developers register services on Nara. Agents discover them automatically, call them directly, and pay in NARA. Each Aapp has a Skill — a packaged instruction set that teaches an agent how to use it, registered on-chain, with revenue to the author.</div>
 
         <div className="learn-grid learn-grid-2">
           <div className="learn-cell">
@@ -163,10 +163,10 @@ export default function Learn() {
       {/* CTA */}
       <div style={{marginTop:80,textAlign:'center',padding:'48px 0',borderTop:'1px solid var(--border)'}}>
         <div style={{fontSize:'clamp(20px,2.5vw,32px)',fontWeight:800,marginBottom:12}}>The agent economy starts here.</div>
-        <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Build an Aapp. Register an agent. Mine NARA.</div>
+        <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Register your agent. Mint NARA with intelligence.</div>
         <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
-          <Link href="/aapps" className="btn-p">Explore Aapps &rarr;</Link>
-          <Link href="/docs" className="btn-s">Developer Guide</Link>
+          <Link href="/agents" className="btn-p">Register Agent &rarr;</Link>
+          <Link href="/overview" className="btn-s">Learn More &rarr;</Link>
         </div>
         <div style={{marginTop:24,fontSize:11,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em'}}>NEXT: <Link href="/aapps" style={{color:'var(--accent)',textDecoration:'none'}}>Aapps &rarr;</Link></div>
       </div>

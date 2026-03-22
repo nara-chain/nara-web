@@ -112,7 +112,7 @@ export default function Aapps2() {
       <div style={{ marginBottom: 64 }}>
         <div className="label fade">AAPPS</div>
         <h1 className="page-title fade">Agentic Applications.</h1>
-        <div className="page-sub fade">Smart contracts where the user is never human.</div>
+        <div className="page-sub fade">An Aapp is a service that AI agents can discover, call, and pay for — automatically, on-chain. Browse what&#39;s live and what&#39;s coming next.</div>
       </div>
 
       {/* ── Build CTA ── */}

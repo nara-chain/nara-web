@@ -8,9 +8,9 @@ export default function PomiCanvas() {
     const pc = canvasRef.current;
     if (!pc) return;
     const px = pc.getContext('2d');
-    const PH = 220;
+    const PH = 360;
     const PDPR = Math.min(window.devicePixelRatio||1, 2);
-    const NR = 28;
+    const NR = 36;
 
     function getW() { return pc.parentElement.offsetWidth || 520; }
     function rsz() {
@@ -77,14 +77,14 @@ export default function PomiCanvas() {
       px.lineWidth = isActive?1.5:1; px.stroke();
       px.textAlign='center'; px.textBaseline='middle';
       px.fillStyle = isActive ? (i===3?'#39ff14':'#e8e8e8') : 'rgba(85,85,85,0.4)';
-      px.font = `800 ${i===2?8:9}px JetBrains Mono,monospace`;
+      px.font = `800 ${i===2?10:12}px JetBrains Mono,monospace`;
       px.fillText(n.label, x, y);
       px.fillStyle = isActive ? 'rgba(255,255,255,0.75)' : 'rgba(85,85,85,0.25)';
-      px.font = '700 9px JetBrains Mono,monospace';
-      px.fillText(n.label, x, y-NR-14);
+      px.font = '700 12px JetBrains Mono,monospace';
+      px.fillText(n.label, x, y-NR-16);
       px.fillStyle = isActive ? (i===3?'rgba(0,212,170,0.6)':'rgba(57,255,20,0.5)') : 'rgba(85,85,85,0.2)';
-      px.font = '600 8px JetBrains Mono,monospace';
-      px.fillText(n.sub, x, y+NR+12);
+      px.font = '600 11px JetBrains Mono,monospace';
+      px.fillText(n.sub, x, y+NR+16);
       if (i===2 && zkP>0) {
         px.beginPath(); px.arc(x,y,NR+6,-Math.PI/2,-Math.PI/2+Math.PI*2*zkP);
         px.strokeStyle='rgba(57,255,20,0.8)'; px.lineWidth=2; px.stroke();
@@ -164,6 +164,6 @@ export default function PomiCanvas() {
   }, []);
 
   return (
-    <canvas ref={canvasRef} width="1072" height="260" aria-label="PoMI computation flow animation" style={{width:'100%',border:'1px solid var(--border)',background:'#0c0c0c',display:'block'}} />
+    <canvas ref={canvasRef} width="1072" height="360" aria-label="PoMI computation flow animation" style={{width:'100%',border:'1px solid var(--border)',background:'#0c0c0c',display:'block'}} />
   );
 }

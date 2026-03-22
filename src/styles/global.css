@@ -13,13 +13,15 @@
   --radius-terminal:6px;
   /* Accent opacity tiers */
   --accent-dim:rgba(57,255,20,0.15); --accent-mid:rgba(57,255,20,0.5); --accent-bright:rgba(57,255,20,0.85);
+  /* Concept colors (from Hero terminal) */
+  --c-identity:#00cfff; --c-aapp:#fb923c; --c-pomi:#fbbf24; --c-social:#a78bfa;
   /* Transition easings */
   --ease-out:cubic-bezier(0.16, 1, 0.3, 1); --ease-in-out:cubic-bezier(0.4, 0, 0.2, 1);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-*:focus{outline:none;}
+*:focus:not(:focus-visible){outline:none;}
 *:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
 body{font-family:'JetBrains Mono','Cascadia Code','Fira Code','Consolas','Courier New',monospace;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(57,255,20,0.008) 2px,rgba(57,255,20,0.008) 4px);pointer-events:none;z-index:50;opacity:0.5;}
 #neural{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0.35;}
@@ -236,4 +238,5 @@ pre{background:#080808;color:#ccc;border:1px solid var(--border);padding:24px 28
   .mobile-cta-bar a{flex:1;text-align:center;padding:10px 12px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;font-family:'JetBrains Mono',monospace;}
   .mobile-cta-bar .mcta-earn{background:transparent;color:var(--accent);border:1px solid var(--aborder);}
   .mobile-cta-bar .mcta-docs{background:transparent;color:var(--text);border:1px solid var(--border);}
+  main{padding-bottom:72px;}
 }

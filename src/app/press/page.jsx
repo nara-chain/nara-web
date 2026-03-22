@@ -31,7 +31,7 @@ export default function PressPage() {
       {/* Brand Colors */}
       <div className="fade" style={{ marginBottom: 96 }}>
         <h2 className="sec-title" style={{ marginBottom: 20 }}>Brand Colors</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, background: 'var(--border)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 1, background: 'var(--border)' }}>
           {[
             { name: 'NARA Green', hex: '#3df51a', bg: '#3df51a', text: '#000' },
             { name: 'Background', hex: '#0c0c0c', bg: '#0c0c0c', text: '#e8e8e8' },
