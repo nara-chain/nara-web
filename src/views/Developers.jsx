@@ -191,6 +191,15 @@ export default function Developers() {
             code={`<span class="ck">$</span> npx naracli balance
 <span class="cc"># Check balance of a specific address:</span>
 <span class="ck">$</span> npx naracli balance &lt;address&gt;`} />
+
+          <h3>Get Devnet Tokens</h3>
+          <p>Request free NARA on devnet to start testing:</p>
+          <DocCodeBlock id="cw-faucet" copied={copied} copyFn={copyDoc}
+            code={`<span class="cc"># Switch to devnet</span>
+<span class="ck">$</span> npx naracli config set rpc-url https://devnet-api.nara.build/
+
+<span class="cc"># Request tokens (max 10 per request)</span>
+<span class="ck">$</span> npx naracli airdrop --amount 10`} />
         </section>
 
         {/* Agent Registry — step 3 of get started */}
@@ -391,7 +400,10 @@ Effective
         {/* Skills Hub */}
         <section id="skills-hub">
           <h1>Skills Hub</h1>
-          <p>A Skill is a packaged instruction set that teaches an agent how to use an Aapp — registered on-chain, installed per agent, with revenue to the author on every install.</p>
+          <p>The Skills Hub is the <strong>on-chain registry</strong> for publishing and distributing Skills. A Skill is a packaged instruction set that teaches an agent how to use an Aapp — registered on-chain, installed per agent, with revenue to the author on every install.</p>
+          <div className="doc-callout">
+            <strong>Skills Hub vs Nara Skill:</strong> The Skills Hub is the on-chain registry where developers publish Skills (this section). <strong>Nara Skill</strong> is a specific pre-built Skill that lets AI agents interact with the Nara chain itself — see <a href="#what-is-skill" style={{color:'var(--accent)'}}>What is Nara Skill</a>.
+          </div>
 
           <h3>registerSkill</h3>
           <p className="doc-sig"><code>registerSkill(connection, wallet, skillName, author) → {'{ signature }'}</code></p>
@@ -488,7 +500,7 @@ Effective
           <p>Nara Skill can be integrated into AI Agents that support the Skill system, enabling Agents to autonomously execute operations on Nara Chain.</p>
 
           <h3>Supported Agents</h3>
-          <p><a href="https://openclaw.org/" target="_blank" rel="noopener noreferrer">OpenClaw</a>, <a href="https://claude.com/claude-code" target="_blank" rel="noopener noreferrer">Claude Code</a>, <a href="https://openai.com/codex" target="_blank" rel="noopener noreferrer">Codex</a>, and other major AI Agents support the Skill system.</p>
+          <p>AI coding agents like <a href="https://claude.com/claude-code" target="_blank" rel="noopener noreferrer">Claude Code</a>, <a href="https://openai.com/codex" target="_blank" rel="noopener noreferrer">Codex</a>, <a href="https://openclaw.org/" target="_blank" rel="noopener noreferrer">OpenClaw</a>, and others support the Skill system.</p>
 
           <h3>Install Skill</h3>
           <DocCodeBlock id="sia-1" copied={copied} copyFn={copyDoc}
@@ -581,32 +593,27 @@ Effective
             code={`<span class="ck">$</span> npx naracli balance`} />
 
           <div className="doc-callout">
-            <strong>Coming Soon:</strong> The airdrop feature is currently being prepared. Stay tuned to official announcements for specific timing and details.
+            <strong>Rolling Out:</strong> Mainnet is live. The airdrop claim mechanism is being deployed in phases. Follow <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer" style={{color:'var(--accent)'}}>@NaraBuildAI</a> for timing and details.
           </div>
         </section>
 
         {/* Other Ways to Earn */}
         <section id="earn-other">
-          <h1>Other Ways to Earn</h1>
-          <p>More ways to earn NARA are coming soon.</p>
+          <h1>Community Rewards</h1>
+          <p>Additional reward mechanisms rolling out on mainnet — designed to distribute NARA to active participants.</p>
 
-          <h3>Skill Twitter Integration</h3>
-          <p>Earn daily NARA token rewards by linking your Twitter account and retweeting official posts.</p>
-          <ol className="doc-steps">
-            <li><strong>Link Twitter</strong> — Use Nara Skill to bind your Twitter account to your Nara wallet address</li>
-            <li><strong>Retweet</strong> — Retweet any official Nara post</li>
-            <li><strong>Claim Reward</strong> — Claim your NARA token reward once per day</li>
-          </ol>
-          <p>Follow the official Nara Twitter: <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">@NaraBuildAI</a></p>
+          <h3>Social Verification</h3>
+          <p>Link your Twitter/X account to your Nara wallet via Nara Skill. Verified participants earn NARA for contributing to network awareness.</p>
+          <p>Follow: <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">@NaraBuildAI</a></p>
 
-          <h3>Passcode Red Packets</h3>
-          <p>Claim NARA rewards by entering a specific passcode distributed by the community or official team.</p>
+          <h3>Community Distribution</h3>
+          <p>Periodic NARA distributions via passcode events. Distributed through official channels to active community members.</p>
 
-          <h3>Daily Check-In</h3>
-          <p>Earn NARA token rewards simply by checking in every day. The longer your consecutive streak, the greater the rewards.</p>
+          <h3>Participation Streaks</h3>
+          <p>Consistent on-chain activity earns bonus rewards. Longer streaks yield higher multipliers.</p>
 
           <div className="doc-callout">
-            <strong>Coming Soon:</strong> These features are currently in development. Stay tuned.
+            <strong>In Development:</strong> These mechanisms are being built on mainnet. Follow <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer" style={{color:'var(--accent)'}}>@NaraBuildAI</a> for updates.
           </div>
         </section>
 
@@ -886,6 +893,7 @@ console.log(<span class="cs">'Current Slot:'</span>, slot);`} />
               <tr><td><code>nara aapp search &lt;query&gt;</code></td><td>Search for Aapps by name or capability</td></tr>
               <tr><td><code>nara aapp inspect &lt;name&gt;</code></td><td>View Aapp manifest, stats, and top callers</td></tr>
               <tr><td><code>nara aapp call &lt;name&gt;.&lt;action&gt;(args)</code></td><td>Call an Aapp action on-chain</td></tr>
+              <tr><td><code>nara aapp watch &lt;name&gt; --live</code></td><td>Stream live Aapp activity in real-time</td></tr>
             </tbody>
           </table>
 

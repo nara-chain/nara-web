@@ -176,6 +176,8 @@ export default function Agents2() {
         <span style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>Nara Network &middot; Mainnet</span>
         <span style={{ fontSize: 'var(--sm)', color: '#3df51a', fontWeight: 700 }}>&bull; Live</span>
       </div>
+
+      <div style={{marginTop:24,fontSize:11,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em',textAlign:'center'}}>NEXT: <a href="/aapps" style={{color:'var(--accent)',textDecoration:'none'}}>Aapps →</a></div>
     </div>
   );
 }

@@ -71,7 +71,7 @@ export default function OverviewPage() {
               </div>
               <div style={{flex:1,background:i===3?'var(--adim)':'var(--surface)',border:'1px solid '+(i===3?'var(--aborder)':'var(--border)'),padding:'16px 20px',display:'flex',alignItems:'center',gap:16}}>
                 <div style={{fontSize:10,color:i===3?'var(--accent)':'var(--muted)',letterSpacing:'0.15em',fontWeight:700,minWidth:80,opacity:i===3?1:0.5}}>{s.layer}</div>
-                <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5,fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif'}}>{s.desc}</div>
+                <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5}}>{s.desc}</div>
               </div>
             </div>
           ))}
@@ -137,13 +137,13 @@ export default function OverviewPage() {
             {icon:'◆',label:'SELF',desc:'Bio, persona, memory — stored on-chain. Switch frameworks, switch devices. Your agent stays the same.',accent:false},
             {icon:'◈',label:'BOUNDARIES',desc:'Spending caps, app whitelists, expiration dates. Owners set rules. The chain enforces them.',accent:false},
             {icon:'◇',label:'PRIVACY',desc:'ZK proofs let agents transact and settle — without revealing a wallet address.',accent:false},
-            {icon:'◉',label:'HISTORY',desc:'Every action traceable. Every settlement permanent. Accountability without bureaucracy.',accent:false},
+            {icon:'◉',label:'HISTORY',desc:'Every action recorded on-chain. Every settlement permanent. Wallet links stay private via ZK proofs.',accent:false},
             {icon:'⬡',label:'TRUST',desc:'Agents verify each other before transacting. Reputation built from real history, not followers.',accent:true},
           ].map((a,i) => (
             <div key={i} style={{display:'flex',alignItems:'center',gap:16,padding:'14px 0',borderBottom:'1px solid var(--border)'}}>
               <div style={{fontSize:16,color:a.accent?'var(--accent)':'var(--muted)',opacity:a.accent?0.8:0.3,width:24,textAlign:'center',flexShrink:0}}>{a.icon}</div>
               <div style={{fontSize:10,color:a.accent?'var(--accent)':'var(--muted)',letterSpacing:'0.15em',fontWeight:700,minWidth:90,opacity:a.accent?1:0.5,flexShrink:0}}>{a.label}</div>
-              <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5,fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif'}}>{a.desc}</div>
+              <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5}}>{a.desc}</div>
             </div>
           ))}
         </div>
@@ -167,7 +167,7 @@ export default function OverviewPage() {
             <div key={i} style={{display:'flex',alignItems:'center',gap:16,padding:'16px 0',borderBottom:'1px solid '+(s.accent?'var(--aborder)':'var(--border)'),background:s.accent?'var(--adim)':'transparent',margin:s.accent?'0 -20px':0,padding:s.accent?'16px 20px':'16px 0'}}>
               <div style={{fontSize:20,color:s.accent?'var(--accent)':'var(--muted)',opacity:s.accent?0.8:0.3,width:32,textAlign:'center',flexShrink:0}}>{s.icon}</div>
               <div style={{fontSize:10,color:s.accent?'var(--accent)':'var(--muted)',letterSpacing:'0.15em',fontWeight:700,minWidth:60,opacity:s.accent?1:0.5,flexShrink:0}}>{s.step} · {s.label}</div>
-              <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5,fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif'}}>{s.desc}</div>
+              <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5}}>{s.desc}</div>
             </div>
           ))}
         </div>
@@ -203,7 +203,7 @@ export default function OverviewPage() {
           ].map((f,i) => (
             <div key={i} style={{padding:'12px 0',borderBottom:'1px solid var(--border)',display:'flex',gap:16}}>
               <div style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700,minWidth:160,flexShrink:0}}>{f.q}</div>
-              <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5,fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif'}}>{f.a}</div>
+              <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5}}>{f.a}</div>
             </div>
           ))}
         </div>
@@ -251,7 +251,7 @@ export default function OverviewPage() {
             <div key={i} style={{display:'flex',alignItems:'center',gap:16,padding:'14px 0',borderBottom:'1px solid var(--border)'}}>
               <div style={{fontSize:16,color:a.accent?'var(--accent)':'var(--muted)',opacity:a.accent?0.8:0.3,width:24,textAlign:'center',flexShrink:0}}>{a.icon}</div>
               <div style={{fontSize:10,color:a.accent?'var(--accent)':'var(--muted)',letterSpacing:'0.15em',fontWeight:700,minWidth:80,opacity:a.accent?1:0.5,flexShrink:0}}>{a.label}</div>
-              <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5,fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif'}}>{a.desc}</div>
+              <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5}}>{a.desc}</div>
             </div>
           ))}
         </div>
@@ -293,12 +293,12 @@ export default function OverviewPage() {
               <div style={{fontSize:18,color:a.accent?'var(--accent)':'var(--muted)',opacity:a.accent?0.8:0.3,width:28,textAlign:'center',flexShrink:0}}>{a.icon}</div>
               <div style={{flex:1}}>
                 <div style={{fontSize:12,fontWeight:700,color:'var(--text)',marginBottom:2}}>{a.name}</div>
-                <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5,fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif'}}>{a.desc}</div>
+                <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5}}>{a.desc}</div>
               </div>
               <a href={`https://${a.url}`} target="_blank" rel="noopener noreferrer" style={{fontSize:10,color:'var(--muted)',textDecoration:'none',opacity:0.5,flexShrink:0}}>{a.url} ↗</a>
             </div>
           ))}
-          <div style={{fontSize:11,color:'var(--muted)',marginTop:16,opacity:0.4,fontStyle:'italic',fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif'}}>The standard is open — the next Aapp is yours to build.</div>
+          <div style={{fontSize:11,color:'var(--muted)',marginTop:16,opacity:0.4,fontStyle:'italic'}}>The standard is open — the next Aapp is yours to build.</div>
         </div>
       </div>
 
@@ -325,7 +325,7 @@ export default function OverviewPage() {
             <span><span className="supply-legend-item" style={{background:'#ec4899'}}></span>Nodes 10%</span>
             <span><span className="supply-legend-item" style={{background:'#14b8a6'}}></span>Community 10%</span>
           </div>
-          <div style={{marginTop:16,fontSize:'var(--sm)',color:'#999',fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif'}}>No inflation. 26% non-circulating at genesis. <Link href="/tokenomics" style={{color:'var(--accent)',textDecoration:'none',fontWeight:700}}>Full breakdown →</Link></div>
+          <div style={{marginTop:16,fontSize:'var(--sm)',color:'#999'}}>No inflation. 26% non-circulating at genesis. <Link href="/tokenomics" style={{color:'var(--accent)',textDecoration:'none',fontWeight:700}}>Full breakdown →</Link></div>
         </div>
       </div>
 

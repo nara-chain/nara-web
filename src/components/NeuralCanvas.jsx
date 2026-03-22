@@ -25,12 +25,18 @@ export default function NeuralCanvas() {
     }
     rsz();
     window.addEventListener('resize', rsz);
-    for (let i = 0; i < COUNT; i++) pts.push({ x: Math.random()*W, y: Math.random()*H, vx:(Math.random()-.5)*.32, vy:(Math.random()-.5)*.32 });
+    for (let i = 0; i < COUNT; i++) pts.push({
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-.5)*.7,
+      vy: (Math.random()-.5)*.7,
+      size: 1.5 + Math.random()*1.5, // 1.5–3px, varied sizes
+      pulse: Math.random() * Math.PI * 2, // phase offset for pulsing
+    });
     if (!IS_MOBILE) document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
     const onScroll = () => { scrollY = window.scrollY; };
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    const CELL = 140;
+    const CELL = 160;
     function buildGrid() {
       const g = {};
       pts.forEach((p, i) => { const k = `${Math.floor(p.x/CELL)},${Math.floor(p.y/CELL)}`; if(!g[k])g[k]=[]; g[k].push(i); });
@@ -42,7 +48,7 @@ export default function NeuralCanvas() {
       return res;
     }
 
-    const FPS = IS_MOBILE ? 18 : 20;
+    const FPS = IS_MOBILE ? 24 : 30;
     const INTERVAL = 1000/FPS;
     let lastFrame = 0;
     let rafId = 0;
@@ -52,19 +58,40 @@ export default function NeuralCanvas() {
       lastFrame = ts;
       cx.clearRect(0,0,W,H);
       cx.save();
-      cx.translate(0, -scrollY*0.2);
+      cx.translate(0, -scrollY*0.15);
       const grid = buildGrid();
+      const time = ts * 0.001;
       pts.forEach((p, idx) => {
         p.x += p.vx; p.y += p.vy;
         if (p.x<0||p.x>W) p.vx *= -1; if (p.y<0||p.y>H) p.vy *= -1;
+        // Mouse attraction — stronger
         const ddx=mx-p.x, ddy=my-p.y, dd=Math.sqrt(ddx*ddx+ddy*ddy);
-        if (dd<150) { p.x += ddx*.003; p.y += ddy*.003; }
-        cx.beginPath(); cx.arc(p.x,p.y,1.5,0,Math.PI*2);
-        cx.fillStyle='rgba(57,255,20,0.6)'; cx.fill();
+        if (dd<200) { p.x += ddx*.008; p.y += ddy*.008; }
+
+        // Pulsing opacity per particle
+        const pulse = 0.5 + 0.5 * Math.sin(time * 1.5 + p.pulse);
+        const alpha = 0.4 + pulse * 0.6;
+
+        // Draw dot with glow
+        cx.beginPath(); cx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+        cx.fillStyle = `rgba(57,255,20,${alpha})`;
+        cx.shadowColor = 'rgba(57,255,20,0.4)';
+        cx.shadowBlur = 3;
+        cx.fill();
+        cx.shadowBlur = 0;
+
+        // Draw connections
         neighbors(grid,p).forEach(j => {
           if (j<=idx) return;
           const b=pts[j], dx=p.x-b.x, dy=p.y-b.y, d=Math.sqrt(dx*dx+dy*dy);
-          if (d<140) { cx.beginPath(); cx.strokeStyle=`rgba(57,255,20,${0.15*(1-d/140)})`; cx.lineWidth=0.6; cx.moveTo(p.x,p.y); cx.lineTo(b.x,b.y); cx.stroke(); }
+          if (d<160) {
+            const lineAlpha = 0.25 * (1 - d/160);
+            cx.beginPath();
+            cx.strokeStyle = `rgba(57,255,20,${lineAlpha})`;
+            cx.lineWidth = 0.8;
+            cx.moveTo(p.x, p.y); cx.lineTo(b.x, b.y);
+            cx.stroke();
+          }
         });
       });
       cx.restore();
