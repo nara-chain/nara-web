@@ -29,7 +29,6 @@ export default function NeuralCanvas() {
       x: Math.random()*W, y: Math.random()*H,
       vx: (Math.random()-.5)*.7,
       vy: (Math.random()-.5)*.7,
-      size: 1.5 + Math.random()*1.5, // 1.5–3px, varied sizes
       pulse: Math.random() * Math.PI * 2, // phase offset for pulsing
     });
     if (!IS_MOBILE) document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
@@ -73,7 +72,7 @@ export default function NeuralCanvas() {
         const alpha = 0.4 + pulse * 0.6;
 
         // Draw dot with glow
-        cx.beginPath(); cx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+        cx.beginPath(); cx.arc(p.x, p.y, 1.5, 0, Math.PI*2);
         cx.fillStyle = `rgba(57,255,20,${alpha})`;
         cx.shadowColor = 'rgba(57,255,20,0.4)';
         cx.shadowBlur = 3;
