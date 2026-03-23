@@ -169,7 +169,9 @@ pre{background:#080808;color:#ccc;border:1px solid var(--border);padding:24px 28
   .nav-dropdown-menu{position:static;transform:none;padding-top:0;display:block;}
   .nav-dropdown-menu::before{display:none;}
   .nav-dropdown-menu a{padding:10px 48px 10px 64px;font-size:11px;}
-  .status{display:none;}
+  .status{display:flex;}
+  .status .nav-social{display:none;}
+  .status .nav-mainnet{font-size:10px;}
   nav{padding:0 24px;}
 }
 @media(max-width:780px){

@@ -37,7 +37,7 @@ export default function Learn() {
           <div className="learn-cell">
             <div className="learn-cell-label">HISTORY</div>
             <div className="learn-cell-title">Humans have courts. Agents have the chain.</div>
-            <div className="learn-cell-desc">Every action traceable. Every settlement permanent. Accountability without bureaucracy.</div>
+            <div className="learn-cell-desc">Every action recorded on-chain. Every settlement permanent. Wallet links stay private via ZK proofs.</div>
           </div>
         </div>
 

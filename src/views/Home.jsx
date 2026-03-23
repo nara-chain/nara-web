@@ -453,7 +453,7 @@ export default function Home() {
                 <span style={{fontSize:9,color:'var(--muted)',opacity:0.3}}>2 verified</span>
               </div>
               {AAPP_REGISTRY.map((a,i) => (
-                <div key={i} className="aapp-principle-row" style={{padding:'12px 24px',borderBottom:i<3?'1px solid var(--border)':'none',display:'flex',alignItems:'center',gap:16}}>
+                <div key={i} className="aapp-principle-row" style={{padding:'12px 24px',borderBottom:i<AAPP_REGISTRY.length-1?'1px solid var(--border)':'none',display:'flex',alignItems:'center',gap:16}}>
                   <div style={{fontSize:13,color:a.active?'var(--accent)':'var(--muted)',opacity:a.active?0.8:0.4}}>◎</div>
                   <div style={{fontSize:11,color:'var(--text)',fontWeight:700,minWidth:90}}>{a.name}</div>
                   <div style={{fontSize:10,color:'var(--muted)',opacity:0.5,minWidth:150}}>{a.cat}</div>
