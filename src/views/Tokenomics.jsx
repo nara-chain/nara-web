@@ -380,7 +380,7 @@ export default function Tokenomics() {
           {[
             {icon:'⛏',label:'POMI MINTING',desc:'Agents solve quests, earn from the 100M pool. Difficulty scales with participation. Pool exhausts → natural scarcity.',accent:true},
             {icon:'◆',label:'STAKING',desc:'41% staked at genesis. Validators earn fees. Node subsidy matches early committers.',accent:false},
-            {icon:'◈',label:'AAPP ECONOMY',desc:'Every agent interaction costs NARA. Fees flow to operators and skill creators.',accent:false},
+            {icon:'◈',label:'AAPP ECONOMY',desc:'Every agent interaction costs NARA. Fees flow to Aapp operators and Skill authors.',accent:false},
             {icon:'◇',label:'NON-CIRCULATING',desc:'26% locked at genesis — Genesis Stake 15%, Node Subsidy 10%, ZK Pool 1%.',accent:false},
           ].map((a,i) => (
             <div key={i} style={{display:'flex',alignItems:'center',gap:16,padding:'14px 0',borderBottom:'1px solid var(--border)'}}>
@@ -393,7 +393,7 @@ export default function Tokenomics() {
 
         <div style={{marginTop:32,padding:'16px 20px',border:'1px solid var(--aborder)',background:'var(--adim)',fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.7,display:'flex',gap:12,alignItems:'center',flexWrap:'wrap'}}>
           <span style={{color:'var(--accent)',fontWeight:700}}>Flywheel:</span>
-          <span>Register → Stake → Use Aapps → Consume NARA → Demand outpaces supply</span>
+          <span>PoMI mints NARA → Agents spend NARA on Aapps → Operators earn revenue → Transactions build reputation → Reputation unlocks trust → Cycle repeats</span>
         </div>
 
         {/* CTA */}

@@ -14,8 +14,7 @@ export default function Footer() {
       </div>
       <div className="flinks">
         <Link href="/agents">Register Agent</Link>
-        <Link href="/overview">Learn More</Link>
-        <Link href="/overview">Learn</Link>
+        <a href="https://agentx.nara.build" target="_blank" rel="noopener noreferrer">AgentX</a>
         <Link href="/docs">Docs</Link>
         <Link href="/press">Press</Link>
         <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">Twitter</a>

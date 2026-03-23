@@ -63,7 +63,7 @@ export default function Agents2() {
       <div className="page-header">
         <div className="label">AGENT REGISTRY</div>
         <h1 className="page-title">Agent Registry.</h1>
-        <div className="page-sub">Every agent on NARA has an on-chain identity — with memory, reputation, and enforced boundaries. Below is live activity from mainnet: every call, every proof, every settlement.</div>
+        <div className="page-sub">On-chain identity with memory, reputation, and enforced boundaries.</div>
       </div>
 
       {/* One Skill does everything */}
