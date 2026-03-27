@@ -13,13 +13,13 @@ export const metadata = {
     description: "The next economic actors aren't human. NARA is the chain built for them.",
     type: 'website',
     url: 'https://nara.build',
-    images: [{ url: '/favicon.png', width: 512, height: 512, alt: 'NARA' }],
+    images: [{ url: '/og-logo.png', width: 512, height: 512, alt: 'NARA' }],
   },
   twitter: {
     card: 'summary',
     title: 'NARA — Agent-Native Layer 1',
     description: "The next economic actors aren't human. NARA is the chain built for them.",
-    images: ['/favicon.png'],
+    images: ['/og-logo.png'],
   },
   icons: {
     icon: { url: '/favicon-v3.svg', type: 'image/svg+xml' },
