@@ -10,7 +10,7 @@ export default function NeuralCanvas() {
     const cx = cv.getContext('2d');
     const DPR = Math.min(window.devicePixelRatio || 1, 2);
     const IS_MOBILE = window.innerWidth < 768;
-    const COUNT = IS_MOBILE ? 35 : 90;
+    const COUNT = IS_MOBILE ? 35 : 85;
     let W, H;
     const pts = [];
     let mx = -999, my = -999;
@@ -25,12 +25,15 @@ export default function NeuralCanvas() {
     }
     rsz();
     window.addEventListener('resize', rsz);
-    for (let i = 0; i < COUNT; i++) pts.push({
-      x: Math.random()*W, y: Math.random()*H,
+    for (let i = 0; i < COUNT; i++) {
+      const ox = Math.random()*W, oy = Math.random()*H;
+      pts.push({
+      x: ox, y: oy, ox, oy,
       vx: (Math.random()-.5)*.7,
       vy: (Math.random()-.5)*.7,
       pulse: Math.random() * Math.PI * 2, // phase offset for pulsing
     });
+    }
     if (!IS_MOBILE) document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
     const onScroll = () => { scrollY = window.scrollY; };
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -60,31 +63,53 @@ export default function NeuralCanvas() {
       cx.translate(0, -scrollY*0.15);
       const grid = buildGrid();
       const time = ts * 0.001;
+      const connCount = new Uint8Array(COUNT); // track connections per node
+      const MAX_CONN = 5;
+      // Update positions
       pts.forEach((p, idx) => {
         p.x += p.vx; p.y += p.vy;
         if (p.x<0||p.x>W) p.vx *= -1; if (p.y<0||p.y>H) p.vy *= -1;
+        // Repulsion between nearby nodes
+        neighbors(grid, p).forEach(j => {
+          if (j <= idx) return;
+          const b = pts[j], rdx = p.x - b.x, rdy = p.y - b.y;
+          const dist = Math.sqrt(rdx*rdx + rdy*rdy);
+          if (dist < 80 && dist > 0) {
+            const force = 0.5 * (1 - dist/80);
+            p.x += (rdx/dist) * force;
+            p.y += (rdy/dist) * force;
+            b.x -= (rdx/dist) * force;
+            b.y -= (rdy/dist) * force;
+          }
+        });
+        // Gentle pull back toward origin to prevent clustering
+        p.vx += (p.ox - p.x) * 0.0003;
+        p.vy += (p.oy - p.y) * 0.0003;
         // Mouse attraction — stronger
         const ddx=mx-p.x, ddy=my-p.y, dd=Math.sqrt(ddx*ddx+ddy*ddy);
         if (dd<200) { p.x += ddx*.008; p.y += ddy*.008; }
-
-        // Pulsing opacity per particle
+      });
+      // Draw dots
+      pts.forEach((p, idx) => {
         const pulse = 0.5 + 0.5 * Math.sin(time * 1.5 + p.pulse);
         const alpha = 0.4 + pulse * 0.6;
-
-        // Draw dot with glow
         cx.beginPath(); cx.arc(p.x, p.y, 1.5, 0, Math.PI*2);
         cx.fillStyle = `rgba(57,255,20,${alpha})`;
         cx.shadowColor = 'rgba(57,255,20,0.4)';
         cx.shadowBlur = 3;
         cx.fill();
         cx.shadowBlur = 0;
-
-        // Draw connections
+      });
+      // Draw connections (max 5 per node)
+      pts.forEach((p, idx) => {
+        if (connCount[idx] >= MAX_CONN) return;
         neighbors(grid,p).forEach(j => {
           if (j<=idx) return;
+          if (connCount[idx] >= MAX_CONN || connCount[j] >= MAX_CONN) return;
           const b=pts[j], dx=p.x-b.x, dy=p.y-b.y, d=Math.sqrt(dx*dx+dy*dy);
-          if (d<160) {
-            const lineAlpha = 0.25 * (1 - d/160);
+          if (d<180) {
+            connCount[idx]++; connCount[j]++;
+            const lineAlpha = 0.25 * (1 - d/180);
             cx.beginPath();
             cx.strokeStyle = `rgba(57,255,20,${lineAlpha})`;
             cx.lineWidth = 0.8;

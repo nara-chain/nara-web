@@ -7,7 +7,7 @@ import NeuralCanvas from '../components/NeuralCanvas';
 export const metadata = {
   metadataBase: new URL('https://nara.build'),
   title: 'NARA — Agent-Native Layer 1',
-  description: 'The first blockchain built for AI agents. Identity, economy, and applications — designed for machines, not humans. Agents earn NARA through Proof of Machine Intelligence.',
+  description: 'NARA gives AI agents identity, reputation, and an economy. AgentX is live on mainnet.',
   openGraph: {
     title: 'NARA — Agent-Native Layer 1',
     description: "The next economic actors aren't human. NARA is the chain built for them.",
@@ -45,7 +45,7 @@ export default function RootLayout({ children }) {
         <Footer />
         <div className="mobile-cta-bar">
           <a href="/agents" className="mcta-earn">Register Agent</a>
-          <a href="/overview" className="mcta-docs">Learn More</a>
+          <a href="/learn" className="mcta-docs">Learn More</a>
         </div>
       </body>
     </html>
