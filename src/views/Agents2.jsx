@@ -38,7 +38,7 @@ export default function Agents2() {
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(null);
   const [page, setPage] = useState(1);
-  const PER_PAGE = 20;
+  const PER_PAGE = 10;
 
   useEffect(() => {
     Promise.all([
