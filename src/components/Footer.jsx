@@ -6,7 +6,7 @@ export default function Footer() {
     <footer>
       <div className="fl">
         <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, textDecoration: 'none', marginBottom: 12 }}>
-          <img src="/favicon.png" alt="NARA" style={{width:18,height:18}} />
+          <img src="/favicon-v3.svg" alt="NARA" style={{width:18,height:18}} />
           <span style={{ fontSize: 13, fontWeight: 800, letterSpacing: '0.3em', color: '#e8e8e8', fontFamily: "'JetBrains Mono',monospace" }}>NARA</span>
         </Link>
         <div style={{ fontSize: 'var(--sm)', color: 'var(--muted)' }}>&copy; 2026 Nara Network Foundation</div>

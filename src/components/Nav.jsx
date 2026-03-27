@@ -13,7 +13,7 @@ export default function Nav() {
   return (
     <nav>
       <Link className={`nav-logo${pathname === '/' ? ' nav-active' : ''}`} href="/">
-        <img src="/favicon.png" alt="NARA" style={{width:20,height:20}} />
+        <img src="/favicon-v3.svg" alt="NARA" style={{width:20,height:20}} />
         <span>NARA</span>
       </Link>
       <button

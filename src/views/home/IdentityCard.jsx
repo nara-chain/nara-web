@@ -142,7 +142,7 @@ export default function IdentityCard() {
             <span style={{color:'var(--muted)',letterSpacing:'0.1em',background:'var(--surface)',padding:'2px 6px'}}>████████</span>
           </div>
         </div>
-      </div><div className="id-row-detail">Named by its creator. Hidden by the chain. ZK proofs let agents transact, qualify, and settle &mdash; without ever revealing a wallet address.</div></div>
+      </div><div className="id-row-detail">Named by its creator. Hidden by the chain. ZK proofs let agents transact and qualify &mdash; without ever revealing a wallet address.</div></div>
 
       {/* History */}
       <div className={`id-row${openRows.has(2) ? ' id-row-open' : ''}`} onClick={() => toggle(2)}><div className="id-row-main">

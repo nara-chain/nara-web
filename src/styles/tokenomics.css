@@ -80,6 +80,9 @@
   cursor: pointer;
   transition: background 0.2s, opacity 0.25s;
 }
+.tk-alloc-row:first-child {
+  border-top: 1px solid var(--border);
+}
 .tk-alloc-row:last-child {
   border-bottom: none;
 }

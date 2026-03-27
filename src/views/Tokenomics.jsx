@@ -17,7 +17,7 @@ const allocations = [
   {
     id: 'pomi', label: 'PoMI Minting', pct: 20, amount: 100_000_000,
     circulating: true, staked: false,
-    color: '#3df51a',  /* brand green */
+    color: '#3df51a',
     desc: 'Minting rewards distributed to agents solving on-chain quests. Output scales with network participation. Estimated ~1 year to fully distribute.',
   },
   {
@@ -29,7 +29,7 @@ const allocations = [
   {
     id: 'node', label: 'Node Subsidy', pct: 10, amount: 50_000_000,
     circulating: false, staked: true,
-    color: '#ec4899',
+    color: '#e879f9',
     desc: 'Validator incentive pool. Reserved at genesis. Nodes with >1% stake can apply for a matching subsidy (up to 1x). First come, first served. Distributed only to qualifying validators.',
   },
   {
@@ -41,19 +41,19 @@ const allocations = [
   {
     id: 'labs', label: 'NARA Labs', pct: 8, amount: 40_000_000,
     circulating: 'vesting', staked: true,
-    color: '#f43f5e',
+    color: '#fb923c',
     desc: '50% unlocked at launch, remainder locked for 12 months. All tokens staked.',
   },
   {
     id: 'foundation', label: 'NARA Foundation', pct: 8, amount: 40_000_000,
     circulating: 'vesting', staked: true,
-    color: '#8b5cf6',
+    color: '#38bdf8',
     desc: '50% unlocked at launch, remainder locked for 12 months. All tokens staked.',
   },
   {
     id: 'ecosystem', label: 'Ecosystem Rewards', pct: 3, amount: 15_000_000,
     circulating: true, staked: false,
-    color: '#06b6d4',
+    color: '#f43f5e',
     desc: 'AgentRegistry rewards, ModelHub subsidies, SkillHub incentives, AgentX rewards, and Aapp grants.',
   },
   {
@@ -79,10 +79,10 @@ const allocations = [
 /* ── Pie Chart (SVG) ── */
 function PieChart({ active, onHover }) {
   const size = 280;
-  const cx = size / 2, cy = size / 2, r = 110;
-  let cumAngle = -90; // start from top
+  const cx = size / 2, cy = size / 2, outerR = 110, innerR = 65;
+  let cumAngle = -90;
 
-  const slices = allocations.map((a, i) => {
+  const slices = allocations.map((a) => {
     const angle = (a.pct / 100) * 360;
     const startAngle = cumAngle;
     cumAngle += angle;
@@ -91,21 +91,21 @@ function PieChart({ active, onHover }) {
     const startRad = (Math.PI / 180) * startAngle;
     const endRad = (Math.PI / 180) * endAngle;
 
-    const x1 = cx + r * Math.cos(startRad);
-    const y1 = cy + r * Math.sin(startRad);
-    const x2 = cx + r * Math.cos(endRad);
-    const y2 = cy + r * Math.sin(endRad);
-
+    const isActive = active === a.id;
+    const or = isActive ? outerR + 6 : outerR;
+    const ir = innerR;
     const largeArc = angle > 180 ? 1 : 0;
 
-    const isActive = active === a.id;
-    const rr = isActive ? r + 6 : r;
-    const ax1 = cx + rr * Math.cos(startRad);
-    const ay1 = cy + rr * Math.sin(startRad);
-    const ax2 = cx + rr * Math.cos(endRad);
-    const ay2 = cy + rr * Math.sin(endRad);
+    const ox1 = cx + or * Math.cos(startRad);
+    const oy1 = cy + or * Math.sin(startRad);
+    const ox2 = cx + or * Math.cos(endRad);
+    const oy2 = cy + or * Math.sin(endRad);
+    const ix1 = cx + ir * Math.cos(endRad);
+    const iy1 = cy + ir * Math.sin(endRad);
+    const ix2 = cx + ir * Math.cos(startRad);
+    const iy2 = cy + ir * Math.sin(startRad);
 
-    const d = `M ${cx} ${cy} L ${ax1} ${ay1} A ${rr} ${rr} 0 ${largeArc} 1 ${ax2} ${ay2} Z`;
+    const d = `M ${ox1} ${oy1} A ${or} ${or} 0 ${largeArc} 1 ${ox2} ${oy2} L ${ix1} ${iy1} A ${ir} ${ir} 0 ${largeArc} 0 ${ix2} ${iy2} Z`;
 
     return (
       <path
@@ -114,8 +114,8 @@ function PieChart({ active, onHover }) {
         fill={a.color}
         opacity={active && !isActive ? 0.3 : 1}
         stroke="var(--bg)"
-        strokeWidth="2"
-        style={{ transition: 'opacity 0.25s, d 0.25s', cursor: 'pointer' }}
+        strokeWidth="1.5"
+        style={{ transition: 'opacity 0.25s', cursor: 'pointer' }}
         onMouseEnter={() => onHover(a.id)}
         onMouseLeave={() => onHover(null)}
         onClick={() => onHover(active === a.id ? null : a.id)}
@@ -126,8 +126,8 @@ function PieChart({ active, onHover }) {
   return (
     <svg viewBox={`0 0 ${size} ${size}`} className="pie-svg">
       {slices}
-      <text x={cx} y={cy - 12} textAnchor="middle" fill="var(--text)" fontSize="22" fontWeight="800">500M</text>
-      <text x={cx} y={cy + 10} textAnchor="middle" fill="var(--muted)" fontSize="10" letterSpacing="0.15em">TOTAL SUPPLY</text>
+      <text x={cx} y={cy - 8} textAnchor="middle" fill="var(--text)" fontSize="20" fontWeight="800">500M</text>
+      <text x={cx} y={cy + 10} textAnchor="middle" fill="var(--muted)" fontSize="9" letterSpacing="0.15em">NARA</text>
     </svg>
   );
 }
@@ -402,7 +402,6 @@ export default function Tokenomics() {
           <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Register your agent. Mint NARA with intelligence. Mainnet is live.</div>
           <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
             <Link href="/agents" className="btn-p">Register Agent →</Link>
-            <Link href="/learn" className="btn-s">Learn More →</Link>
           </div>
           <div style={{marginTop:24,fontSize:11,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em'}}>NEXT: <Link href="/docs" style={{color:'var(--accent)',textDecoration:'none'}}>Developer Documentation →</Link></div>
         </div>
