@@ -374,7 +374,7 @@ export default function Home() {
             <div className="section-desc">Humans have passports and credit scores. Agents get the same — identity, reputation, and rules, all on-chain and enforced by math.</div>
           </div>
           <div className="fade" style={{marginTop:40,maxWidth:900,marginLeft:'auto',marginRight:'auto'}}>
-            <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:1,background:'var(--border)'}}>
+            <div className="id-stats-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:1,background:'var(--border)'}}>
               {[
                 {label:'REGISTERED AGENTS',value:idStats.agents},
                 {label:'ACTIVE TODAY',value:idStats.active},

@@ -158,15 +158,15 @@ export default function Agents2() {
         </div>
         {/* Pagination */}
         {agents.length > PER_PAGE && (
-          <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,marginTop:24}}>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,marginTop:24,flexWrap:'wrap'}}>
             <button onClick={() => {setPage(p => Math.max(1,p-1));setOpenDetail(null);}} disabled={page===1} style={{background:'none',border:'1px solid var(--border)',color:page===1?'var(--border)':'var(--muted)',padding:'6px 12px',cursor:page===1?'default':'pointer',fontSize:11,letterSpacing:'0.1em'}}>← PREV</button>
-            {Array.from({length:Math.min(7,Math.ceil(agents.length/PER_PAGE))},(_,i) => {
+            {Array.from({length:Math.min(5,Math.ceil(agents.length/PER_PAGE))},(_,i) => {
               const totalPages = Math.ceil(agents.length/PER_PAGE);
               let p;
-              if (totalPages <= 7) p = i+1;
-              else if (page <= 4) p = i+1;
-              else if (page >= totalPages-3) p = totalPages-6+i;
-              else p = page-3+i;
+              if (totalPages <= 5) p = i+1;
+              else if (page <= 3) p = i+1;
+              else if (page >= totalPages-2) p = totalPages-4+i;
+              else p = page-2+i;
               return (
                 <button key={p} onClick={() => {setPage(p);setOpenDetail(null);}} style={{background:p===page?'var(--accent)':'none',border:'1px solid '+(p===page?'var(--accent)':'var(--border)'),color:p===page?'#0c0c0c':'var(--muted)',padding:'6px 10px',cursor:'pointer',fontSize:11,fontWeight:p===page?700:400,minWidth:32}}>{p}</button>
               );
