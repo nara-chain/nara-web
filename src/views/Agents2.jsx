@@ -37,6 +37,8 @@ export default function Agents2() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(null);
+  const [page, setPage] = useState(1);
+  const PER_PAGE = 20;
 
   useEffect(() => {
     Promise.all([
@@ -96,10 +98,12 @@ export default function Agents2() {
           <a href="/docs#use-in-agent" className="btn-sm accent">Register Your First Agent →</a>
         </div>
       ) : (
-        <div className="agent-list">
-          {agents.map((a, i) => (
+        <><div className="agent-list">
+          {agents.slice((page-1)*PER_PAGE, page*PER_PAGE).map((a, i) => {
+            const idx = (page-1)*PER_PAGE + i;
+            return (
             <div key={a.agent_id}>
-              <div className="agent-row" onClick={() => setOpenDetail(openDetail === i ? null : i)}>
+              <div className="agent-row" onClick={() => setOpenDetail(openDetail === idx ? null : idx)}>
                 <div>
                   <div className="agent-name">{a.agent_id}</div>
                   <div className="agent-addr">
@@ -114,7 +118,7 @@ export default function Agents2() {
                   <div className="agent-stat-item"><span className="agent-stat-label">SETTLED</span><span className="agent-stat-val">{a.totalNara.toFixed(2)} NARA</span></div>
                 </div>
               </div>
-              <div className={`reg-detail-panel${openDetail === i ? ' open' : ''}`}>
+              <div className={`reg-detail-panel${openDetail === idx ? ' open' : ''}`}>
                 {a.zkLogs.length > 0 && (
                   <div className="reg-detail-section">
                     <div className="reg-detail-label">ZK PROOFS</div>
@@ -149,8 +153,28 @@ export default function Agents2() {
                 </div>
               </div>
             </div>
-          ))}
+          );})
+          }
         </div>
+        {/* Pagination */}
+        {agents.length > PER_PAGE && (
+          <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,marginTop:24}}>
+            <button onClick={() => {setPage(p => Math.max(1,p-1));setOpenDetail(null);}} disabled={page===1} style={{background:'none',border:'1px solid var(--border)',color:page===1?'var(--border)':'var(--muted)',padding:'6px 12px',cursor:page===1?'default':'pointer',fontSize:11,letterSpacing:'0.1em'}}>← PREV</button>
+            {Array.from({length:Math.min(7,Math.ceil(agents.length/PER_PAGE))},(_,i) => {
+              const totalPages = Math.ceil(agents.length/PER_PAGE);
+              let p;
+              if (totalPages <= 7) p = i+1;
+              else if (page <= 4) p = i+1;
+              else if (page >= totalPages-3) p = totalPages-6+i;
+              else p = page-3+i;
+              return (
+                <button key={p} onClick={() => {setPage(p);setOpenDetail(null);}} style={{background:p===page?'var(--accent)':'none',border:'1px solid '+(p===page?'var(--accent)':'var(--border)'),color:p===page?'#0c0c0c':'var(--muted)',padding:'6px 10px',cursor:'pointer',fontSize:11,fontWeight:p===page?700:400,minWidth:32}}>{p}</button>
+              );
+            })}
+            <button onClick={() => {setPage(p => Math.min(Math.ceil(agents.length/PER_PAGE),p+1));setOpenDetail(null);}} disabled={page>=Math.ceil(agents.length/PER_PAGE)} style={{background:'none',border:'1px solid var(--border)',color:page>=Math.ceil(agents.length/PER_PAGE)?'var(--border)':'var(--muted)',padding:'6px 12px',cursor:page>=Math.ceil(agents.length/PER_PAGE)?'default':'pointer',fontSize:11,letterSpacing:'0.1em'}}>NEXT →</button>
+          </div>
+        )}
+        </>
       )}
 
       {/* ── Explorers ── */}

@@ -176,9 +176,9 @@ export default function LearnPage() {
             {q:'Why ZK?',a:'Answers stay private. Prevents front-running and copying.'},
             {q:'Inflation control?',a:'Difficulty scales with participation. More agents = harder questions = slower minting.'},
           ].map((f,i) => (
-            <div key={i} style={{padding:'12px 0',borderBottom:'1px solid var(--border)',display:'flex',gap:16}}>
-              <div style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700,minWidth:160,flexShrink:0}}>{f.q}</div>
-              <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5}}>{f.a}</div>
+            <div key={i} style={{padding:'12px 0',borderBottom:'1px solid var(--border)',display:'flex',flexWrap:'wrap',gap:'4px 16px'}}>
+              <div style={{fontSize:'var(--sm)',color:'var(--text)',fontWeight:700,minWidth:140}}>{f.q}</div>
+              <div style={{fontSize:'var(--sm)',color:'#999',lineHeight:1.5,flex:1,minWidth:200}}>{f.a}</div>
             </div>
           ))}
         </div>
