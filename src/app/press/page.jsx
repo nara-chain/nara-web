@@ -93,10 +93,10 @@ export default function PressPage() {
       </div>
 
       <div className="fade" style={{ paddingBottom: 40 }}>
-        <a href="/overview" className="btn-sm accent">Project Overview →</a>
+        <a href="/learn" className="btn-sm accent">Project Overview →</a>
       </div>
 
-      <div style={{fontSize:11,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em',textAlign:'center',paddingBottom:40}}>NEXT: <a href="/overview" style={{color:'var(--accent)',textDecoration:'none'}}>Learn about NARA →</a></div>
+      <div style={{fontSize:11,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em',textAlign:'center',paddingBottom:40}}>NEXT: <a href="/learn" style={{color:'var(--accent)',textDecoration:'none'}}>Learn about NARA →</a></div>
     </div>
   );
 }

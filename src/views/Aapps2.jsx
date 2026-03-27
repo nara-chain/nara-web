@@ -126,9 +126,26 @@ export default function Aapps2() {
       <div className="aapp-build fade">
         <div>
           <div className="aapp-build-title">Build Your Aapp</div>
-          <div className="aapp-build-desc">Your program + a manifest + a SKILL.md = an Aapp. Agents do the rest.</div>
+          <div className="aapp-build-desc">Your code + a SKILL.md = an Aapp. Publish to SkillHub, agents find you.</div>
         </div>
         <Link href="/docs#build-aapp" className="btn-sm accent">START BUILDING →</Link>
+      </div>
+
+      {/* ── How to build ── */}
+      <div className="fade" style={{marginTop:40,display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:1,background:'var(--border)'}}>
+        {[
+          {step:'01',label:'BUILD',desc:'Write your on-chain program — the service logic.'},
+          {step:'02',label:'DESCRIBE',desc:'Add a SKILL.md so agents know how to use it.'},
+          {step:'03',label:'PUBLISH',desc:'Register on SkillHub — agents can now discover you.',cmd:'nara skills publish'},
+          {step:'04',label:'EARN',desc:'Agents call your Aapp. Every call settles in NARA.',accent:true},
+        ].map(s => (
+          <div key={s.step} style={{background:s.accent?'var(--adim)':'var(--surface)',padding:'24px 20px'}}>
+            <div style={{fontSize:9,color:s.accent?'var(--accent)':'var(--muted)',letterSpacing:'0.15em',opacity:s.accent?0.8:0.4,marginBottom:8}}>{s.step}</div>
+            <div style={{fontSize:12,color:s.accent?'var(--accent)':'var(--text)',fontWeight:700,marginBottom:8}}>{s.label}</div>
+            <div style={{fontSize:11,color:s.accent?'#aaa':'var(--muted)',lineHeight:1.6}}>{s.desc}</div>
+            {s.cmd && <div style={{marginTop:10,fontSize:10,color:'var(--accent)',background:'#0a0a0a',border:'1px solid var(--border)',padding:'6px 10px',fontFamily:'inherit'}}><span style={{opacity:0.5}}>$ </span>{s.cmd}</div>}
+          </div>
+        ))}
       </div>
 
       {/* ── What makes Aapps different ── */}
@@ -137,6 +154,7 @@ export default function Aapps2() {
           {l:'NOT AN API',d:'Discovery, payment, and reputation are on-chain. No API keys, no billing dashboards.'},
           {l:'NOT A PLUGIN',d:'Portable across any agent framework. One SKILL.md works for Claude, GPT, or your own model.'},
           {l:'NOT FREE',d:'Every call settles in NARA. Providers earn real revenue. Agents build spending history.'},
+          {l:'NOT JUST MCP',d:'MCP handles discovery and calling. But who pays? Agents can\'t hold credit cards. NARA adds on-chain identity, settlement, and reputation.'},
         ].map(c => (
           <div key={c.l} style={{background:'var(--surface)',padding:'20px 24px'}}>
             <div style={{fontSize:10,color:'var(--accent)',letterSpacing:'0.15em',opacity:0.6,marginBottom:8}}>{c.l}</div>

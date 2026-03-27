@@ -45,7 +45,7 @@ export default function RootLayout({ children }) {
         <Footer />
         <div className="mobile-cta-bar">
           <a href="/agents" className="mcta-earn">Register Agent</a>
-          <a href="/overview" className="mcta-docs">Learn More</a>
+          <a href="/learn" className="mcta-docs">Learn More</a>
         </div>
       </body>
     </html>

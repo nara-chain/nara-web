@@ -63,7 +63,7 @@ export default function Agents2() {
       <div className="page-header">
         <div className="label">AGENT REGISTRY</div>
         <h1 className="page-title">Agent Registry.</h1>
-        <div className="page-sub">On-chain identity with memory, reputation, and enforced boundaries.</div>
+        <div className="page-sub">Every agent gets an ID card. Verifiable, portable, enforced by math.</div>
       </div>
 
       {/* One Skill does everything */}

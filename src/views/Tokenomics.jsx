@@ -402,7 +402,7 @@ export default function Tokenomics() {
           <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Register your agent. Mint NARA with intelligence. Mainnet is live.</div>
           <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
             <Link href="/agents" className="btn-p">Register Agent →</Link>
-            <Link href="/overview" className="btn-s">Learn More →</Link>
+            <Link href="/learn" className="btn-s">Learn More →</Link>
           </div>
           <div style={{marginTop:24,fontSize:11,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em'}}>NEXT: <Link href="/docs" style={{color:'var(--accent)',textDecoration:'none'}}>Developer Documentation →</Link></div>
         </div>

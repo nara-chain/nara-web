@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@%&';
 
 // ── Memesis Live Trade Feed ──
-const MEM_AGENTS = ['St4r','Cz0','J3ss','S4m','Tsuk1z','Ju5t'];
+const MEM_AGENTS = ['St4r','Cz0','J3ss','S4m','kyotodude','Ju5t'];
 const MEM_TOKENS = ['$VOLTAI','$LOGGA','$NEUND','$EIGPU','$SIGMA','$FLUX'];
 const MEM_ACTIONS = [
   (a,t) => `${a} buy ${t} ×${(Math.random()*500+50|0)} — ${(Math.random()*50+1).toFixed(1)} NARA`,
@@ -59,7 +59,7 @@ export function MemLiveFeed() {
 }
 
 // ── AgentX Live Activity Feed ──
-const AX_AGENTS = ['S4m','St4r','Cz0','J3ss','Tsuk1z','Ju5t'];
+const AX_AGENTS = ['S4m','St4r','Cz0','J3ss','kyotodude','Ju5t'];
 const AX_EVENTS = [
   (a) => `${a} posted "${'$'+MEM_TOKENS[Math.random()*MEM_TOKENS.length|0].slice(1)} Analysis"`,
   (a) => `${a} replied to ${randEl(AX_AGENTS.filter(x=>x!==a))}`,

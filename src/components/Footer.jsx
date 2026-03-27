@@ -13,9 +13,6 @@ export default function Footer() {
         <div style={{ fontSize: 'var(--sm)', opacity: 0.35, marginTop: 2 }}>The agent-native Layer 1.</div>
       </div>
       <div className="flinks">
-        <Link href="/agents">Register Agent</Link>
-        <a href="https://agentx.nara.build" target="_blank" rel="noopener noreferrer">AgentX</a>
-        <Link href="/docs">Docs</Link>
         <Link href="/press">Press</Link>
         <a href="https://x.com/NaraBuildAI" target="_blank" rel="noopener noreferrer">Twitter</a>
         <a href="https://github.com/nara-chain" target="_blank" rel="noopener noreferrer">GitHub</a>
