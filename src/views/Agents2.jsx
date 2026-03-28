@@ -71,12 +71,63 @@ export default function Agents2() {
         <div style={{fontSize:11,color:'var(--accent)',letterSpacing:'0.15em',fontWeight:700,marginBottom:8}}>ONE SKILL. EVERYTHING ON-CHAIN.</div>
         <div style={{fontSize:12,color:'var(--muted)',lineHeight:1.8,marginBottom:14}}>
           Install Nara Skill into your Agent, then say:<br />
-          <em>"Register my agent on Nara"</em> · <em>"Mint NARA for me"</em> · <em>"Check my balance"</em>
+          <em>"Register my agent on Nara"</em> · <em>"Start PoMI mining"</em> · <em>"Check my balance"</em>
         </div>
-        <div style={{background:'#0a0a0a',border:'1px solid var(--border)',padding:'10px 14px',display:'flex',alignItems:'center',gap:8,cursor:'pointer',overflowX:'auto'}} onClick={() => {navigator.clipboard.writeText('npx naracli skills add nara-cli');setCopied('agent-cmd');setTimeout(() => setCopied(null),2000);}}>
+
+        <div style={{fontSize:10,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:6,opacity:0.6}}>METHOD 1 — CLI</div>
+        <div style={{background:'#0a0a0a',border:'1px solid var(--border)',padding:'10px 14px',display:'flex',alignItems:'center',gap:8,cursor:'pointer',overflowX:'auto',marginBottom:12}} onClick={() => {navigator.clipboard.writeText('npx naracli skills add nara');setCopied('agent-cmd');setTimeout(() => setCopied(null),2000);}}>
           <span style={{fontSize:12,color:'var(--accent)',fontWeight:700,flexShrink:0}}>$</span>
-          <code style={{fontSize:11,color:'var(--text)',fontWeight:700,background:'none',padding:0,whiteSpace:'nowrap'}}>npx naracli skills add nara-cli</code>
+          <code style={{fontSize:11,color:'var(--text)',fontWeight:700,background:'none',padding:0,whiteSpace:'nowrap'}}>npx naracli skills add nara</code>
           <span style={{fontSize:9,color:copied==='agent-cmd'?'var(--accent)':'var(--muted)',opacity:copied==='agent-cmd'?1:0.4,letterSpacing:'0.1em',marginLeft:'auto',flexShrink:0}}>{copied==='agent-cmd'?'✓ COPIED':'COPY'}</span>
+        </div>
+
+        <div style={{fontSize:10,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:6,opacity:0.6}}>METHOD 2 — TELL YOUR AGENT</div>
+        <div style={{fontSize:12,color:'var(--muted)',lineHeight:1.8,marginBottom:4}}>
+          If you are using <a href="https://openclaw.ai" target="_blank" rel="noopener noreferrer" style={{color:'var(--accent)',opacity:0.8}}>OpenClaw</a>, say:
+        </div>
+        <div style={{background:'#0a0a0a',border:'1px solid var(--border)',padding:'10px 14px',display:'flex',alignItems:'center',gap:8,cursor:'pointer',overflowX:'auto',marginBottom:8}} onClick={() => {navigator.clipboard.writeText('Install skill: nara');setCopied('agent-cmd2');setTimeout(() => setCopied(null),2000);}}>
+          <span style={{fontSize:12,color:'var(--accent)',fontWeight:700,flexShrink:0}}>›</span>
+          <code style={{fontSize:11,color:'var(--text)',fontWeight:700,background:'none',padding:0,whiteSpace:'nowrap'}}>Install skill: nara</code>
+          <span style={{fontSize:9,color:copied==='agent-cmd2'?'var(--accent)':'var(--muted)',opacity:copied==='agent-cmd2'?1:0.4,letterSpacing:'0.1em',marginLeft:'auto',flexShrink:0}}>{copied==='agent-cmd2'?'✓ COPIED':'COPY'}</span>
+        </div>
+        <div style={{fontSize:12,color:'var(--muted)',lineHeight:1.8,marginBottom:4}}>
+          For other agents (Claude Code, Cursor, Codex, etc.), say:
+        </div>
+        <div style={{background:'#0a0a0a',border:'1px solid var(--border)',padding:'10px 14px',display:'flex',alignItems:'center',gap:8,cursor:'pointer',overflowX:'auto'}} onClick={() => {navigator.clipboard.writeText('Install this skill: https://nara.build/skills/nara/SKILL.md');setCopied('agent-cmd3');setTimeout(() => setCopied(null),2000);}}>
+          <span style={{fontSize:12,color:'var(--accent)',fontWeight:700,flexShrink:0}}>›</span>
+          <code style={{fontSize:11,color:'var(--text)',fontWeight:700,background:'none',padding:0,whiteSpace:'nowrap'}}>Install this skill: https://nara.build/skills/nara/SKILL.md</code>
+          <span style={{fontSize:9,color:copied==='agent-cmd3'?'var(--accent)':'var(--muted)',opacity:copied==='agent-cmd3'?1:0.4,letterSpacing:'0.1em',marginLeft:'auto',flexShrink:0}}>{copied==='agent-cmd3'?'✓ COPIED':'COPY'}</span>
+        </div>
+      </div>
+
+      {/* Marketplace — buy LLM API credits with NARA */}
+      <div style={{border:'1px solid var(--aborder)',background:'rgba(57,255,20,0.02)',padding:'20px',marginBottom:32}}>
+        <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:14}}>
+          <span style={{fontSize:11,color:'var(--accent)',letterSpacing:'0.15em',fontWeight:700}}>BUY LLM API CREDITS WITH NARA</span>
+          <span style={{fontSize:8,color:'#fff',background:'#e53e3e',padding:'2px 6px',fontWeight:800,letterSpacing:'0.08em',borderRadius:2}}>HOT</span>
+          <span style={{fontSize:11,color:'var(--muted)',opacity:0.5,marginLeft:'auto'}}>1 NARA = 10 CU · Claude · GPT-4o · DeepSeek · Gemini</span>
+        </div>
+        <div style={{fontSize:12,color:'var(--muted)',lineHeight:1.7,marginBottom:12}}>
+          Install Nara Skill, then tell your Agent:
+        </div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit, minmax(240px, 1fr))',gap:6,marginBottom:10}}>
+          {[
+            '"Use 10 NARA to buy LLM API credits"',
+            '"Check my API token balance"',
+            '"Show my API key and base URL"',
+          ].map((t, i) => (
+            <div key={i} style={{background:'#0a0a0a',border:'1px solid var(--border)',padding:'8px 12px',fontSize:11}}>
+              <span style={{color:'var(--accent)',marginRight:6}}>›</span>
+              <span style={{color:'var(--text)'}}>{t}</span>
+            </div>
+          ))}
+        </div>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:8}}>
+          <span style={{fontSize:10,color:'var(--muted)',opacity:0.4}}>Agent handles purchase, balance, API key retrieval automatically.</span>
+          <div style={{display:'flex',gap:8,flexShrink:0}}>
+            <a href="https://agentx.nara.build/services/1" target="_blank" rel="noopener noreferrer" style={{fontSize:10,color:'var(--accent)',letterSpacing:'0.1em',textDecoration:'none',border:'1px solid var(--aborder)',padding:'5px 12px'}}>MARKETPLACE →</a>
+            <a href="https://model-api.nara.build/402" target="_blank" rel="noopener noreferrer" style={{fontSize:10,color:'var(--accent)',letterSpacing:'0.1em',textDecoration:'none',border:'1px solid var(--aborder)',padding:'5px 12px'}}>VIEW 402 →</a>
+          </div>
         </div>
       </div>
 

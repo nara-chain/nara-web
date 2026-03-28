@@ -9,8 +9,18 @@ const TOTAL_SUPPLY = 500_000_000;
 
 const allocations = [
   {
+    id: 'genesis-node', label: 'Validator Staking', pct: 25, amount: 125_000_000,
+    circulating: false, staked: true,
+    color: '#f59e0b',
+    desc: 'Permanently locked and staked at genesis. Never enters circulation.',
+    subs: [
+      { label: 'Genesis Stake', pct: 15, amount: 75_000_000, desc: 'Secures the network from day one.' },
+      { label: 'Node Subsidy', pct: 10, amount: 50_000_000, desc: 'Validator incentive pool. Nodes with >1% stake can apply for a matching subsidy (up to 1x). First come, first served.' },
+    ],
+  },
+  {
     id: 'investors', label: 'Investors', pct: 21, amount: 105_000_000,
-    circulating: 'vesting', staked: 'after-sale',
+    circulating: 'vesting', staked: false,
     color: '#6366f1',
     desc: 'Seed, strategic, and public presale rounds. Subject to lock-up schedules. Staked after purchase. Not staked until sold.',
   },
@@ -21,114 +31,94 @@ const allocations = [
     desc: 'Minting rewards distributed to agents solving on-chain quests. Output scales with network participation. Estimated ~1 year to fully distribute.',
   },
   {
-    id: 'genesis', label: 'Genesis Stake', pct: 15, amount: 75_000_000,
-    circulating: false, staked: true,
-    color: '#f59e0b',
-    desc: 'Permanently staked at genesis. Never enters circulation. Secures the network from day one.',
-  },
-  {
-    id: 'node', label: 'Node Subsidy', pct: 10, amount: 50_000_000,
-    circulating: false, staked: true,
-    color: '#ec4899',
-    desc: 'Validator incentive pool. Reserved at genesis. Nodes with >1% stake can apply for a matching subsidy (up to 1x). First come, first served. Distributed only to qualifying validators.',
-  },
-  {
-    id: 'community', label: 'Community', pct: 10, amount: 50_000_000,
+    id: 'community', label: 'Community', pct: 18, amount: 90_000_000,
     circulating: 'vesting', staked: false,
     color: '#14b8a6',
-    desc: 'Community operations, hackathon prizes, developer grants, Solana ecosystem migration incentives, and community campaigns.',
+    desc: 'Community operations, ecosystem growth, airdrops, and on-chain liquidity.',
+    subs: [
+      { label: 'Community Ops', pct: 10, amount: 50_000_000, desc: 'Hackathon prizes, developer grants, migration incentives, and campaigns.' },
+      { label: 'Ecosystem Rewards', pct: 3, amount: 15_000_000, desc: 'AgentRegistry rewards, ModelHub subsidies, SkillHub incentives, AgentX rewards, and Aapp grants.' },
+      { label: 'Solana Airdrop', pct: 2, amount: 10_000_000, desc: 'Airdrop to Solana holders, distributed across 4 rounds.' },
+      { label: 'Points Airdrop', pct: 2, amount: 10_000_000, desc: 'Airdrop based on agent-generated points. Rewards active agent participation.' },
+      { label: 'ZK Pool Liquidity', pct: 1, amount: 5_000_000, desc: 'Injected into ZK identity pool at genesis. Permanently locked.' },
+    ],
   },
   {
-    id: 'labs', label: 'NARA Labs', pct: 8, amount: 40_000_000,
+    id: 'labs', label: 'NARA Foundation', pct: 16, amount: 80_000_000,
     circulating: 'vesting', staked: true,
     color: '#f43f5e',
     desc: '50% unlocked at launch, remainder locked for 12 months. All tokens staked.',
   },
-  {
-    id: 'foundation', label: 'NARA Foundation', pct: 8, amount: 40_000_000,
-    circulating: 'vesting', staked: true,
-    color: '#8b5cf6',
-    desc: '50% unlocked at launch, remainder locked for 12 months. All tokens staked.',
-  },
-  {
-    id: 'ecosystem', label: 'Ecosystem Rewards', pct: 3, amount: 15_000_000,
-    circulating: true, staked: false,
-    color: '#06b6d4',
-    desc: 'AgentRegistry rewards, ModelHub subsidies, SkillHub incentives, AgentX rewards, and Aapp grants.',
-  },
-  {
-    id: 'airdrop', label: 'Solana Airdrop', pct: 2, amount: 10_000_000,
-    circulating: true, staked: false,
-    color: '#a78bfa',
-    desc: 'Airdrop to Solana holders, distributed across 4 rounds.',
-  },
-  {
-    id: 'points', label: 'Points Airdrop', pct: 2, amount: 10_000_000,
-    circulating: true, staked: false,
-    color: '#fb923c',
-    desc: 'Airdrop based on agent-generated points. Rewards active agent participation in the ecosystem.',
-  },
-  {
-    id: 'zk', label: 'ZK Pool Liquidity', pct: 1, amount: 5_000_000,
-    circulating: false, staked: false,
-    color: '#64748b',
-    desc: 'Injected into the ZK identity pool at genesis. Permanently locked — never circulates.',
-  },
 ];
 
-/* ── Pie Chart (SVG) ── */
-function PieChart({ active, onHover }) {
-  const size = 280;
-  const cx = size / 2, cy = size / 2, r = 110;
-  let cumAngle = -90; // start from top
+/* ── Allocation Hub (pie left + callouts right) ── */
+function AllocationHub({ active, onHover }) {
+  const pieSize = 180, pieCx = pieSize / 2, pieCy = pieSize / 2, pieR = 78;
 
-  const slices = allocations.map((a, i) => {
+  // Pie slice mid-angles (for line start points on pie edge)
+  let cumAngle = -90;
+  const slices = allocations.map(a => {
+    const start = cumAngle;
     const angle = (a.pct / 100) * 360;
-    const startAngle = cumAngle;
     cumAngle += angle;
-    const endAngle = cumAngle;
-
-    const startRad = (Math.PI / 180) * startAngle;
-    const endRad = (Math.PI / 180) * endAngle;
-
-    const x1 = cx + r * Math.cos(startRad);
-    const y1 = cy + r * Math.sin(startRad);
-    const x2 = cx + r * Math.cos(endRad);
-    const y2 = cy + r * Math.sin(endRad);
-
-    const largeArc = angle > 180 ? 1 : 0;
-
-    const isActive = active === a.id;
-    const rr = isActive ? r + 6 : r;
-    const ax1 = cx + rr * Math.cos(startRad);
-    const ay1 = cy + rr * Math.sin(startRad);
-    const ax2 = cx + rr * Math.cos(endRad);
-    const ay2 = cy + rr * Math.sin(endRad);
-
-    const d = `M ${cx} ${cy} L ${ax1} ${ay1} A ${rr} ${rr} 0 ${largeArc} 1 ${ax2} ${ay2} Z`;
-
-    return (
-      <path
-        key={a.id}
-        d={d}
-        fill={a.color}
-        opacity={active && !isActive ? 0.3 : 1}
-        stroke="var(--bg)"
-        strokeWidth="2"
-        style={{ transition: 'opacity 0.25s, d 0.25s', cursor: 'pointer' }}
-        onMouseEnter={() => onHover(a.id)}
-        onMouseLeave={() => onHover(null)}
-        onClick={() => onHover(active === a.id ? null : a.id)}
-      />
-    );
+    const mid = start + angle / 2;
+    return { start, angle, mid };
   });
 
   return (
-    <svg viewBox={`0 0 ${size} ${size}`} className="pie-svg">
-      {slices}
-      <text x={cx} y={cy - 12} textAnchor="middle" fill="var(--text)" fontSize="22" fontWeight="800">500M</text>
-      <text x={cx} y={cy + 10} textAnchor="middle" fill="var(--muted)" fontSize="10" letterSpacing="0.15em">TOTAL SUPPLY</text>
-    </svg>
+    <div className="tk-hub">
+      {/* Left: pie chart */}
+      <div className="tk-hub-pie">
+        <svg viewBox={`0 0 ${pieSize} ${pieSize}`} width={pieSize} height={pieSize} style={{display:'block'}}>
+          {allocations.map((a, i) => {
+            const s = slices[i];
+            const sr = (Math.PI / 180) * s.start;
+            const er = (Math.PI / 180) * (s.start + s.angle);
+            const isActive = active === a.id;
+            const rr = isActive ? pieR + 4 : pieR;
+            const d = `M ${pieCx} ${pieCy} L ${pieCx + rr * Math.cos(sr)} ${pieCy + rr * Math.sin(sr)} A ${rr} ${rr} 0 ${s.angle > 180 ? 1 : 0} 1 ${pieCx + rr * Math.cos(er)} ${pieCy + rr * Math.sin(er)} Z`;
+            return (
+              <path key={a.id} d={d} fill={a.color}
+                opacity={active && !isActive ? 0.3 : 1}
+                stroke="var(--bg)" strokeWidth="1.5"
+                style={{ transition: 'opacity 0.25s', cursor: 'pointer' }}
+                onMouseEnter={() => onHover(a.id)}
+                onMouseLeave={() => onHover(null)}
+              />
+            );
+          })}
+          <circle cx={pieCx} cy={pieCy} r="36" fill="var(--bg)" />
+          <text x={pieCx} y={pieCy - 4} textAnchor="middle" fill="var(--text)" fontSize="18" fontWeight="800">500M</text>
+          <text x={pieCx} y={pieCy + 12} textAnchor="middle" fill="var(--muted)" fontSize="8" letterSpacing="0.12em">NARA</text>
+        </svg>
+      </div>
+
+      {/* Right: callout list with connecting lines */}
+      <div className="tk-hub-list">
+        {allocations.map((a, i) => {
+          const isActive = active === a.id;
+          const isDim = active && !isActive;
+          return (
+            <div key={a.id}
+              className={`tk-hub-row${isActive ? ' tk-hub-active' : ''}${isDim ? ' tk-hub-dim' : ''}`}
+              onMouseEnter={() => onHover(a.id)}
+              onMouseLeave={() => onHover(null)}
+            >
+              <div className="tk-hub-line" style={{ background: a.color, opacity: isDim ? 0.1 : 0.4 }} />
+              <div className="tk-hub-dot" style={{ background: a.color, boxShadow: isActive ? `0 0 10px ${a.color}` : 'none' }} />
+              <div className="tk-hub-body">
+                <div className="tk-hub-head">
+                  <span className="tk-hub-name">{a.label}</span>
+                  <span className="tk-hub-pct">{a.pct}%</span>
+                  <span className="tk-hub-amt">{(a.amount / 1_000_000).toFixed(0)}M</span>
+                </div>
+                <div className="tk-hub-desc">{a.desc}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
@@ -216,7 +206,6 @@ function DecayCurve({ schedule, hoverMonth, onHover }) {
 export default function Tokenomics() {
   const [active, setActive] = useState(null);
   const [hoverMonth, setHoverMonth] = useState(null);
-  const activeData = allocations.find(a => a.id === active);
   const schedule = useMemo(() => getMiningSchedule(), []);
 
   // Calculate circulation stats
@@ -232,7 +221,7 @@ export default function Tokenomics() {
       <div style={{ marginBottom: 48 }}>
         <div className="label">TOKENOMICS</div>
         <h1 className="page-title">NARA Token.</h1>
-        <div className="page-sub">Fixed supply. No inflation. Agents earn through intelligence, not issuance.</div>
+        <div className="page-sub">Agents earn through intelligence.</div>
       </div>
 
       {/* Key metrics */}
@@ -255,46 +244,8 @@ export default function Tokenomics() {
         </div>
       </div>
 
-      {/* Pie + Detail */}
-      <div className="tk-main">
-        <div className="tk-chart-col">
-          <PieChart active={active} onHover={setActive} />
-          {activeData && (
-            <div className="tk-tooltip">
-              <span className="tk-tooltip-dot" style={{ background: activeData.color }} />
-              <span className="tk-tooltip-label">{activeData.label}</span>
-              <span className="tk-tooltip-pct">{activeData.pct}%</span>
-            </div>
-          )}
-          {!activeData && (
-            <div className="tk-tooltip tk-tooltip-hint">
-              Hover to explore allocation
-            </div>
-          )}
-        </div>
-
-        <div className="tk-detail-col">
-          <div className="tk-alloc-grid">
-            {allocations.map(a => (
-              <div
-                key={a.id}
-                className={`tk-alloc-row${active === a.id ? ' tk-alloc-active' : ''}${active && active !== a.id ? ' tk-alloc-dim' : ''}`}
-                onMouseEnter={() => setActive(a.id)}
-                onMouseLeave={() => setActive(null)}
-              >
-                <div className="tk-alloc-bar">
-                  <span className="tk-alloc-dot" style={{ background: a.color }} />
-                  <span className="tk-alloc-name">{a.label}</span>
-                </div>
-                <div className="tk-alloc-nums">
-                  <span className="tk-alloc-pct">{a.pct}%</span>
-                  <span className="tk-alloc-amount">{(a.amount / 1_000_000).toFixed(a.amount % 1_000_000 === 0 ? 0 : 1)}M</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* Allocation Hub */}
+      <AllocationHub active={active} onHover={setActive} />
 
       {/* Detail cards */}
       <div className="tk-cards">
@@ -305,15 +256,30 @@ export default function Tokenomics() {
             onMouseEnter={() => setActive(a.id)}
             onMouseLeave={() => setActive(null)}
           >
-            <div className="tk-card-header">
-              <span className="tk-card-dot" style={{ background: a.color }} />
-              <span className="tk-card-title">{a.label}</span>
-              <span className="tk-card-pct">{a.pct}%</span>
+            <div className="tk-card-left">
+              <div className="tk-card-header">
+                <span className="tk-card-dot" style={{ background: a.color }} />
+                <span className="tk-card-title">{a.label}</span>
+                <span className="tk-card-pct">{a.pct}%</span>
+              </div>
+              <div className="tk-card-amount">{a.amount.toLocaleString()} NARA</div>
+              <div className="tk-card-badges">
+                <Badge circulating={a.circulating} staked={a.staked} />
+              </div>
             </div>
-            <div className="tk-card-amount">{a.amount.toLocaleString()} NARA</div>
-            <div className="tk-card-desc">{a.desc}</div>
-            <div className="tk-card-badges">
-              <Badge circulating={a.circulating} staked={a.staked} />
+            <div className="tk-card-right">
+              <div className="tk-card-desc">{a.desc}</div>
+              {a.subs && (
+                <div style={{marginTop:8,borderTop:'1px solid var(--border)',paddingTop:8,display:'flex',flexDirection:'column',gap:6}}>
+                  {a.subs.map((s, i) => (
+                    <div key={i} style={{display:'flex',alignItems:'baseline',gap:8,fontSize:11,lineHeight:1.5}}>
+                      <span style={{color:'var(--accent)',opacity:0.6,flexShrink:0,width:24,textAlign:'right',fontWeight:700,fontSize:10}}>{s.pct}%</span>
+                      <span style={{color:'var(--text)',fontWeight:600,flexShrink:0}}>{s.label}</span>
+                      <span style={{color:'var(--muted)',opacity:0.5}}>— {s.desc}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         ))}
@@ -381,7 +347,7 @@ export default function Tokenomics() {
             {icon:'⛏',label:'POMI MINTING',desc:'Agents solve quests, earn from the 100M pool. Difficulty scales with participation. Pool exhausts → natural scarcity.',accent:true},
             {icon:'◆',label:'STAKING',desc:'41% staked at genesis. Validators earn fees. Node subsidy matches early committers.',accent:false},
             {icon:'◈',label:'AAPP ECONOMY',desc:'Every agent interaction costs NARA. Fees flow to operators and skill creators.',accent:false},
-            {icon:'◇',label:'NON-CIRCULATING',desc:'26% locked at genesis — Genesis Stake 15%, Node Subsidy 10%, ZK Pool 1%.',accent:false},
+            {icon:'◇',label:'NON-CIRCULATING',desc:'25% permanently locked at genesis — Genesis Stake 15% + Node Subsidy 10%. ZK Pool 1% also locked.',accent:false},
           ].map((a,i) => (
             <div key={i} style={{display:'flex',alignItems:'center',gap:16,padding:'14px 0',borderBottom:'1px solid var(--border)'}}>
               <div style={{fontSize:16,color:a.accent?'var(--accent)':'var(--muted)',opacity:a.accent?0.8:0.3,width:24,textAlign:'center',flexShrink:0}}>{a.icon}</div>
