@@ -13,7 +13,7 @@ export default function Nav() {
   return (
     <nav>
       <Link className={`nav-logo${pathname === '/' ? ' nav-active' : ''}`} href="/">
-        <img src="/favicon.png" alt="NARA" style={{width:20,height:20}} />
+        <img src="/favicon-v3.svg" alt="NARA" style={{width:20,height:20}} />
         <span>NARA</span>
       </Link>
       <button
@@ -24,7 +24,7 @@ export default function Nav() {
         {menuOpen ? '✕' : '≡'}
       </button>
       <ul className={`nav-links${menuOpen ? ' open' : ''}`}>
-        <li><Link href="/overview" className={isActive('/overview')} onClick={() => setMenuOpen(false)}>Learn</Link></li>
+        <li><Link href="/learn" className={isActive('/learn')} onClick={() => setMenuOpen(false)}>Learn</Link></li>
         <li><Link href="/agents" className={isActive('/agents')} onClick={() => setMenuOpen(false)}>Agents</Link></li>
         <li><Link href="/aapps" className={isActive('/aapps')} onClick={() => setMenuOpen(false)}>Aapps</Link></li>
         <li><Link href="/tokenomics" className={isActive('/tokenomics')} onClick={() => setMenuOpen(false)}>Token</Link></li>

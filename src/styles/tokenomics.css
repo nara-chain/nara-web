@@ -35,6 +35,9 @@
   cursor: pointer;
   transition: opacity 0.25s;
 }
+.tk-hub-row:first-child {
+  border-top: 1px solid var(--border);
+}
 .tk-hub-row:last-child {
   border-bottom: none;
 }

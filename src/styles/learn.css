@@ -33,16 +33,26 @@
 /* Flywheel arrow dividers */
 .flywheel-arrow{font-size:16px;color:var(--accent);opacity:0.3;padding:0 12px;}
 
+@media(max-width:900px){
+  .ov-arch-grid{grid-template-columns:repeat(2,1fr) !important;}
+  .ov-pomi-grid{grid-template-columns:1fr !important;}
+  .ov-roles-grid{grid-template-columns:1fr !important;}
+  .ov-live-grid{grid-template-columns:1fr !important;}
+}
 @media(max-width:780px){
   .learn-grid-2,.learn-grid-3{grid-template-columns:1fr;}
+  .ov-id-grid{grid-template-columns:repeat(2,1fr) !important;}
 }
 @media(max-width:680px){
   .learn-container{padding:120px 20px 80px;}
   .flywheel-arrow{display:none;}
   .ov-flywheel .fade > div[style]{flex-direction:column !important;}
+  .ov-arch-grid{grid-template-columns:1fr !important;}
+  .ov-id-grid{grid-template-columns:1fr !important;}
 }
 @media(max-width:600px){
   .mcp-compare-grid{grid-template-columns:1fr;}
+  .ov-live-grid{grid-template-columns:1fr !important;}
 }
 @media(max-width:480px){
   .learn-container{padding:80px 16px 60px;}

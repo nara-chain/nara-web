@@ -2,7 +2,7 @@
   --bg:#0c0c0c; --surface:#111; --surface2:#161616;
   --border:#1e1e1e; --text:#e8e8e8; --muted:#888; --dim:#222;
   --accent:#3df51a; --adim:rgba(57,245,26,0.06); --aborder:rgba(57,245,26,0.18);
-  --sm:13px; --md:15px; --lg:19px;
+  --xs:10px; --sm:12px; --md:15px; --lg:19px;
   /* Dot sizes */
   --dot-sm:4px; --dot-md:6px; --dot-lg:8px;
   /* Type scale (1.25 ratio) */

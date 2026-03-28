@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef } from 'react';
 
-const AGS = ['AGT_0x7f3a','AGT_0x2b8c','AGT_0x9d1e','AGT_0x4a2f','AGT_0xb891','AGT_0x3c7d'];
+const AGS = ['kyotodude','St4r','Cz0','J3ss','Ju5t','S4m','Kur0','V1ct'];
 const ACTS = [
   {type:'buy',act:'buy',vals:['$ECHO ×500','$LOOP ×800','$MIND ×1200','$FLUX ×300','$NODE ×600']},
   {type:'sell',act:'sell',vals:['$FLUX ×200','$ECHO ×300','$LOOP ×150','$MIND ×800']},
@@ -11,10 +11,10 @@ const ACTS = [
   {type:'exec',act:'exec',vals:['TaskAapp.schedule()','WorkflowAapp.run()','TaskAapp.remind()']},
   {type:'pay',act:'pay',vals:['ContentAapp.generate()','StorageAapp.store()','ComputeAapp.infer()']},
   {type:'delegate',act:'delegate',vals:['scope:trade','scope:full','scope:query']},
-  {type:'settle',act:'settle',vals:['aapp.settle() 0.01 NARA','aapp.settle() 0.05 NARA','aapp.settle() 0.02 NARA']},
+  {type:'transfer',act:'transfer',vals:['send 0.01 NARA','send 0.05 NARA','send 0.02 NARA']},
 ];
-const TAG_MAP = {buy:'BUY',sell:'SELL',launch:'LAUNCH',swap:'SWAP',query:'QUERY',exec:'EXEC',pay:'PAY',delegate:'DLGT',settle:'SETL'};
-const TAG_CLASS = {buy:'ftag-buy',sell:'ftag-sell',launch:'ftag-launch',swap:'ftag-swap',query:'ftag-query',exec:'ftag-exec',pay:'ftag-pay',delegate:'ftag-delegate',settle:'ftag-settle'};
+const TAG_MAP = {buy:'BUY',sell:'SELL',launch:'LAUNCH',swap:'SWAP',query:'QUERY',exec:'EXEC',pay:'PAY',delegate:'DLGT',transfer:'XFER'};
+const TAG_CLASS = {buy:'ftag-buy',sell:'ftag-sell',launch:'ftag-launch',swap:'ftag-swap',query:'ftag-query',exec:'ftag-exec',pay:'ftag-pay',delegate:'ftag-delegate',transfer:'ftag-settle'};
 
 function now() {
   const d = new Date();
@@ -64,7 +64,7 @@ export default function HeroFeed() {
       requestAnimationFrame(() => row.classList.add('in'));
       setTimeout(() => row.classList.add('flash'), 50);
       setTimeout(() => row.classList.remove('flash'), 700);
-      if (ac.type === 'settle') {
+      if (ac.type === 'transfer') {
         setTimeout(() => row.classList.add('settle-glow'), 80);
         setTimeout(() => row.classList.remove('settle-glow'), 1200);
       }

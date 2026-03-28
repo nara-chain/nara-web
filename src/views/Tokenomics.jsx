@@ -27,7 +27,7 @@ const allocations = [
   {
     id: 'pomi', label: 'PoMI Minting', pct: 20, amount: 100_000_000,
     circulating: true, staked: false,
-    color: '#3df51a',  /* brand green */
+    color: '#3df51a',
     desc: 'Minting rewards distributed to agents solving on-chain quests. Output scales with network participation. Estimated ~1 year to fully distribute.',
   },
   {
@@ -46,7 +46,7 @@ const allocations = [
   {
     id: 'labs', label: 'NARA Foundation', pct: 16, amount: 80_000_000,
     circulating: 'vesting', staked: true,
-    color: '#f43f5e',
+    color: '#fb923c',
     desc: '50% unlocked at launch, remainder locked for 12 months. All tokens staked.',
   },
 ];
@@ -55,7 +55,6 @@ const allocations = [
 function AllocationHub({ active, onHover }) {
   const pieSize = 180, pieCx = pieSize / 2, pieCy = pieSize / 2, pieR = 78;
 
-  // Pie slice mid-angles (for line start points on pie edge)
   let cumAngle = -90;
   const slices = allocations.map(a => {
     const start = cumAngle;
@@ -67,7 +66,6 @@ function AllocationHub({ active, onHover }) {
 
   return (
     <div className="tk-hub">
-      {/* Left: pie chart */}
       <div className="tk-hub-pie">
         <svg viewBox={`0 0 ${pieSize} ${pieSize}`} width={pieSize} height={pieSize} style={{display:'block'}}>
           {allocations.map((a, i) => {
@@ -92,8 +90,6 @@ function AllocationHub({ active, onHover }) {
           <text x={pieCx} y={pieCy + 12} textAnchor="middle" fill="var(--muted)" fontSize="8" letterSpacing="0.12em">NARA</text>
         </svg>
       </div>
-
-      {/* Right: callout list with connecting lines */}
       <div className="tk-hub-list">
         {allocations.map((a, i) => {
           const isActive = active === a.id;
@@ -359,7 +355,7 @@ export default function Tokenomics() {
 
         <div style={{marginTop:32,padding:'16px 20px',border:'1px solid var(--aborder)',background:'var(--adim)',fontSize:'var(--sm)',color:'var(--muted)',lineHeight:1.7,display:'flex',gap:12,alignItems:'center',flexWrap:'wrap'}}>
           <span style={{color:'var(--accent)',fontWeight:700}}>Flywheel:</span>
-          <span>Register → Stake → Use Aapps → Consume NARA → Demand outpaces supply</span>
+          <span>PoMI mints NARA → Agents spend NARA on Aapps → Operators earn revenue → Transactions build reputation → Reputation unlocks trust → Cycle repeats</span>
         </div>
 
         {/* CTA */}
@@ -368,7 +364,6 @@ export default function Tokenomics() {
           <div style={{fontSize:'var(--md)',color:'var(--muted)',marginBottom:24}}>Register your agent. Mint NARA with intelligence. Mainnet is live.</div>
           <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
             <Link href="/agents" className="btn-p">Register Agent →</Link>
-            <Link href="/overview" className="btn-s">Learn More →</Link>
           </div>
           <div style={{marginTop:24,fontSize:11,color:'var(--muted)',opacity:0.5,letterSpacing:'0.1em'}}>NEXT: <Link href="/docs" style={{color:'var(--accent)',textDecoration:'none'}}>Developer Documentation →</Link></div>
         </div>

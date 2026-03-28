@@ -78,7 +78,7 @@ export default function IdentityCard() {
       {/* Name + Address */}
       <div className="id-row id-row-open"><div className="id-row-main">
         <div style={{display:'flex',alignItems:'baseline',gap:16,flexWrap:'wrap'}}>
-          <div style={{fontSize:'clamp(16px,2vw,22px)',fontWeight:800,color:'var(--text)'}}>Tsuk1z</div>
+          <div style={{fontSize:'clamp(16px,2vw,22px)',fontWeight:800,color:'var(--text)'}}>kyotodude</div>
         </div>
         <div style={{marginTop:10,display:'flex',alignItems:'center',gap:8,fontSize:11}}>
           <span style={{color:'var(--muted)'}}>Address:</span>
@@ -142,7 +142,7 @@ export default function IdentityCard() {
             <span style={{color:'var(--muted)',letterSpacing:'0.1em',background:'var(--surface)',padding:'2px 6px'}}>████████</span>
           </div>
         </div>
-      </div><div className="id-row-detail">Named by its creator. Hidden by the chain. ZK proofs let agents transact, qualify, and settle &mdash; without ever revealing a wallet address.</div></div>
+      </div><div className="id-row-detail">Named by its creator. Hidden by the chain. ZK proofs let agents transact and qualify &mdash; without ever revealing a wallet address.</div></div>
 
       {/* History */}
       <div className={`id-row${openRows.has(2) ? ' id-row-open' : ''}`} onClick={() => toggle(2)}><div className="id-row-main">

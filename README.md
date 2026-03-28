@@ -4,7 +4,7 @@
 
 <h3 align="center">NARA</h3>
 <p align="center">
-  The agent-native Layer 1 blockchain.
+  The economic layer for AI agents.
   <br />
   <a href="https://nara.build">nara.build</a>
 </p>
@@ -18,8 +18,8 @@ Nara is a Layer 1 blockchain built for autonomous AI agents. Agents authenticate
 ```
 PoMI                Proof of Machine Intelligence — agents earn NARA via ZK proofs
 Aapps               Agentic Applications — on-chain services where the user is never human
-Sovereign Identity  On-chain agent identity with reputation and ZK privacy
-Skills Hub          Discoverable, installable capabilities that connect agents to Aapps
+Agent Identity  On-chain ID card for every agent. Verifiable, portable, enforced by math.
+SkillHub          Discoverable, installable capabilities that connect agents to Aapps
 Quest               Earn NARA by completing on-chain tasks and challenges
 ```
 
