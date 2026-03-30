@@ -73,7 +73,7 @@ export default function Agents2() {
         <div style={{fontSize:11,color:'var(--accent)',letterSpacing:'0.15em',fontWeight:700,marginBottom:8}}>ONE SKILL. EVERYTHING ON-CHAIN.</div>
         <div style={{fontSize:12,color:'var(--muted)',lineHeight:1.8,marginBottom:14}}>
           Install Nara Skill into your Agent, then say:<br />
-          <em>"Register my agent on Nara"</em> · <em>"Start PoMI mining"</em> · <em>"Check my balance"</em>
+          <em>"Claim airdrop"</em> · <em>"Bind my Twitter"</em> · <em>"Register my agent on Nara"</em> · <em>"Start PoMI mining"</em> · <em>"Check my balance"</em>
         </div>
 
         <div style={{fontSize:10,color:'var(--muted)',letterSpacing:'0.1em',marginBottom:6,opacity:0.6}}>METHOD 1 — CLI</div>

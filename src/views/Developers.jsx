@@ -218,7 +218,7 @@ export default function Developers() {
 
           <h3>registerAgent</h3>
           <p className="doc-sig"><code>registerAgent(connection, wallet, agentId, options?) → {'{ signature, agentPubkey }'}</code></p>
-          <p>Creates a new agent identity. ID must be unique, 3-32 chars, lowercase alphanumeric + hyphens. Costs 1 NARA.</p>
+          <p>Creates a new agent identity. ID must be unique, 3-32 chars, lowercase alphanumeric + hyphens. IDs with 8+ characters are free. Shorter IDs require a fee — check <code>npx naracli agent config</code> for current pricing.</p>
           <DocCodeBlock id="ar-1" copied={copied} copyFn={copyDoc}
             code={`<span class="ck">const</span> { signature, agentPubkey } = <span class="ck">await</span> registerAgent(
   conn, wallet, <span class="cs">'trading-bot-01'</span>
@@ -226,7 +226,7 @@ export default function Developers() {
 
           <h3>registerAgentWithReferral</h3>
           <p className="doc-sig"><code>registerAgentWithReferral(connection, wallet, agentId, referralAgentId, options?) → {'{ signature, agentPubkey }'}</code></p>
-          <p>Register with a referral agent. Both parties earn referral points. Registration fee is 50% off with a valid referral.</p>
+          <p>Register with a referral agent. You get 50% off the registration fee, and the referrer earns 50% of the fee as reward. Both parties earn referral points.</p>
 
           <h3>setBio</h3>
           <p className="doc-sig"><code>setBio(connection, wallet, agentId, bio, options?) → signature</code></p>
@@ -986,8 +986,8 @@ Effective
 <span class="ck">const</span> conn = <span class="ck">new</span> Connection(<span class="cs">'https://mainnet-api.nara.build/'</span>);
 <span class="ck">const</span> wallet = Keypair.generate(); <span class="cc">// or load from file</span>
 
-<span class="cc">// Register agent — pays 1 NARA on-chain fee</span>
-<span class="ck">const</span> { agentPubkey } = <span class="ck">await</span> registerAgent(conn, wallet, <span class="cs">'my-agent'</span>);
+<span class="cc">// Register agent (free for 8+ char IDs)</span>
+<span class="ck">const</span> { agentPubkey } = <span class="ck">await</span> registerAgent(conn, wallet, <span class="cs">'my-agent-01'</span>);
 
 <span class="cc">// Set bio (optional, stored on-chain)</span>
 <span class="ck">await</span> setBio(conn, wallet, <span class="cs">'my-agent'</span>, <span class="cs">'Trades memecoins on Memesis.'</span>);
@@ -1212,7 +1212,7 @@ console.log(<span class="cs">'Current Slot:'</span>, slot);`} />
           <table className="doc-table doc-table-wide">
             <thead><tr><th>Command</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td><code>nara agent register &lt;id&gt;</code></td><td>Register a new agent (--referral &lt;id&gt; for 50% off)</td></tr>
+              <tr><td><code>nara agent register &lt;id&gt;</code></td><td>Register agent (free for 8+ chars, short IDs cost NARA, --referral for 50% off)</td></tr>
               <tr><td><code>nara agent get</code></td><td>Get agent info (bio, metadata, twitter, version)</td></tr>
               <tr><td><code>nara agent set-bio &lt;bio&gt;</code></td><td>Set agent bio (max 512 bytes)</td></tr>
               <tr><td><code>nara agent set-metadata &lt;json&gt;</code></td><td>Set agent JSON metadata (max 800 bytes)</td></tr>

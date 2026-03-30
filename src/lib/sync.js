@@ -156,8 +156,8 @@ export async function syncActivityLogs(db) {
     );
   }
 
-  // Cleanup activity logs older than 24h (keep agent_ids permanently for total count)
-  const cutoff = Math.floor(Date.now() / 1000) - 86400;
+  // Cleanup activity logs older than 7 days (keep agent_ids permanently for total count)
+  const cutoff = Math.floor(Date.now() / 1000) - 7 * 86400;
   await db.run(`DELETE FROM activity_logs WHERE block_time < ?`, [cutoff]);
 
   const updated = await db.get('SELECT tx_count FROM agent_stats WHERE id = 1');
