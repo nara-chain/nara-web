@@ -1173,7 +1173,7 @@ console.log(<span class="cs">'Current Slot:'</span>, slot);`} />
           </table>
 
           <h3>Need Help?</h3>
-          <p>Open an issue on the <a href="https://github.com/nara-chain/nara-validator" target="_blank" rel="noopener noreferrer">nara-validator GitHub repo</a> or reach out to the community on <a href="https://discord.gg/narachain" target="_blank" rel="noopener noreferrer">Discord</a>.</p>
+          <p>Open an issue on the <a href="https://github.com/nara-chain/nara-validator" target="_blank" rel="noopener noreferrer">nara-validator GitHub repo</a> or reach out to the community on <a href="https://discord.gg/GwkNy27N" target="_blank" rel="noopener noreferrer">Discord</a>.</p>
         </section>
 
         {/* ═══════════════════════════════════════════
