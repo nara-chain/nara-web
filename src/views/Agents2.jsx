@@ -172,31 +172,33 @@ export default function Agents2() {
               <div className={`reg-detail-panel${openDetail === idx ? ' open' : ''}`}>
                 {a.zkLogs.length > 0 && (
                   <div className="reg-detail-section">
-                    <div className="reg-detail-label">ZK PROOFS</div>
-                    {a.zkLogs.map((zl, zi) => (
+                    <div className="reg-detail-label">ZK PROOFS <span style={{opacity:0.4,fontWeight:400}}>({a.zkLogs.length})</span></div>
+                    {a.zkLogs.slice(0, 20).map((zl, zi) => (
                       <div key={zi} className="zk-row">
                         <span className="zk-check">✓</span>
                         <span style={{color:'var(--muted)'}}>ZK-verified:</span>
                         <span style={{color:'var(--text)',fontWeight:700}}>{zl.zk_type}</span>
                         {zl.zk_proof_hash && <span className="zk-block">{zl.zk_proof_hash}</span>}
+                        <a href={`https://explorer.nara.build/tx/${zl.tx_signature}`} target="_blank" rel="noopener noreferrer" className="agent-tx-link" style={{marginLeft:4}}>{truncAddr(zl.tx_signature)} ↗</a>
                       </div>
                     ))}
-                    <ZkCircuitAnimation proofHash={a.zkLogs[0]?.zk_proof_hash} />
+                    {a.zkLogs.length > 20 && <div style={{fontSize:10,color:'var(--muted)',opacity:0.4,marginTop:4}}>... and {a.zkLogs.length - 20} more</div>}
                   </div>
                 )}
                 <div className="reg-detail-section">
-                  <div className="reg-detail-label">HISTORY</div>
+                  <div className="reg-detail-label">HISTORY <span style={{opacity:0.4,fontWeight:400}}>({a.logs.length})</span></div>
                   <div className="detail-log">
-                    {a.logs.map((l, li) => (
+                    {a.logs.slice(0, 20).map((l, li) => (
                       <div key={li} className="ok">
                         <span style={{color:'var(--muted)',marginRight:8}}>{formatTime(l.block_time)}</span>
                         <span style={{color:'var(--accent)',marginRight:8}}>{l.activity}</span>
                         <span style={{color:'var(--text)',marginRight:8}}>{l.log}</span>
                         <span style={{color:'var(--muted)'}}>+{l.points_earned}pts</span>
                         {l.zk_type && <span className="zk" style={{marginLeft:8,fontSize:9}}>ZK</span>}
-                        <a href={`https://explorer.nara.build/tx/${l.tx_signature}`} target="_blank" rel="noopener noreferrer" className="agent-tx-link" style={{marginLeft:8}}>{truncAddr(l.tx_signature)} ↗ <span style={{fontSize:8,background:'rgba(57,255,20,0.12)',border:'1px solid var(--aborder)',color:'var(--accent)',padding:'1px 4px',letterSpacing:'0.1em',verticalAlign:'middle'}}>MAINNET</span></a>
+                        <a href={`https://explorer.nara.build/tx/${l.tx_signature}`} target="_blank" rel="noopener noreferrer" className="agent-tx-link" style={{marginLeft:8}}>{truncAddr(l.tx_signature)} ↗</a>
                       </div>
                     ))}
+                    {a.logs.length > 20 && <div style={{fontSize:10,color:'var(--muted)',opacity:0.4,marginTop:4}}>... and {a.logs.length - 20} more</div>}
                   </div>
                 </div>
                 <div style={{padding:'14px 28px',borderTop:'1px solid var(--border)',background:'rgba(57,255,20,0.03)'}}>
