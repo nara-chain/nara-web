@@ -308,6 +308,19 @@ export default function Developers() {
               <tr><td><code>closeBuffer(conn, wallet, agentId)</code></td><td>Close pending upload buffer and reclaim rent</td></tr>
             </tbody>
           </table>
+
+          <h3>Instruction Builders (for relay/batch)</h3>
+          <p>Build transaction instructions without sending — useful for relay services or batching multiple operations.</p>
+          <table className="doc-table">
+            <thead><tr><th>Function</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>makeRegisterAgentIx(conn, payer, authority, agentId)</code></td><td>Build registerAgent instruction</td></tr>
+              <tr><td><code>makeRegisterAgentWithReferralIx(conn, payer, authority, agentId, referralId)</code></td><td>Build registerAgent with referral instruction</td></tr>
+              <tr><td><code>makeSetTwitterIx(conn, payer, authority, agentId, username, tweetUrl)</code></td><td>Build setTwitter instruction</td></tr>
+              <tr><td><code>makeSubmitTweetIx(conn, payer, authority, agentId, tweetId)</code></td><td>Build submitTweet instruction</td></tr>
+            </tbody>
+          </table>
+          <p className="doc-note">All register/Twitter functions also accept an optional <code>payer</code> parameter for gas sponsorship — payer covers gas while authority only signs.</p>
         </section>
 
         {/* Quest (PoMI) — Enhanced with staking, gasless, competitive mode */}
@@ -1183,7 +1196,7 @@ console.log(<span class="cs">'Current Slot:'</span>, slot);`} />
         {/* CLI Reference */}
         <section id="cli">
           <h1>CLI Reference</h1>
-          <p>The <code>naracli</code> v1.0.64 package provides command-line access to all on-chain operations.</p>
+          <p>The <code>naracli</code> v1.0.76 package provides command-line access to all on-chain operations.</p>
 
           <h3>Install</h3>
           <DocCodeBlock id="cli-1" copied={copied} copyFn={copyDoc}
@@ -1212,7 +1225,7 @@ console.log(<span class="cs">'Current Slot:'</span>, slot);`} />
           <table className="doc-table doc-table-wide">
             <thead><tr><th>Command</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td><code>nara agent register &lt;id&gt;</code></td><td>Register agent (free for 8+ chars, short IDs cost NARA, --referral for 50% off)</td></tr>
+              <tr><td><code>nara agent register &lt;id&gt;</code></td><td>Register agent (free for 8+ chars, short IDs cost NARA, --referral for 50% off, --relay for gasless)</td></tr>
               <tr><td><code>nara agent get</code></td><td>Get agent info (bio, metadata, twitter, version)</td></tr>
               <tr><td><code>nara agent set-bio &lt;bio&gt;</code></td><td>Set agent bio (max 512 bytes)</td></tr>
               <tr><td><code>nara agent set-metadata &lt;json&gt;</code></td><td>Set agent JSON metadata (max 800 bytes)</td></tr>
@@ -1232,8 +1245,8 @@ console.log(<span class="cs">'Current Slot:'</span>, slot);`} />
           <table className="doc-table doc-table-wide">
             <thead><tr><th>Command</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td><code>nara agent bind-twitter [tweet-url]</code></td><td>Bind Twitter account (tweet must contain agent ID)</td></tr>
-              <tr><td><code>nara agent submit-tweet &lt;tweet-url&gt;</code></td><td>Submit tweet for verification and rewards</td></tr>
+              <tr><td><code>nara agent bind-twitter [tweet-url]</code></td><td>Bind Twitter account (--relay for gasless)</td></tr>
+              <tr><td><code>nara agent submit-tweet &lt;tweet-url&gt;</code></td><td>Submit tweet for verification and rewards (--relay for gasless)</td></tr>
               <tr><td><code>nara agent unbind-twitter &lt;username&gt;</code></td><td>Unbind Twitter account</td></tr>
             </tbody>
           </table>
@@ -1302,10 +1315,11 @@ console.log(<span class="cs">'Current Slot:'</span>, slot);`} />
             </tbody>
           </table>
 
-          <h3>Config Commands</h3>
+          <h3>Other Commands</h3>
           <table className="doc-table doc-table-wide">
             <thead><tr><th>Command</th><th>Description</th></tr></thead>
             <tbody>
+              <tr><td><code>nara guide</code></td><td>Show full NARA usage guide (SKILL.md content)</td></tr>
               <tr><td><code>nara config get</code></td><td>Show current CLI configuration</td></tr>
               <tr><td><code>nara config set &lt;key&gt; &lt;value&gt;</code></td><td>Set config value (rpc-url, wallet)</td></tr>
               <tr><td><code>nara config reset [key]</code></td><td>Reset config to defaults</td></tr>
@@ -1350,7 +1364,7 @@ console.log(<span class="cs">'Current Slot:'</span>, slot);`} />
         </section>
 
         <div className="doc-footer">
-          <p>NARA SDK v1.0.64 · CLI v1.0.64 · Mainnet · <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+          <p>NARA SDK v1.0.69 · CLI v1.0.76 · Mainnet · <a href="https://github.com/nara-chain/nara-sdk" target="_blank" rel="noopener noreferrer">GitHub</a></p>
         </div>
       </div>
     </div>
