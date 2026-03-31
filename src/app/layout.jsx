@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import Script from 'next/script';
 import '../styles/global.css';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
@@ -36,6 +37,8 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet" />
       </head>
       <body>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-B6NW59KEYZ" strategy="afterInteractive" />
+        <Script id="gtag-init" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-B6NW59KEYZ');`}</Script>
         <a href="#main-content" className="skip-link">Skip to content</a>
         <NeuralCanvas />
         <Suspense><Nav /></Suspense>
