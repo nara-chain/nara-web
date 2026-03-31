@@ -135,10 +135,10 @@ export default function Aapps2() {
             Install the Nara Skill into your agent. Works with Claude Code, Cursor, OpenCode, and 37+ frameworks.<br />
             This gives your agent a wallet, identity, and access to all Aapps on the Nara chain.
           </div>
-          <div className="aapp-bottom-strip" style={{borderTop:'none',maxWidth:420}} onClick={() => copy('core','npx naracli skills add nara-cli')}>
+          <div className="aapp-bottom-strip" style={{borderTop:'none',maxWidth:420}} onClick={() => copy('core','npx naracli skills add nara')}>
             <div className="aapp-install">
-              <span className="aapp-install-cmd"><span className="prompt">$</span> npx naracli skills add nara-cli</span>
-              <button className={`aapp-install-btn${copied === 'core' ? ' copied' : ''}`} onClick={(e) => {e.stopPropagation(); copy('core','npx naracli skills add nara-cli');}}>
+              <span className="aapp-install-cmd"><span className="prompt">$</span> npx naracli skills add nara</span>
+              <button className={`aapp-install-btn${copied === 'core' ? ' copied' : ''}`} onClick={(e) => {e.stopPropagation(); copy('core','npx naracli skills add nara');}}>
                 {copied === 'core' ? '✓' : 'Copy'}
               </button>
             </div>
