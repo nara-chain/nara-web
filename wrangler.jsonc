@@ -15,6 +15,12 @@
       "database_id": "892913f7-7dd8-421c-987d-74d0decba954"
     }
   ],
+  "r2_buckets": [
+    {
+      "binding": "NEXT_CACHE_R2",
+      "bucket_name": "nara-web"
+    }
+  ],
   "vars": {
     "SYNC_SECRET": "af312d75cc7557b7466878834263a1d577324ba171a9d17ed8d690fb9cd48c8a"
   },
