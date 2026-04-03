@@ -4,9 +4,10 @@ export default function robots() {
       {
         userAgent: '*',
         allow: '/',
-        disallow: '/api/',
+        disallow: ['/api/', '/_next/'],
       },
     ],
     sitemap: 'https://nara.build/sitemap.xml',
+    host: 'https://nara.build',
   };
 }

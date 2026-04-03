@@ -25,6 +25,9 @@ export const metadata = {
   icons: {
     icon: { url: '/favicon-v3.svg', type: 'image/svg+xml' },
   },
+  other: {
+    'llms.txt': 'https://nara.build/llms.txt',
+  },
 };
 
 export default function RootLayout({ children }) {
